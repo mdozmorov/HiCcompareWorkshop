@@ -10,3 +10,4 @@ Please, refer to the [hic_tutorial.Rmd](vignettes/hic_tutorial.Rmd) vignette for
 * [multiHiCcompare](https://bioconductor.org/packages/multiHiCcompare)
 
 The tutorial has been developed to be presented at the [Bioconductor Conference 2020](https://bioc2020.bioconductor.org/), July 27-July 31 in Boston, MA.
+
