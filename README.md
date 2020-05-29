@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/dozmorovlab/HiCcompareWorkshop.svg?branch=master)](https://travis-ci.org/dozmorovlab/HiCcompareWorkshop)
+[![Build Status](https://travis-ci.org/dozmorovlab/HiCcompareWorkshop.svg?branch=master)](https://travis-ci.com/github/dozmorovlab/HiCcompareWorkshop/builds)
 
 # Differential Hi-C Data Analysis Workshop
 
