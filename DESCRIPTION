@@ -39,7 +39,7 @@ Imports:
     readr,
     data.table,
     edgeR
-URL: https://dozmorovlab.github.io/HiCcompareWorkshop/
-BugReports: https://github.com/dozmorovlab/HiCcompareWorkshop/issues/new/choose
+URL: https://mdozmorov.github.io/HiCcompareWorkshop/
+BugReports: https://github.com/mdozmorov/HiCcompareWorkshop/issues/new/choose
 VignetteBuilder: knitr
 DockerImage: mdozmorov/hiccompareworkshop:latest
