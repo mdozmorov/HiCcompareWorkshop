@@ -1,5 +1,7 @@
 <!--[![Build Status](https://travis-ci.org/dozmorovlab/HiCcompareWorkshop.svg?branch=master)](https://travis-ci.com/github/dozmorovlab/HiCcompareWorkshop/builds)-->
 
+![.github/workflows/basic_checks.yaml](https://github.com/mdozmorov/HiCcompareWorkshop/workflows/.github/workflows/basic_checks.yaml/badge.svg)
+
 # Differential Hi-C Data Analysis Workshop
 
 This tutorial is an introductory guide into differential Hi-C data analysis. It includes joint normalization of Hi-C data matrices and the detection of differential chromatin interactions. Preprocessing and extraction of Hi-C data matrices are introduced. Examples of downstream analysis of differentially interacting chromatin regions and guidelines on how to visualize and interpret the results are also provided.
