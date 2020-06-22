@@ -1,0 +1,451 @@
+---
+title: Downstream analysis and interpretation of differentially interacting regions
+output:
+  rmarkdown::html_document:
+    highlight: pygments
+    toc: true
+    toc_depth: 3
+    fig_width: 5
+bibliography: bibliography.bib
+vignette: >
+  %\VignetteIndexEntry{Downstream analysis and interpretation of differentially interacting regions}
+  %\VignetteEncoding[utf8]{inputenc}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+The identification of differentially interacting chromatin regions (DIRs) opens up a problem of interpretation - what is so special about these regions from a genome regulation perspective? Answers to the following questions may help to better understand the regulatory role of differentially interacting regions.
+
+- **Visualization of DIRs.** A Manhattan-like plot of DIRs may inform us about abnormalities or reveal chromosome-specific enrichment of differentially interacting regions.
+- **Overlap between differentially expressed genes and DIRs.** If gene expression measurements are available, a list of differentially expressed genes may be tested for overlap with DIRs. The goal of this analysis is to establish a formal link between DIRs and changed gene expression.
+- **Functional enrichment of genes overlapping DIRs.** DIRs may disrupt the regulation of genes overlapping them. The goal of this analysis is to test whether genes overlapping DIRs are enriched in a canonical pathway or share a common function.
+- **Overlap enrichment between TAD boundaries and DIRs.** DIRs may correspond to TAD boundaries that are deleted or created. Thus, it is important to test DIRs for significant overlap with TAD boundaries detected in either condition or only in boundaries changed between the conditions. Similar overlap enrichment can be calculated between DIRs and any genomic annotation.
+- **Overlap between DIRs and binding sites.** DIRs may correspond to locations where proteins bind with the DNA such as CTCF sites. Thus, it may be of interest to check for overlap between binding site locations and DIRs.
+
+This tutorial is a follow-up of the main [hic_tutorial](hic_tutorial.html) vignette presenting the detection of differentially interacting chromatin regions from multiple Hi-C datasets. It as assumed that you ran the code from the main vignette and obtained the results of differential chromatin interaction detection in a saved `rao2017.rda` file.
+
+```{r setup, echo=FALSE, message=FALSE, warning=FALSE}
+library(knitr)
+# Set up the environment
+opts_chunk$set(cache.path='cache/', fig.path='img/', cache=T, tidy=F, fig.keep='high', echo=T, dpi=100, warnings=F, message=F, comment=NA, warning=F, results='as.is', fig.width = 10, fig.height = 6) #out.width=700, 
+set.seed(1)
+options(stringsAsFactors = FALSE)
+```
+
+### Necessary packages
+
+```{r libraries}
+# Install, if necessary, and load necessary libraries and set up R session
+if (!requireNamespace("BiocManager", quietly = TRUE)) install.packages("BiocManager")
+library(readr) # install.packages("readr")
+library(data.table) # install.packages("data.table")
+library(dplyr) # install.packages("dplyr")
+library(edgeR) # BiocManager::install("edgeR")
+library(BiocParallel) # BiocManager::install("BiocParallel") 
+library(HiCcompare) # BiocManager::install("HiCcompare"), or, for the latest version,
+# install.packages("devtools")
+# devtools::install_github('dozmorovlab/HiCcompare', build_vignettes = TRUE, force = TRUE)
+library(multiHiCcompare) # BiocManager::install("multiHiCcompare", version = "devel") 
+library(TADCompare) # BiocManager::install("TADCompare", version = "devel") 
+options(scipen = 999) # Output fixed numbers, not scientific notation
+```
+
+### Load the data
+
+```{r}
+load("rao2017_exact.rda")
+```
+
+### Visualizing differentially interacting chromatin regions (DIRs)
+
+Regions which are frequently detected as differentially interacting may be visualized by using the Manhattan plot-like plotting function provided by `multiHiCcompare`. The function `manhattan_hicexp` allows the user to make a Manhattan plot showing the regions that are either detected as significantly differentially interacting with any other regions (summarized p-value) or frequently detected as significantly differentially interacting (number of times a region is significantly differentially interacting with other regions). 
+
+The `standard` method (default) displays the -log10-transformed p-values for each interacting pair of regions, which allows you to visualize the most significant interactions in the datasets. However, the `standard` method requires more computational time than the other methods. The p-value summarization methods include the `addCLT` (default) [@Nguyen:2016], `fisher` [@Fisher:1950], and `stouffer` [@Stouffer:1949] methods to combine the p-values for each region to produce a plot of the most significant regions. 
+
+The `count` method creates a plot where the height corresponds to the number of times a region was detected as significant. The goal of these plots is to visualize the most significantly differentially interacting regions in the context of the linear genome. 
+
+The higher the dots are, the more significant/more frequent a region was detected as significantly differentially interacting. Use `plot.chr` to focus on any given chromosome:
+
+```{r}
+manhattan_hicexp(rao2017, method = 'addCLT')
+```
+
+```{r}
+manhattan_hicexp(rao2017, method = 'count', plot.chr = 1)
+```
+
+It may be of interest to take a more in-depth look at the most significant regions that were detected as differentially interacting many times. We can get started with this by using the `topDirs` function that gives us a `data.frame` of the regions and the count for the number of times each region was detected as differentially interacting, along with the Fisher combined p-value of the detected interactions. The `topDirs` function is an analog of the `limma::topTable` and `edger::topTags` functions in that it allows us to filter the results by the average log fold-change (`logfc_cutoff`), the average interaction frequency (the higher the average frequency the more confident we are in the detected difference, `logcpm_cutoff`), the adjusted p-value cutoff (`p.adj_cutoff`), and the distance cutoff (`D_cutoff`). The `topDirs` function allows us to focus on the most significant regions while filtering out less interesting regions.
+
+The `return_df = 'bed'` option gives us a summary of the regions which are found to be interacting at least one time or more:
+
+```{r}
+counts <- topDirs(rao2017, logfc_cutoff = 1, logcpm_cutoff = 2,
+                  p.adj_cutoff = 0.01, return_df = 'bed')
+
+kable(head(counts))
+```
+
+We can now use the `counts` data.frame as an input for plotting the p-values of the top DIRs, summarized by Fisher's method. To zoom in on a particular chromosome the `plot.chr` option can be used:
+
+```{r}
+plot_pvals(counts)
+```
+
+We can also plot the counts:
+
+```{r}
+plot_counts(counts, plot.chr = 1)
+```
+
+The `return_df = 'pairedbed'` will give the results in the form of interacting pairs:
+
+```{r}
+pairs <- topDirs(rao2017, logfc_cutoff = 2, logcpm_cutoff = 4,
+                 p.adj_cutoff = 0.01, return_df = 'pairedbed')
+
+kable(head(pairs))
+```
+
+The coordinates of differentially interacting regions may be saved as `.bed` files for downstream analysis in tools such as GenomeRunner [@Dozmorov:2016aa], LOLA [@Sheffield:2016aa], or visualization in, e.g., UCSC Genome Browser [@Karolchik:2014aa]:
+
+```{r eval=FALSE}
+# Regular BED format
+write_tsv(counts[, c('chr', 'start', 'end', 'count')], 
+          path = 'detected_regions.bed', col_names = FALSE)
+# Paired BED format
+write_tsv(pairs, path = 'detected_regions.pairedbed', 
+          col_names = FALSE)
+```
+
+Sometimes, a BED file of all regions in the genome needs to be saved, to be used as a "background" for random sampling:
+
+```{r eval=FALSE}
+# Get list of all 100KB regions in genome
+regions <- topDirs(rao2017, logfc_cutoff = 0, logcpm_cutoff = -1,
+                   D_cutoff = 0, p.adj_cutoff = 1, alpha = 2, 
+                   return_df = 'bed' ) 
+# Order regions
+regions <- regions[order(chr, start, end), ]
+# Remove unnecessary columns
+regions <- regions[, c('chr', 'start', 'end')]
+# Write into BED format
+write_tsv(regions, path = 'all_regions.bed', col_names = FALSE)
+```
+
+
+
+### Overlap between differentially expressed genes and DIRs
+
+If gene expression data is available, DIRs may be checked for statistically significant overlap with differentially expressed (DE) genes. The hypothesis here is that regions detected as differentially interacting harbor genes that change their gene expression due to changes in chromatin interactions. In our example, we obtain a list of genes differentially expressed between the normal cells and auxin treated cells [@Rao:2017aa] and test whether they are co-localized with DIRs. First, we get the genomic coordinates (hg19/GRCh37) of all differentially interacting regions:
+
+```{r}
+library(GenomicRanges) # BiocManager::install("GenomicRanges")
+# Make GRanges from significant regions
+sig.regions <- topDirs(rao2017, logfc_cutoff = 1, p.adj_cutoff = 10^-15,
+                       return_df = 'bed')
+sig.regions.gr <- makeGRangesFromDataFrame(sig.regions, 
+                                           seqnames.field = 'chr', 
+                                           start.field = 'start', 
+                                           end.field = 'end',
+                                           keep.extra.columns = TRUE)
+```
+
+Next, we get the genomic coordinates of all protein-coding genes in the genome. They will be used for a permutation test, to assess the average probability of overlap between DIRs and genes:
+
+```{r}
+# Install annotables package for gene locations
+# devtools::install_github("stephenturner/annotables")
+library(annotables)
+library(dplyr)
+
+# Use annotables for hg19 symbols
+hg19_symbols <- grch37 %>% # Get genomic coordinates for hg19/GRCh37  genome assembly
+  subset(.,biotype == "protein_coding") %>% # For protein-coding genes only
+  subset(., chr %in% c(1:22, 'X')) # On autosomes and X chromosome
+# Make X chromosome numeric for compatibility with Hi-C data conventions
+hg19_symbols$chr[hg19_symbols$chr == 'X'] <- 23 
+hg19_symbols$chr <- paste0('chr', hg19_symbols$chr)
+hg19_symbols$strand <- ifelse(hg19_symbols$strand == -1, '-', '+')
+head(hg19_symbols)
+```
+
+Then, we need to download the list of differentially expressed genes from GEO:
+
+```{bash eval = FALSE}
+wget https://ftp.ncbi.nlm.nih.gov/geo/series/GSE106nnn/GSE106886/suppl/GSE106886_Rao-2017-CMVnotreat_vs_RAD21treat.Genes.DESeq2.txt.gz
+
+gzip -d GSE106886_Rao-2017-CMVnotreat_vs_RAD21treat.Genes.DESeq2.txt.gz
+```
+
+Now, we read the list of differentially expressed genes into R, get their genomic coordinates (hg19 genome assembly), and create the GRanges object:
+
+```{r eval=FALSE}
+de.genes <- read.table('GSE106886_Rao-2017-CMVnotreat_vs_RAD21treat.Genes.DESeq2.txt')
+# Add "symbol" column
+de.genes <- de.genes %>% mutate(symbol = rownames(de.genes))
+# Remove genes without differential expression statistics
+de.genes <- de.genes[ !is.na(de.genes[, "padj"]), ]
+# Select the most significant differentially expressed genes
+de.genes <- de.genes[de.genes[, "padj"] < 0.05, ] # FDR cutoff 0.05
+# Merge differentially expressed genes with genomic coordinates
+de.genes <- left_join(de.genes, hg19_symbols, by = c('symbol' = 'symbol'))
+# Remove rows with NAs
+de.genes <- de.genes[complete.cases(de.genes),]
+# Make GRanges object for DE genes
+de.genes.gr <- GRanges(de.genes$chr, IRanges(start = de.genes$start, 
+                                             end = de.genes$end))
+# Save the de.genes GRanges object
+save(de.genes.gr, file = 'rao2017_genes.rda')
+```
+
+
+```{r}
+# To start the downstream analysis, load the saved file
+load('rao2017_genes.rda') 
+# Find overlaps
+olaps <- findOverlaps(sig.regions.gr, de.genes.gr)
+olaps
+```
+
+We can see that there are `r length(olaps)` overlaps between the DE genes and our significant regions. To test if this amount of overlap is significantly different from what can be expected by chance, we can perform a permutation test by testing the overlap of the DE genes with randomly selected regions from the genome. We can use `multiHiCcompare`'s built in permutation test for checking the enrichment of genomic features:
+
+```{r}
+# use multiHiCcompare's permutation test function 
+p.value <- perm_test(rao2017, de.genes.gr, p.adj_cutoff = 10^-15, 
+                     logfc_cutoff = 1, num.perm = 1000)
+p.value
+```
+
+We can see that the DE genes are not significantly enriched in our DIRs that were detected by `mulitHiCcompare` (p-value = `r formatC(p.value, digits = 3, format = 'E')`). 
+
+
+### Functional enrichment of genes overlapping DIRs
+
+Given the significant overlap between DE genes and DIRs, it may be of interest to test whether all genes overlapping DIRs are enriched in any canonical pathway or gene ontology annotation category. This can be done using the `ROntoTools` R package [@Voichita:2012].
+
+First, we need to get the genomic locations of the genes including strand information:
+
+```{r, message = FALSE}
+library(clusterProfiler) # BiocManager::install("clusterProfiler")
+library(DOSE) # BiocManager::install("DOSE")
+library(ROntoTools) # BiocManager::install("ROntoTools")
+library(graph) # BiocManager::install("graph")
+
+# Make GRanges out of all genes
+hg19_symbols.gr <- makeGRangesFromDataFrame(hg19_symbols, 
+                                            seqnames.field = 'chr', 
+                                            start.field = 'start', 
+                                            end.field = 'end', 
+                                            strand.field = 'strand', 
+                                            keep.extra.columns = TRUE)
+
+# Overlap genes with DIRs defined previously
+olap <- findOverlaps(sig.regions.gr, hg19_symbols.gr)
+```
+
+Next, we need to create a named vector for the number of times each region was detected as significantly interacting. The names for this vector will be the Entrez gene IDs. This vector will be used for the pathway enrichment to walk down the list of genes overlapping most-to-least frequently detected DIRs:
+
+```{r, message=FALSE, warning=FALSE, results='hide'}
+# Create "gene_counts" data.frame with the column for count and gene symbol
+genes_olap <- olap %>% as.data.frame %>% group_by(queryHits) %>%
+              mutate(genes = hg19_symbols.gr@elementMetadata$symbol[subjectHits]) %>% 
+              dplyr::select(queryHits, genes) %>% distinct()
+
+tmp <- sig.regions %>% dplyr::select(count, avgLogFC, avgP.adj) %>% mutate(id = 1:nrow(sig.regions))
+gene_counts <- left_join(genes_olap, tmp, by = c('queryHits' = 'id'))
+
+# Convert gene symbols into entrez ID
+entrez <- bitr(gene_counts$genes, fromType = 'SYMBOL', toType = 'ENTREZID', OrgDb = 'org.Hs.eg.db')
+
+# Join the Entrez ID to the counts
+gene_counts <- left_join(gene_counts, entrez, by = c('genes' = 'SYMBOL'))
+# Remove unmapped entries
+gene_counts <- gene_counts[complete.cases(gene_counts), ]
+
+# Make the named vector of fold changes and pvalues for genes
+fc <- gene_counts$avgLogFC
+names(fc) <- paste0('hsa:', gene_counts$ENTREZID)
+pv <- as.numeric(gene_counts$avgP.adj)
+names(pv) <- paste0('hsa:', gene_counts$ENTREZID)
+
+# load KEGG pathways 
+kpg <- keggPathwayGraphs("hsa", updateCache = TRUE, verbose = FALSE)
+# set edge weights
+kpg <- setEdgeWeights(kpg, edgeTypeAttr = "subtype",
+                      edgeWeightByType = list(activation = 1, inhibition = -1,
+                      expression = 1, repression = -1),
+                      defaultWeight = 0)
+```
+
+Now we can plug the `fc` (fold-chabge) and `pv` (p-value) vectors into `ROntoTools` pathway analysis:
+
+```{r, message=FALSE, warning=FALSE}
+# Set node weights
+kpg <- setNodeWeights(kpg,weights = alpha1MR(pv), defaultWeight = 1)
+# Perform pathway analysis
+peRes <- pe(x = fc, graphs = kpg, ref = paste0('hsa:', as.character(hg19_symbols$entrez)), nboot = 200, verbose = FALSE)
+# Prepare results table
+kpn <- keggPathwayNames("hsa")
+table1 <- head(Summary(peRes, pathNames = kpn, totalAcc = FALSE, totalPert = FALSE,
+              pAcc = FALSE, pORA = FALSE, comb.pv = NULL, order.by = "pPert"), n = 15)
+table1$pPert <- round(table1$pPert, digits = 3)
+table1$pPert.fdr <- round(table1$pPert.fdr, digits = 3)
+```
+
+
+```{r}
+# Print results
+knitr::kable(table1)
+```
+
+Here we can see the results of the Pathway analysis. These pathways do not make much sense in the context of the auxin vs. normal experiment and given only chromosome 1 was analyzed. 
+
+<!--
+We can also plot the pathways using `ROntoTools` to visualize the propagation across a specific pathway. Select a pathway name of interest, for example, "Cytokine-cytokine receptor interaction" pathway (path:hsa04060). We then create the plot as follows (figure omitted due to large size).
+
+
+```{r, eval=FALSE}
+# Select pathway
+p <- peRes@pathways[["path:hsa04146"]]
+# Create graph
+g <- layoutGraph(p@map, layoutType = "dot")
+graphRenderInfo(g) <- list(fixedsize = FALSE)
+edgeRenderInfo(g) <- peEdgeRenderInfo(p)
+nodeRenderInfo(g) <- peNodeRenderInfo(p)
+# Plot the graph
+renderGraph(g)
+```
+-->
+
+<!-- We will also check the standard hypergeometric test for enrichment. This can be done by plugging the same `geneList` object into the `enrichKEGG` function: -->
+
+<!-- ```{r} -->
+<!-- # Perform over representation test -->
+<!-- over.rep <- enrichKEGG(names(geneList), organism = 'hsa', pvalueCutoff = 0.05) -->
+<!-- table2 <- over.rep@result[1:15, c("ID", "Description", "GeneRatio", -->
+<!--                                   "BgRatio", "pvalue", "p.adjust")] -->
+<!-- ``` -->
+
+
+<!-- ```{r, eval=FALSE, echo=FALSE} -->
+<!-- # Print results -->
+<!-- knitr::kable(table2) -->
+<!-- ``` -->
+
+
+
+<!-- Again, we seem to have a random assortment of pathways, likely due to the widespread effects of auxin upon the genome (Table 2). -->
+
+
+### Overlap enrichment between TAD boundaries and DIRs
+
+Another plausible hypothesis to test is the overlap between DIRs and boundaries of topologically associated domains (TADs). 
+
+We will first need to identify the TADs for the datasets being used. We can use the `TopDom` R script for TAD identification. `TopDom` can be downloaded from here: http://zhoulab.usc.edu/TopDom/. To use `TopDom`, the user will need to download the R script to the working directory and source it in the R session. Note: TADs are typically called using Hi-C data at resolutions of 50KB or higher, however for simplicity here we continue to use the 100KB data. If the user plans to perform an analysis using TADs, he should call them at 50KB resolution or higher. 
+
+```{r}
+# Install TopDom
+# remotes::install_github("HenrikBengtsson/TopDom", ref="master")
+library("TopDom")
+```
+
+Next, we will create the matrix file necessary for `TopDom`. `TopDom` requires an $N \times (N+3)$ matrix in a text file. We can create this file for chromosome 1 as follows:
+
+```{r}
+# Load previously saved sample data
+load("rao2017_samples.rda")
+# Convert sparse matrix read in at beginning of tutorial to a full matrix
+mat <- sparse2full(sample_list[[1]][chr == 1, c('region1', 'region2', 'IF')])
+# Create 3 extra columns necessary for TopDom
+bed <- data.frame(chr = 'chr1', start = colnames(mat),
+                  end = as.numeric(colnames(mat)) + resolution(rao2017))
+# Merge 3 columns with full matrix
+mat <- cbind(bed, mat)
+# Write as a text file for input into TopDom
+write_tsv(mat, path = 'chr1.matrix', col_names = FALSE)
+```
+
+The user should now have a text file containing the $N \times (N+3)$ contact matrix for chromosome 1 in the file `chr1.matrix`. Now we can input the matrix into `TopDom` and get the TAD boundaries:
+
+```{r, message=FALSE, results='hide'}
+TADs <- TopDom(data = "chr1.matrix", window.size = 5)
+```
+
+The results contain a BED file indicating the positions of the gaps, domains, and boundaries. We will pull out the locations of the boundaries to check if the DIRs are enriched within them:
+
+```{r}
+# Pull out the bed file from the TopDom results with boundary locations
+boundaries <- TADs$bed
+# Subset to only boundaries
+boundaries <- boundaries[boundaries$name == "boundary",]
+
+# Convert to GRanges
+boundaries <- makeGRangesFromDataFrame(boundaries, 
+                                       seqnames.field = 'chrom', 
+                                       start.field = 'chromStart', 
+                                       end.field = 'chromEnd', 
+                                       keep.extra.columns = TRUE)
+```
+
+Similarly, we prepare a list of DIRs on chromosome 1:
+
+```{r}
+# Make GRanges object for DIRs from `counts` object created with the topDIRs function
+chr1.dir <- counts[counts$chr == 'chr1', ] 
+chr1.dir <- makeGRangesFromDataFrame(chr1.dir, 
+                                     seqnames.field = 'chr', 
+                                     start.field = 'start', 
+                                     end.field = 'end',
+                                     keep.extra.columns = TRUE)
+
+# Find overlaps between boundaries and DIRs
+olaps <- findOverlaps(chr1.dir, boundaries)
+olaps
+```
+
+Next, we perform a permutation test similar to the one performed in the previous section. This will test for enrichment of DIRs within the TAD boundaries:
+
+```{r}
+# subset rao2017 Hicexp object to only chr1
+chr1.rao2017 <- rao2017
+slot(rao2017, "comparison") <- results(rao2017)[chr == 1, ]
+
+# perofrm permutation test
+p.value <- perm_test(rao2017, boundaries, p.adj_cutoff = 0.01, 
+                     logfc_cutoff = 1, num.perm = 1000)
+p.value
+```
+
+The DIRs do not seem to be enriched within TAD boundaries. This could be due to the simplifications we took for this tutorial. TADs should be called at resolutions of 50KB or higher so it is possible our TAD boundaries are not as accurate as they should be. Additionally, it is possible that the changes induced by auxin do not target TAD boundaries but instead target smaller loop boundaries within the TADs. 
+
+
+### Overlap between DIRs and binding sites
+
+The auxin treatment used in [@Rao:2017aa] was noted to destroy the RAD21 complex. Thus, our DIRs may correspond to changes at RAD21 binding sites. 
+
+We will need to download the location information for RAD21 binding sites for HCT-116 cells from [CistromeDB](http://cistrome.org/db/#/). Search for "46207" and download the BED peaks `46207_peaks.bed` file into the working directory. Then we can read the file into R:
+
+```{r}
+rad21 <- read.table('46207_peaks.bed')
+
+head(rad21)
+```
+
+This is a standard BED file. We will need to convert it into a `GRanges` object so that we can input these locations into the permutation test function:
+
+```{r}
+# convert X and Y chr names into 23 and 24 to correspond with multiHiCcompare results
+rad21$V1 <- sub("X", "23", rad21$V1)
+rad21$V1 <- sub("Y", "24", rad21$V1)
+
+# convert to GRanges
+rad21 <- GRanges(rad21$V1, IRanges(start = rad21$V2, end = rad21$V3))
+
+# input into permutation test
+perm_test(rao2017, rad21, p.adj_cutoff = 10^-15, logfc_cutoff = 1, num.perm = 1000)
+```
+
+RAD21 sites are not significantly enriched in the DIRs. This is due to oversimplification of analyzing chromosome 1 only. When all chromosomes are analyzed, this enrichment is significant, confirming the published observations [@Rao:2017aa]. 
+
+# References

@@ -1,24 +1,23 @@
 ---
+title: Detection of Differentially Interacting Chromatin Regions From Multiple Hi-C Datasets
 output:
   rmarkdown::html_document:
     highlight: pygments
     toc: true
     toc_depth: 3
     fig_width: 5
-# bibliography: "`r system.file(package='dummychapter1', 'vignettes', 'bibliography.bib')`"
+bibliography: bibliography.bib
 vignette: >
-  %\VignetteIndexEntry{HiCtutorial}
+  %\VignetteIndexEntry{Detection of Differentially Interacting Chromatin Regions From Multiple Hi-C Datasets}
   %\VignetteEncoding[utf8]{inputenc}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
   chunk_output_type: console
 ---
 
-# Detection of Differentially Interacting Chromatin Regions From Multiple Hi-C Datasets
-
 ## Workshop information
 
-### Instructor(s) name(s) and contact information
+### Instructor name and contact information
 
 Mikhail Dozmorov
 
@@ -37,7 +36,7 @@ This tutorial will introduce methods for the comparative (aka differential) anal
 * Basic knowledge of R syntax and command-line tools
 * Familiarity with Hi-C chromatin conformation capture technology and FASTQ format
 * Understanding of Hi-C data properties (distance-dependent decay of interaction frequencies, biases)
-* Familiarity with specialized (`.hic` [http://aidenlab.org/data.html](http://aidenlab.org/data.html), `.cool` [ftp://cooler.csail.mit.edu/coolers](ftp://cooler.csail.mit.edu/coolers)) and text-based (sparse upper-triangular, full square matrix) Hi-C data formats
+* Familiarity with specialized (`.hic` [http://aidenlab.org/data.html](http://aidenlab.org/data.html), `.cool` [ftp://cooler.csail.mit.edu/coolers](ftp://cooler.csail.mit.edu/coolers)) and text-based (sparse upper-triangular, full square matrix) Hi-C data formats is desirable
 
 ### Workshop Participation
 
@@ -64,10 +63,9 @@ Execution of example code and hands-on practice
 * Get familiar with Hi-C data import into R
 * Understand the visualization of biases between pairs of Hi-C datasets using Mean-Distance (MD) plot
 * Learn the Loess-based normalization strategy that minimizes between-dataset differences
-* Perform differential analysis of 2X2 groups of Hi-C data
+* Perform differential analysis of 2X2 groups of Hi-C data, that may include covariates
 * Visualize and understand interaction frequency differences
-* Learn how the significance of differential interactions changes with the increasing distance between interacting regions
-* Get familiar with approaches to interpret chromatin interaction differences in context of genes
+* Get familiar with approaches to interpret chromatin interaction differences in the context of genes
 
 ```{r setup, echo=FALSE, message=FALSE, warning=FALSE}
 library(knitr)
@@ -77,24 +75,80 @@ set.seed(1)
 options(stringsAsFactors = FALSE)
 ```
 
+### Necessary packages
+
+```{r libraries}
+# Install, if necessary, and load necessary libraries and set up R session
+if (!requireNamespace("BiocManager", quietly = TRUE)) install.packages("BiocManager")
+library(readr) # install.packages("readr")
+library(data.table) # install.packages("data.table")
+library(dplyr) # install.packages("dplyr")
+library(edgeR) # BiocManager::install("edgeR")
+library(BiocParallel) # BiocManager::install("BiocParallel") 
+library(HiCcompare) # BiocManager::install("HiCcompare"), or, for the latest version,
+# install.packages("devtools")
+# devtools::install_github('dozmorovlab/HiCcompare', build_vignettes = TRUE, force = TRUE)
+library(multiHiCcompare) # BiocManager::install("multiHiCcompare", version = "devel") 
+library(TADCompare) # BiocManager::install("TADCompare", version = "devel") 
+options(scipen = 999) # Output fixed numbers, not scientific notation
+```
+
+
+### Hi-C data formats
+
+Like most sequencing data, Hi-C data starts out as paired-end reads stored in `fastq` files. These `fastq` files can be very large, depending on the depth of the sequencing. Several Hi-C data processing pipelines exist to convert raw Hi-C data into text-based chromatin interaction matrices [@Ay:2015aa]. Researchers looking to generate their Hi-C experiments will need to familiarize themselves with the Hi-C data processing pipelines to convert raw data into chromatin interaction matrices [@Lajoie:2015aa]. However, those interested in using the wide range of public Hi-C data deposited on Gene Expression Omnibus (GEO) repositories can frequently bypass the data processing steps, as most deposited Hi-C data also includes the processed chromatin interaction matrices. These matrices are typically stored in the text-based `.hic` or HDF5-based `.cool` formats developed by Aiden lab (http://aidenlab.org/data.html) and Mirny lab (ftp://cooler.csail.mit.edu/coolers), respectively, and can be converted to plain text files. For more information, see Stansfield et al. 2019, “[R Tutorial: Detection of Differentially Interacting Chromatin Regions From Multiple Hi-C Datasets](https://doi.org/10.1002/cpbi.76)” [@Stansfield:2019ab], and the vignettes for the [HiCcompare](https://www.bioconductor.org/packages/release/bioc/vignettes/HiCcompare/inst/doc/HiCcompare-vignette.html), [multiHiCcompare](https://www.bioconductor.org/packages/release/bioc/vignettes/multiHiCcompare/inst/doc/multiHiCcompare.html), [SpectralTAD](http://bioconductor.org/packages/release/bioc/vignettes/SpectralTAD/inst/doc/SpectralTAD.html) and [TADCompare](https://www.bioconductor.org/packages/devel/bioc/vignettes/TADCompare/inst/doc/Input_Data.html) R/Bioconductor packages. 
+
+## Working with $n \times n$ matrices
+
+$n \times n$ contact matrices are most commonly associated with data coming from the Bing Ren lab (http://chromosome.sdsc.edu/mouse/hi-c/download.html). These contact matrices are square and symmetric with entry $ij$ corresponding to the number of contacts between region $i$ and region $j$. Below is an example of a $75 \times 75$ region of a contact matrix derived from Rao et al. 2014 data, GM12878 cell line [@Rao:2014aa], chromosome 22, 50kb resolution. Note the symmetry around the diagonal - the typical shape of chromatin interaction matrix. The figure was created using the [pheatmap](https://cran.r-project.org/web/packages/pheatmap/index.html) package.
+
+```{r echo = FALSE, fig.height=8}
+data("rao_chr22_prim")
+row.names(rao_chr22_prim) <- colnames(rao_chr22_prim) <- format(as.numeric(row.names(rao_chr22_prim)), scientific = FALSE)
+coords <- 200:275
+pheatmap::pheatmap(log10(rao_chr22_prim[coords, coords]), cluster_rows = FALSE, cluster_cols = FALSE)
+```
+
+## Working with $n \times (n+3)$ matrices
+
+$n \times (n+3)$ matrices are commonly associated with the `TopDom` TAD caller (http://zhoulab.usc.edu/TopDom/). These matrices consist of an $n \times n$ matrix but with three additional leading columns containing the chromosome, the start of the region and the end of the region. Regions in this case are determined by the resolution of the data. The subset of a typical $n \times (n+3)$ matrix is shown below.
+
+```{r echo = FALSE}
+coords  <- 50:53
+sub_mat <- data.frame(chr = "chr22", start = as.numeric(colnames(rao_chr22_prim[coords, coords])), end   = as.numeric(colnames(rao_chr22_prim[coords, coords])) + 50000, rao_chr22_prim[coords, coords]) 
+row.names(sub_mat) = NULL
+sub_mat
+```
+
+## Working with sparse 3-column matrices
+
+Sparse 3-column matrices are matrices where the first and second columns refer to region $i$ and region $j$ of the chromosome, and the third column is the number of contacts between them.  This style is becoming increasingly popular and is associated with raw data from Lieberman-Aiden lab (e.g., https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE63525), and is the data output produced by the Juicer tool [@Durand:2016aa]. 3-column matrices are handled internally in the package by converting them to $n \times n$ matrices using the [HiCcompare](https://bioconductor.org/packages/release/bioc/html/HiCcompare.html) package's `sparse2full()` function. The first 5 rows of a typical sparse 3-column matrix are shown below.
+
+```{r echo = FALSE}
+data("rao_chr22_prim") 
+head(HiCcompare::full2sparse(rao_chr22_prim))
+```
 ### Working with processed Hi-C data
 
-The `HiCcompare` R package was designed for working with processed Hi-C data. It contains several functions which may be useful for an analysis. Hi-C data extracted from `.hic` files using `straw` can be simply read into R in the standard fashion for loading any text file containing data. `HiCcompare` can then be used to convert Hi-C data from sparse upper triangular matrix format into a full contact matrix using the `sparse2full` function. This process can be reversed using the `full2sparse` function. Data aligned by `HiC-Pro` can be converted into a more usable `BEDPE` format using the `hicpro2bedpe` function. The `hicpro2bedpe` function takes the `.matrix` and `.bed` files produced by `HiC-Pro` as input and produces a sparse upper triangular matrix containing start and end coordinates for each interacting region. 
+The `HiCcompare` R package was designed for working with processed Hi-C data. It contains several functions that may be useful for analysis. Hi-C data extracted from `.hic` files using `straw` can be simply read into R in the standard fashion for loading any text file containing data. `HiCcompare` can then be used to convert Hi-C data from a sparse upper triangular matrix format into a full contact matrix using the `sparse2full` function. This process can be reversed using the `full2sparse` function. Data aligned by `HiC-Pro` can be converted into a more usable `BEDPE` format using the `hicpro2bedpe` function. The `hicpro2bedpe` function takes the `.matrix` and `.bed` files produced by `HiC-Pro` as input and creates a sparse upper triangular matrix containing start and end coordinates for each interacting region. 
 
-The original `HiCCompare` R package can be used when only two Hi-C datasets are available to be compared [@Stansfield2018]. `HiCcompare` provides a method for the joint normalization and difference detection of two Hi-C datasets, but cannot be generalized to higher numbers of datasets. `multiHiCcompare` will need to be used if more than two Hi-C datasets are to be compared [@Stansfield:multihiccompare].
+## Obtaining and preparing the data
 
-### Obtaining and preparing the data
+Public Hi-C data is available from several sources. GEO (https://www.ncbi.nlm.nih.gov/geo/) catalogs the data for many studies, and a simple search for "Hi-C" returns 3,647 hits (as of June 21, 2020). Additionally, the Aiden Lab website (https://www.aidenlab.org/) lists many high-quality datasets that they have generated. Finally, there is the `cooler` repository (https://github.com/mirnylab/cooler), which provides a database of Hi-C data ready for download. More Hi-C studies and data can be found in our GitHub repository (https://github.com/mdozmorov/HiC_data).
 
-We begin our tutorial illustrating the processing of Hi-C datasets to prepare them for comparative analysis. First, we will need to download an example set of Hi-C data. We will use data from Rao 2017 [@Rao:2017aa]. For simplicity, we will only use two replicates for each experimental condition. The experimental conditions are normal HCT-116 cells and HCT-116 cells treated with auxin for six hours. To download the `.hic` files from GEO run the following commands in the terminal. Note: downloading the data for this protocol will require about 30GB of hard drive space. This step is for illustration purposes only, we will work with the much smaller data already processed using these commands.
+First, we will need to download an example set of Hi-C data. We will use data from Rao 2017 [@Rao:2017aa]. For simplicity, we will only use two replicates for each experimental condition. The experimental conditions are normal HCT-116 cells and HCT-116 cells treated with auxin for six hours. To download the `.hic` files from GEO run the following commands in the terminal. Note: downloading the data will require about 30GB of hard drive space. You will also need to download the `straw` software from [https://github.com/theaidenlab/straw/wiki](https://github.com/theaidenlab/straw/wiki) and install it.
+
+This step is only for illustration purposes due to the significant amount of download time and computational resources. We will start the workshop with the processed data in a sparse upper triangular text format.
 
 ```{bash eval=FALSE}
+# Install straw (Linux and Windows installations are available)
 wget https://github.com/theaidenlab/straw/tree/master/bin/Mac/straw
 chmod +x straw
 
-wget ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM2795nnn/GSM2795535/suppl/GSM2795535_Rao-2017-HIC001_30.hic
-wget ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM2795nnn/GSM2795536/suppl/GSM2795536_Rao-2017-HIC002_30.hic
-wget ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM2809nnn/GSM2809539/suppl/GSM2809539_Rao-2017-HIC008_30.hic
-wget ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM2809nnn/GSM2809540/suppl/GSM2809540_Rao-2017-HIC009_30.hic
+wget https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM2795nnn/GSM2795535/suppl/GSM2795535_Rao-2017-HIC001_30.hic
+wget https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM2795nnn/GSM2795536/suppl/GSM2795536_Rao-2017-HIC002_30.hic
+wget https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM2809nnn/GSM2809539/suppl/GSM2809539_Rao-2017-HIC008_30.hic
+wget https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM2809nnn/GSM2809540/suppl/GSM2809540_Rao-2017-HIC009_30.hic
 
 # Make directories for the contact map files
 mkdir HIC001
@@ -129,39 +183,62 @@ for i in {1..22}
     ./straw NONE GSM2809540_Rao-2017-HIC009_30.hic X X BP 500000 > HIC009/HIC009.NONE.chrX.500000.txt
 ```
 
-These steps will create four folders containing the sparse upper triangular matrices for chromosomes 1-22, and X for each sample. HIC001 and HIC002 are the two replicates for the normal HCT-116 cells and HIC008 and HIC009 are the two replicates for the auxin-treated HCT-116 cells. 
+These steps will create four folders containing the sparse upper triangular matrices for chromosomes 1-22 and X for each sample. HIC001 and HIC002 are the two replicates for the normal HCT-116 cells, and HIC008 and HIC009 are the two replicates for the auxin-treated HCT-116 cells. 
 
-We now need to read the data into R. Open R and make sure the working directory is set to the directory where the Hi-C data is stored and execute the following commands:
+### Data import
+
+The original `HiCCompare` R package can be used when only two Hi-C datasets are available to be compared [@Stansfield:2018aa]. `HiCcompare` provides a method for the joint normalization and difference detection of two Hi-C datasets, but cannot be generalized to higher numbers of datasets. `multiHiCcompare` will need to be used if more than two Hi-C datasets are to be compared [@Stansfield:2019aa].
+
+We now need to read the data into R. Open R and make sure the working directory is set to the directory where the Hi-C data is stored in the following folder structure.
+
+```
+.
+├── HIC001
+│   ├── HIC001.NONE.chr1.500000.txt.gz
+│   ├── HIC001.NONE.chr10.500000.txt.gz
+|   ...
+│   ├── HIC001.NONE.chr9.500000.txt.gz
+│   └── HIC001.NONE.chrX.500000.txt.gz
+├── HIC002
+│   ├── HIC002.NONE.chr1.500000.txt.gz
+│   ├── HIC002.NONE.chr10.500000.txt.gz
+|   ...
+│   ├── HIC002.NONE.chr9.500000.txt.gz
+│   └── HIC002.NONE.chrX.500000.txt.gz
+├── HIC008
+│   ├── HIC008.NONE.chr1.500000.txt.gz
+│   ├── HIC008.NONE.chr10.500000.txt.gz
+|   ...
+│   ├── HIC008.NONE.chr9.500000.txt.gz
+│   └── HIC008.NONE.chrX.500000.txt.gz
+└── HIC009
+    ├── HIC009.NONE.chr1.500000.txt.gz
+    ├── HIC009.NONE.chr10.500000.txt.gz
+    ...
+    ├── HIC009.NONE.chr9.500000.txt.gz
+    └── HIC009.NONE.chrX.500000.txt.gz
+```
+
+Execute the following commands:
 
 ```{r, message=FALSE}
-# Install, if necessary, and load necessary libraries and set up R session
-if (!requireNamespace("BiocManager", quietly = TRUE)) install.packages("BiocManager")
-library(readr) # install.packages("readr")
-library(data.table) # install.packages("data.table")
-library(dplyr) # install.packages("dplyr")
-library(edgeR) # BiocManager::install("edgeR")
-library(BiocParallel) # BiocManager::install("BiocParallel") 
-library(HiCcompare) # BiocManager::install("HiCcompare"), or, for the latest version, devtools::install_github('dozmorovlab/HiCcompare', build_vignettes = TRUE, force = TRUE)
-# install.packages("devtools")
-library(multiHiCcompare) # BiocManager::install("multiHiCcompare", version = "devel") 
-options(scipen = 10) # Output fixed numbers, not scientific notation
-
 # Set up parameters for reading in data
-chr <- paste0('chr', c(1:22, 'X')) # Chromosome names
-chr <- paste0('chr', c(1)) # Chromosome names
-dirIn <- "data/" # Input folder
-dirIn <- "https://github.com/kmt555/ComparativeHiC-analysis-tutorial/raw/master/data/" # Remote data
-samples <- paste0('HIC00', c(1, 2, 8, 9)) # Sample names
-res <- 500000 # Data resolution
+# Chromosome names
+chr <- paste0('chr', c(1)) # First chromosome, or use c(1:22, 'X') for all chromosomes
+# Input folder
+dirIn <- "data/" # Local data
+# Sample and Folder names
+samples <- paste0('HIC00', c(1, 2, 8, 9)) 
+# Data resolution
+res <- 500000 
 
 # Read data
 sample_list <- list()
 chr_list    <- list()
 for( j in 1:length(samples)) {
   for (i in 1:length(chr)) {
-    chr_list[[i]] <- read_tsv(paste0(dirIn, samples[j], "/", samples[j], 
-                                     ".NONE.", chr[i], ".", res, ".txt.gz"), 
-                              col_names = FALSE) %>% as.data.table()
+    fileName <- paste0(dirIn, samples[j], "/", samples[j], ".NONE.", chr[i], ".", res, ".txt.gz")
+    chr_list[[i]] <- read_tsv(fileName, col_names = FALSE) %>% as.data.table()
     # Add column indicating the chromosome
     chr_list[[i]] <- cbind(i, chr_list[[i]]) 
     colnames(chr_list[[i]]) <- c('chr', 'region1', 'region2', 'IF')
@@ -172,6 +249,8 @@ for( j in 1:length(samples)) {
 
 # Collapse separate chromosome lists into one table per sample
 sample_list <- lapply(sample_list, rbindlist)
+# Save data
+save(sample_list, file = "rao2017_samples.rda")
 ```
 
 We now have a list with each entry containing the sparse upper triangular matrix for one of the Hi-C datasets:
@@ -180,12 +259,18 @@ We now have a list with each entry containing the sparse upper triangular matrix
 sample_list[[1]]
 ```
 
+The first column indicates the chromosome number. The second column is the start location in base pairs for the first interacting region. The third column is the start location for the second interacting region, and the fourth column is the interaction frequency (IF) for the interacting pair. 
+
 ### Joint normalization of Hi-C datasets
 
-First, we need to create a `Hicexp` object using the Hi-C data:
+As with any sequencing data, Hi-C datasets contain biases. There are two primary sources of bias, sequence- and technology-driven. The DNA sequence-driven biases include GC content, chromatin accessibility, and mappability [@Yaffe:2011aa; @OSullivan:2013aa], which tend to be consistent across datasets generated for the same organism. The similar sequence-driven biases affect chromatin interactions to the same extent when comparing Hi-C datasets.
+
+The technology-driven biases include cross-linking preferences, restriction enzyme choice, batch effects, and biotin labeling [@Lun:2015aa]. The technology-driven biases affect the data unpredictably and thus are harder to model. The `multiHiCcompare` R package was specifically designed to correct for the technology-driven biases between datasets.
+
+To remove biases between pairs of Hi-C datasets, first, we need to create a `Hicexp` object using the Hi-C data:
 
 ```{r}
-# Create a Hicexp object for use by multiHiCcompare (~10 min)
+# Create a Hicexp object for use by multiHiCcompare
 # Four objects are assigned into two groups
 rao2017 <- make_hicexp(data_list = sample_list, groups = c(1, 1, 2, 2))
 
@@ -198,45 +283,29 @@ The `Hicexp` object stores the Hi-C experiment data and is the main input into t
 hic_table(rao2017)
 ```
 
-When comparing multiple Hi-C datasets, a joint normalization procedure increases power and reduces the number of false positives [@Stansfield2018]. The `multiHiCcompare` R package includes two methods for the joint normalization of Hi-C data, cyclic loess and fast loess (fastlo) [@Ballman2004]. We will normalize the data using fastlo.
+When comparing multiple Hi-C datasets, a joint normalization procedure increases power and reduces the number of false positives [@Stansfield:2018aa]. `multiHiCcompare` provides a cyclic loess method for the joint normalization of multiple Hi-C datasets. The method is based on representing the data on an MD plot. The MD plot is similar to the MA plot (Bland-Altman plot), which is commonly used to visualize gene expression differences. $M$ is defined as the log difference between the two data sets $M = log_2(IF_2/IF_1)$, where $IF_1$ and $IF_2$ are interaction frequencies of the first and the second Hi-C datasets, respectively. $D$ is defined as the distance between two interacting regions, expressed in unit-length of the $X$ resolution of the Hi-C data. A loess regression curve is fit through the MD plot and used to remove global biases by centering the $M$ differences around $M=0$ baseline. The `multiHiCcompare` R package includes two methods for the joint normalization of Hi-C data, cyclic loess and fast loess (fastlo) [@Ballman:2004aa]. We will normalize the data using fastlo.
 
 ```{r}
 # MD plots before normalization
 MD_hicexp(rao2017, plot.chr = 1, plot.loess = TRUE)
 ```
 
-```{r, results="hide", echo = FALSE, eval = FALSE}
-# MD plots before normalization
-png(filename = "inst/vignettes/fig1.png", width = 1500, height = 1500, units = 'px', res = 150)
-MD_hicexp(rao2017, plot.chr = 1, plot.loess = TRUE)
-dev.off()
-```
-
-
 ```{r}
-# Normalize (~2 min)
+# Normalize using Loess
 rao2017 <- fastlo(rao2017)
 ```
 
-```{r, eval = FALSE}
+```{r}
 # Plot normalization results
 MD_hicexp(rao2017, plot.chr = 1, plot.loess = TRUE)
 ```
 
-```{r, results="hide", echo = FALSE, eval = FALSE}
-# Plot normalization results
-tiff(filename = "figures/fig3.tiff", width = 1500, height = 1500, units = 'px', res = 300)
-MD_hicexp(rao2017, plot.chr = 1, plot.loess = TRUE, prow = 1, pcol = 1)
-dev.off()
-```
-
-
 ```{r}
 # Print normalized IFs
-knitr::kable(head(hic_table(rao2017)))
+kable(head(hic_table(rao2017)))
 ```
 
-The IFs in the `hic_table` slot have been updated with their normalized values. The MD plots (Fig. 2) show that the normalization has been performed correctly, and the cloud of points is centered and symmetric around 0 indicating that any biases between datasets have been removed. The MD plot displays unit genomic distance on the x-axis and the log2 difference between the two datasets on the y-axis. Any shift of the points away from y = 0 represents scaling differences between the datasets. The loess fit to the data on the MD plot will also model any trend biases between the datasets. Correctly normalized data should be centered around y = 0 and symmetric (without any clear trends) on the MD plot.
+The `hic_table` slot for IFs has been updated with their normalized values. The MD plots show that the normalization has been performed correctly, and the cloud of points is centered and symmetric around 0, indicating that any biases between datasets have been removed. The MD plot displays unit genomic distance on the x-axis and the log2 difference between the two datasets on the y-axis. Any shift of the points away from y = 0 represents scaling differences between the datasets. The loess fit to the data on the MD plot will also model any trend biases between the datasets. Correctly normalized data should be centered around y = 0 and symmetric (without any clear trends) on the MD plot.
 
 Note that if multiple cores are available, the runtime of `multiHiCcompare` can be sped up by using the `parallel` option. `multiHiCcompare` was built with the Bioconductor `BiocParallel` package. The number of cores to be used in parallel processing can be set as follows:
 
@@ -257,44 +326,145 @@ if(Sys.info()['sysname'] == "Windows") {
 
 Now that multiple cores are registered, the user can utilize parallel processing in any of the normalization and difference detection steps by setting `parallel = TRUE` in the function options.
 
-
-
 ### Difference detection
+
+`multiHiCcompare` provides two main ways to perform a differential comparison between the groups or conditions of your Hi-C experiment. For simple experiments where only a comparison between two groups is made, the `hic_exactTest()` function can be used. For more complex experiments with covariates or multiple groups, the `hic_glm()` function should be used. Both of these functions make use of the `edgeR` package for fitting negative binomial models to the Hi-C data. For the difference detection steps, `multiHiCcompare` first splits the data up by distance using the progressive pooling described in the fastlo section. Each distance pool is then treated similarly to an independent RNA-seq data matrix on which `edgeR`'s functions are applied to fit the specified model. This process is illustrated in the Figure below.
+
+![](multiHiCcompare_glm.png)
+
+**Figure.** The off-diagonal analysis of multiple Hi-C replicates. Dashed lines represent the off-diagonal vectors of interaction frequencies at a given distance between interacting regions. Right: Converted into a matrix format similar to RNA-seq data, IFs can be loess normalized, variance across replicates can be estimated using an empirical Bayes approach, and differences can be detected using log-linear GLMs. 
+
+#### Exact test
 
 Now that we have jointly normalized our data, we are ready to compare the conditions to find differentially interacting chromatin regions. For this example, we only have two conditions and no other covariates. Thus, we can use the exact test for our comparison:
 
 ```{r}
-# Perform exact test (~10 min)
+# Perform exact test
 # May use "parallel = TRUE" option to speed up computations
 rao2017 <- hic_exactTest(rao2017, parallel = TRUE) 
 ```
 
-
-
 ```{r}
 # Plot a composite MD plot with the results of a comparison
-MD_composite(rao2017, plot.chr = 1)
+MD_composite(rao2017, plot.chr = 1, D.range = 0.4)
 ```
 
-```{r, results="hide", echo = FALSE, eval = FALSE}
-# Plot a composite MD plot with the results of a comparison
-tiff(filename = "figures/fig4.tiff", width = 1500, height = 1500, units = 'px', res = 300)
-MD_composite(rao2017, plot.chr = 1)
-dev.off()
-```
-
+Here we can see the results. The composite MD plot highlights where the significantly different interactions occur in relation to distance and the fold difference between groups.
 
 ```{r}
 # Print results as a data frame
-knitr::kable(head(results(rao2017)))
+kable(head(results(rao2017)))
+```
 
+The results table shares the same first four columns with the `hic_table`, but the following columns indicate the results of the exact test. `logFC` is the log fold change difference between the experimental groups, `logCPM` is the log counts per million between the samples, `p.value` is the un-adjusted p-value for the exact test, and `p.adj` is the false discovery rate (FDR) corrected p-value from the exact test. 
+
+You can save the results for the downstream analysis.
+
+```{r eval=FALSE}
 # Save the Hicexp object
-save(rao2017, file = 'rao2017.RDA')
+save(rao2017, file = 'rao2017_exact.rda')
 
 # To start the downstream analysis 
 # without re-running multiHiCcompare load the saved file
-# load('rao2017.RDA') 
+# load('rao2017_exact.rda') 
 ```
 
-Here we can see the results. The composite MD plot highlights where the significantly different interactions are occurring in relation to distance and the fold change of the difference between groups (Fig. 3). The results table shares the same first four columns with the `hic_table`, but the following columns indicate the results of the exact test. `logFC` is the log fold change difference between the experimental groups, `logCPM` is the log counts per million between the samples, `p.value` is the un-adjusted p-value for the exact test, and `p.adj` is the false discovery rate (FDR) corrected p-value from the exact test. 
+#### GLM method
 
+For more complex experiments, the exact test is no longer sufficient, and the general linear model (GLM) framework must be used. If, for example, we have some other covariate of interest that we wish to control for or if there are more than two experimental groups, the GLM functionality of `multiHiCcompare` should be used. Here we show an example GLM analysis using two additional replicates from Rao 2017, which come from different biological samples. 
+
+```{r eval=FALSE}
+wget https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM2795nnn/GSM2795538/suppl/GSM2795538_Rao-2017-HIC004_30.hic
+wget https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM2809nnn/GSM2809543/suppl/GSM2809543_Rao-2017-HIC012_30.hic
+```
+
+Assuming you processed the following files and extract matrices as described above, we read the data into R and create a `Hicexp` object as before:
+
+```{r, message=FALSE}
+# Set up parameters for reading in data
+# Chromosome names
+chr <- paste0('chr', c(1)) # First chromosome, or use c(1:22, 'X') for all chromosomes
+# Input folder
+dirIn <- "data/" # Local data
+# Sample and Folder names
+samples <- paste0('HIC0', c('01', '02', '04', '08', '09', '12'))
+# Data resolution
+res <- 500000
+
+# Read data
+sample_list <- list()
+chr_list    <- list()
+for( j in 1:length(samples)) {
+  for (i in 1:length(chr)) {
+    fileName <- paste0(dirIn, samples[j], "/", samples[j], ".NONE.", chr[i], ".", res, ".txt.gz")
+    chr_list[[i]] <- read_tsv(fileName, col_names = FALSE) %>% as.data.table()
+    # Add column indicating the chromosome
+    chr_list[[i]] <- cbind(i, chr_list[[i]]) 
+    colnames(chr_list[[i]]) <- c('chr', 'region1', 'region2', 'IF')
+  }
+  sample_list[[j]] <- chr_list
+  chr_list <- list()
+}
+
+# Collapse separate chromosome lists into one table per sample
+sample_list <- lapply(sample_list, rbindlist)
+```
+
+Then, we create the Hicexp object that includes batch covariate, assuming the additional samples came from a different batch.
+
+```{r}
+# Create a Hicexp object for use by multiHiCcompare
+# Add the covariate data.frame for biological sample source
+rao_glm <- make_hicexp(data_list  = sample_list, groups  = c(1, 1, 1, 2, 2, 2), 
+                       covariates = data.frame(biosample = c(1, 1, 2, 1, 1, 2))) 
+# View covariates
+meta(rao_glm)
+```
+
+Now we can normalize as was done before:
+
+```{r}
+rao_glm <- fastlo(rao_glm, parallel = TRUE)
+```
+
+We are ready to use the GLM functionality of `multiHiCcompare`, which is similar to the strategy used in `limma` and `edgeR` packages. 
+
+First, we need to create a design matrix. The design matrix should contain the covariates of interest. Any categorical variables should be entered as factors. Next, the comparison of interest will need to be specified using either the `contrast` or the `coef` option. For this example, we are interested in the group difference; thus, we can set `coef = 2` (the first coefficient is for the intercept) to test if the group effect is equal to 0. For more information on using `contrast` and `coef` please see the `edgeR` user manual. 
+
+```{r}
+# Make design matrix
+d <- model.matrix(~factor(meta(rao_glm)$group) + factor(meta(rao_glm)$biosample))
+kable(d)
+```
+
+Now we are ready to perform the comparison. There are three methods by which `hic_glm()` can be performed. The default method is to use the `QLFTest` which makes use of the quasi-likelihood model. Additionally, there is the `LRTest` which conducts a likelihood ratio test. The final method is the `Treat` method, which conducts a test relative to a specified fold change threshold. For this option, the `M` option will need to be used to specify the log2 fold change threshold. See the [multiHiCcompare vignette](https://www.bioconductor.org/packages/release/bioc/vignettes/multiHiCcompare/inst/doc/multiHiCcompare.html) for more details.
+
+```{r}
+# Plug into GLM function
+rao_glm <- hic_glm(rao_glm, design = d, coef = 2, method = "QLFTest", p.method = "fdr", parallel = TRUE)
+```
+
+```{r}
+# Plot a composite MD plot with the results of a comparison
+MD_composite(rao_glm, plot.chr = 1, D.range = 0.2)
+```
+
+Here we can see the results. The composite MD plot highlights where the significantly different interactions are occurring in relation to distance and the fold change of the difference between groups.
+
+```{r}
+# Print results as a data frame
+kable(head(results(rao_glm)))
+
+# Save the Hicexp object
+save(rao2017, file = 'rao2017_glm.rda')
+
+# To start the downstream analysis 
+# without re-running multiHiCcompare load the saved file
+# load('rao2017_glm.rda') 
+```
+
+## Downstream interpretation 
+
+The downstream interpretation of differentially interacting chromatin regions is described in the [hic_interpretation](hic_interpretation.html) vignette.
+
+# References
