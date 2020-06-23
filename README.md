@@ -15,5 +15,5 @@ Please, refer to the [hic_tutorial.Rmd](vignettes/hic_tutorial.Rmd) vignette for
 
 [HiCcompareWorkshop Docker image](https://hub.docker.com/repository/docker/mdozmorov/hiccompareworkshop) - https://hub.docker.com/repository/docker/mdozmorov/hiccompareworkshop
 
-The tutorial has been developed to be presented at the [Bioconductor Conference 2020](https://bioc2020.bioconductor.org/), July 27-July 31 in Boston, MA.
+The tutorial has been developed to be presented at the [Bioconductor Conference 2020](https://bioc2020.bioconductor.org/), July 27-31 in Boston, MA.
 
