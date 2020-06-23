@@ -47,7 +47,8 @@ Imports:
     pheatmap,
     TopDom,
     BiocParallel,
-    BiocManager
+    BiocManager,
+    igraph
 Remotes:
     stephenturner/annotables,
     HenrikBengtsson/TopDom
