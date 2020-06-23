@@ -38,7 +38,16 @@ Imports:
     dplyr,
     readr,
     data.table,
-    edgeR
+    edgeR,
+    TADCompare,
+    GenomicRanges,
+    annotables,
+    clusterProfiler,
+    ROntoTools,
+    pheatmap,
+    TopDom,
+    BiocParallel,
+    BiocManager
 URL: https://mdozmorov.github.io/HiCcompareWorkshop/
 BugReports: https://github.com/mdozmorov/HiCcompareWorkshop/issues/new/choose
 VignetteBuilder: knitr
