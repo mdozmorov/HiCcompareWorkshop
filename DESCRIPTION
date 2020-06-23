@@ -48,7 +48,9 @@ Imports:
     TopDom,
     BiocParallel,
     BiocManager,
-    igraph
+    igraph,
+    DO.db,
+    IRanges
 Remotes:
     stephenturner/annotables,
     HenrikBengtsson/TopDom
