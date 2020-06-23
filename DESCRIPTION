@@ -49,7 +49,8 @@ Imports:
     BiocParallel,
     BiocManager
 Remotes:
-    stephenturner/annotables
+    stephenturner/annotables,
+    HenrikBengtsson/TopDom
 URL: https://mdozmorov.github.io/HiCcompareWorkshop/
 BugReports: https://github.com/mdozmorov/HiCcompareWorkshop/issues/new/choose
 VignetteBuilder: knitr
