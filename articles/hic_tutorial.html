@@ -5,13 +5,13 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title> • HiCcompareWorkshop</title>
+<title>Detection of Differentially Interacting Chromatin Regions From Multiple Hi-C Datasets • HiCcompareWorkshop</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Detection of Differentially Interacting Chromatin Regions From Multiple Hi-C Datasets">
 <meta property="og:description" content="HiCcompareWorkshop">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -54,7 +54,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/hic_tutorial.html">UNKNOWN TITLE</a>
+      <a href="../articles/hic_tutorial.html">Detection of Differentially Interacting Chromatin Regions From Multiple Hi-C Datasets</a>
     </li>
   </ul>
 </li>
@@ -76,10 +76,10 @@
 
       
 
-      </header><div class="row">
+      </header><script src="hic_tutorial_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip></h1>
+      <h1 data-toc-skip>Detection of Differentially Interacting Chromatin Regions From Multiple Hi-C Datasets</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/mdozmorov/HiCcompareWorkshop/blob/master/vignettes/hic_tutorial.Rmd"><code>vignettes/hic_tutorial.Rmd</code></a></small>
@@ -89,15 +89,12 @@
 
     
     
-<div id="detection-of-differentially-interacting-chromatin-regions-from-multiple-hi-c-datasets" class="section level1">
-<h1 class="hasAnchor">
-<a href="#detection-of-differentially-interacting-chromatin-regions-from-multiple-hi-c-datasets" class="anchor"></a>Detection of Differentially Interacting Chromatin Regions From Multiple Hi-C Datasets</h1>
 <div id="workshop-information" class="section level2">
 <h2 class="hasAnchor">
 <a href="#workshop-information" class="anchor"></a>Workshop information</h2>
-<div id="instructors-names-and-contact-information" class="section level3">
+<div id="instructor-name-and-contact-information" class="section level3">
 <h3 class="hasAnchor">
-<a href="#instructors-names-and-contact-information" class="anchor"></a>Instructor(s) name(s) and contact information</h3>
+<a href="#instructor-name-and-contact-information" class="anchor"></a>Instructor name and contact information</h3>
 <p>Mikhail Dozmorov</p>
 <p>Department of Biostatistics<br>
 Virginia Commonwealth University<br>
@@ -116,7 +113,7 @@ Richmond, VA, 23298<br><a href="mailto:mikhail.dozmorov@vcuhealth.org" class="em
 <li>Basic knowledge of R syntax and command-line tools</li>
 <li>Familiarity with Hi-C chromatin conformation capture technology and FASTQ format</li>
 <li>Understanding of Hi-C data properties (distance-dependent decay of interaction frequencies, biases)</li>
-<li>Familiarity with specialized (<code>.hic</code> <a href="http://aidenlab.org/data.html">http://aidenlab.org/data.html</a>, <code>.cool</code> <a href="ftp://cooler.csail.mit.edu/coolers">ftp://cooler.csail.mit.edu/coolers</a>) and text-based (sparse upper-triangular, full square matrix) Hi-C data formats</li>
+<li>Familiarity with specialized (<code>.hic</code> <a href="http://aidenlab.org/data.html">http://aidenlab.org/data.html</a>, <code>.cool</code> <a href="ftp://cooler.csail.mit.edu/coolers">ftp://cooler.csail.mit.edu/coolers</a>) and text-based (sparse upper-triangular, full square matrix) Hi-C data formats is desirable</li>
 </ul>
 </div>
 <div id="workshop-participation" class="section level3">
@@ -167,91 +164,162 @@ Richmond, VA, 23298<br><a href="mailto:mikhail.dozmorov@vcuhealth.org" class="em
 <li>Get familiar with Hi-C data import into R</li>
 <li>Understand the visualization of biases between pairs of Hi-C datasets using Mean-Distance (MD) plot</li>
 <li>Learn the Loess-based normalization strategy that minimizes between-dataset differences</li>
-<li>Perform differential analysis of 2X2 groups of Hi-C data</li>
+<li>Perform differential analysis of 2X2 groups of Hi-C data, that may include covariates</li>
 <li>Visualize and understand interaction frequency differences</li>
-<li>Learn how the significance of differential interactions changes with the increasing distance between interacting regions</li>
-<li>Get familiar with approaches to interpret chromatin interaction differences in context of genes</li>
+<li>Get familiar with approaches to interpret chromatin interaction differences in the context of genes</li>
 </ul>
 </div>
-<div id="working-with-processed-hi-c-data" class="section level3">
+<div id="necessary-packages" class="section level3">
 <h3 class="hasAnchor">
-<a href="#working-with-processed-hi-c-data" class="anchor"></a>Working with processed Hi-C data</h3>
-<p>The <code>HiCcompare</code> R package was designed for working with processed Hi-C data. It contains several functions which may be useful for an analysis. Hi-C data extracted from <code>.hic</code> files using <code>straw</code> can be simply read into R in the standard fashion for loading any text file containing data. <code>HiCcompare</code> can then be used to convert Hi-C data from sparse upper triangular matrix format into a full contact matrix using the <code>sparse2full</code> function. This process can be reversed using the <code>full2sparse</code> function. Data aligned by <code>HiC-Pro</code> can be converted into a more usable <code>BEDPE</code> format using the <code>hicpro2bedpe</code> function. The <code>hicpro2bedpe</code> function takes the <code>.matrix</code> and <code>.bed</code> files produced by <code>HiC-Pro</code> as input and produces a sparse upper triangular matrix containing start and end coordinates for each interacting region.</p>
-<p>The original <code>HiCCompare</code> R package can be used when only two Hi-C datasets are available to be compared <span class="citation">[@Stansfield2018]</span>. <code>HiCcompare</code> provides a method for the joint normalization and difference detection of two Hi-C datasets, but cannot be generalized to higher numbers of datasets. <code>multiHiCcompare</code> will need to be used if more than two Hi-C datasets are to be compared <span class="citation">[@Stansfield:multihiccompare]</span>.</p>
-</div>
-<div id="obtaining-and-preparing-the-data" class="section level3">
-<h3 class="hasAnchor">
-<a href="#obtaining-and-preparing-the-data" class="anchor"></a>Obtaining and preparing the data</h3>
-<p>We begin our tutorial illustrating the processing of Hi-C datasets to prepare them for comparative analysis. First, we will need to download an example set of Hi-C data. We will use data from Rao 2017 <span class="citation">[@Rao:2017aa]</span>. For simplicity, we will only use two replicates for each experimental condition. The experimental conditions are normal HCT-116 cells and HCT-116 cells treated with auxin for six hours. To download the <code>.hic</code> files from GEO run the following commands in the terminal. Note: downloading the data for this protocol will require about 30GB of hard drive space. This step is for illustration purposes only, we will work with the much smaller data already processed using these commands.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">wget</span> https://github.com/theaidenlab/straw/tree/master/bin/Mac/straw</span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">chmod</span> +x straw</span>
-<span id="cb1-3"><a href="#cb1-3"></a></span>
-<span id="cb1-4"><a href="#cb1-4"></a><span class="fu">wget</span> ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM2795nnn/GSM2795535/suppl/GSM2795535_Rao-2017-HIC001_30.hic</span>
-<span id="cb1-5"><a href="#cb1-5"></a><span class="fu">wget</span> ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM2795nnn/GSM2795536/suppl/GSM2795536_Rao-2017-HIC002_30.hic</span>
-<span id="cb1-6"><a href="#cb1-6"></a><span class="fu">wget</span> ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM2809nnn/GSM2809539/suppl/GSM2809539_Rao-2017-HIC008_30.hic</span>
-<span id="cb1-7"><a href="#cb1-7"></a><span class="fu">wget</span> ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM2809nnn/GSM2809540/suppl/GSM2809540_Rao-2017-HIC009_30.hic</span>
-<span id="cb1-8"><a href="#cb1-8"></a></span>
-<span id="cb1-9"><a href="#cb1-9"></a><span class="co"># Make directories for the contact map files</span></span>
-<span id="cb1-10"><a href="#cb1-10"></a><span class="fu">mkdir</span> HIC001</span>
-<span id="cb1-11"><a href="#cb1-11"></a><span class="fu">mkdir</span> HIC002</span>
-<span id="cb1-12"><a href="#cb1-12"></a><span class="fu">mkdir</span> HIC008</span>
-<span id="cb1-13"><a href="#cb1-13"></a><span class="fu">mkdir</span> HIC009</span>
-<span id="cb1-14"><a href="#cb1-14"></a></span>
-<span id="cb1-15"><a href="#cb1-15"></a><span class="co"># Extract contact maps using straw by running the following commands in the terminal</span></span>
-<span id="cb1-16"><a href="#cb1-16"></a><span class="co"># Or, put the commands into a script file, e.g., `straw.sh`, and run it</span></span>
-<span id="cb1-17"><a href="#cb1-17"></a><span class="kw">for</span> <span class="ex">i</span> in <span class="dt">{1..22}</span></span>
-<span id="cb1-18"><a href="#cb1-18"></a>    <span class="kw">do</span></span>
-<span id="cb1-19"><a href="#cb1-19"></a>        <span class="ex">./straw</span> NONE GSM2795535_Rao-2017-HIC001_30.hic <span class="va">$i</span> <span class="va">$i</span> BP 500000 <span class="op">&gt;</span> HIC001/HIC001.NONE.chr<span class="va">$i</span>.500000.txt</span>
-<span id="cb1-20"><a href="#cb1-20"></a>    <span class="kw">done</span></span>
-<span id="cb1-21"><a href="#cb1-21"></a>    <span class="ex">./straw</span> NONE GSM2795535_Rao-2017-HIC001_30.hic X X BP 500000 <span class="op">&gt;</span> HIC001/HIC001.NONE.chrX.500000.txt</span>
-<span id="cb1-22"><a href="#cb1-22"></a>    </span>
-<span id="cb1-23"><a href="#cb1-23"></a><span class="kw">for</span> <span class="ex">i</span> in <span class="dt">{1..22}</span></span>
-<span id="cb1-24"><a href="#cb1-24"></a>    <span class="kw">do</span></span>
-<span id="cb1-25"><a href="#cb1-25"></a>        <span class="ex">./straw</span> NONE GSM2795536_Rao-2017-HIC002_30.hic <span class="va">$i</span> <span class="va">$i</span> BP 500000 <span class="op">&gt;</span> HIC002/HIC002.NONE.chr<span class="va">$i</span>.500000.txt</span>
-<span id="cb1-26"><a href="#cb1-26"></a>    <span class="kw">done</span></span>
-<span id="cb1-27"><a href="#cb1-27"></a>    <span class="ex">./straw</span> NONE GSM2795536_Rao-2017-HIC002_30.hic X X BP 500000 <span class="op">&gt;</span> HIC002/HIC002.NONE.chrX.500000.txt</span>
-<span id="cb1-28"><a href="#cb1-28"></a>    </span>
-<span id="cb1-29"><a href="#cb1-29"></a><span class="kw">for</span> <span class="ex">i</span> in <span class="dt">{1..22}</span></span>
-<span id="cb1-30"><a href="#cb1-30"></a>    <span class="kw">do</span></span>
-<span id="cb1-31"><a href="#cb1-31"></a>        <span class="ex">./straw</span> NONE GSM2809539_Rao-2017-HIC008_30.hic <span class="va">$i</span> <span class="va">$i</span> BP 500000 <span class="op">&gt;</span> HIC008/HIC008.NONE.chr<span class="va">$i</span>.500000.txt</span>
-<span id="cb1-32"><a href="#cb1-32"></a>    <span class="kw">done</span></span>
-<span id="cb1-33"><a href="#cb1-33"></a>    <span class="ex">./straw</span> NONE GSM2809539_Rao-2017-HIC008_30.hic X X BP 500000 <span class="op">&gt;</span> HIC008/HIC008.NONE.chrX.500000.txt</span>
-<span id="cb1-34"><a href="#cb1-34"></a>        </span>
-<span id="cb1-35"><a href="#cb1-35"></a><span class="kw">for</span> <span class="ex">i</span> in <span class="dt">{1..22}</span></span>
-<span id="cb1-36"><a href="#cb1-36"></a>    <span class="kw">do</span></span>
-<span id="cb1-37"><a href="#cb1-37"></a>        <span class="ex">./straw</span> NONE GSM2809540_Rao-2017-HIC009_30.hic <span class="va">$i</span> <span class="va">$i</span> BP 500000 <span class="op">&gt;</span> HIC009/HIC009.NONE.chr<span class="va">$i</span>.500000.txt</span>
-<span id="cb1-38"><a href="#cb1-38"></a>    <span class="kw">done</span></span>
-<span id="cb1-39"><a href="#cb1-39"></a>    <span class="ex">./straw</span> NONE GSM2809540_Rao-2017-HIC009_30.hic X X BP 500000 <span class="op">&gt;</span> HIC009/HIC009.NONE.chrX.500000.txt</span></code></pre></div>
-<p>These steps will create four folders containing the sparse upper triangular matrices for chromosomes 1-22, and X for each sample. HIC001 and HIC002 are the two replicates for the normal HCT-116 cells and HIC008 and HIC009 are the two replicates for the auxin-treated HCT-116 cells.</p>
-<p>We now need to read the data into R. Open R and make sure the working directory is set to the directory where the Hi-C data is stored and execute the following commands:</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="co"># Install, if necessary, and load necessary libraries and set up R session</span>
+<a href="#necessary-packages" class="anchor"></a>Necessary packages</h3>
+<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="co"># Install, if necessary, and load necessary libraries and set up R session</span>
 <span class="kw">if</span> (!<span class="fu"><a href="https://rdrr.io/r/base/ns-load.html">requireNamespace</a></span>(<span class="st">"BiocManager"</span>, <span class="kw">quietly</span> <span class="kw">=</span> <span class="fl">TRUE</span>)) <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"BiocManager"</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">readr</span>) <span class="co"># install.packages("readr")</span>
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">data.table</span>) <span class="co"># install.packages("data.table")</span>
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">dplyr</span>) <span class="co"># install.packages("dplyr")</span>
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">edgeR</span>) <span class="co"># BiocManager::install("edgeR")</span>
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">BiocParallel</span>) <span class="co"># BiocManager::install("BiocParallel") </span>
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">HiCcompare</span>) <span class="co"># BiocManager::install("HiCcompare"), or, for the latest version, devtools::install_github('dozmorovlab/HiCcompare', build_vignettes = TRUE, force = TRUE)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">HiCcompare</span>) <span class="co"># BiocManager::install("HiCcompare"), or, for the latest version,</span>
 <span class="co"># install.packages("devtools")</span>
+<span class="co"># devtools::install_github('dozmorovlab/HiCcompare', build_vignettes = TRUE, force = TRUE)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">multiHiCcompare</span>) <span class="co"># BiocManager::install("multiHiCcompare", version = "devel") </span>
-<span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span>(<span class="kw">scipen</span> <span class="kw">=</span> <span class="fl">10</span>) <span class="co"># Output fixed numbers, not scientific notation</span>
-
-<span class="co"># Set up parameters for reading in data</span>
-<span class="no">chr</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="st">'chr'</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>:<span class="fl">22</span>, <span class="st">'X'</span>)) <span class="co"># Chromosome names</span>
-<span class="no">chr</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="st">'chr'</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>)) <span class="co"># Chromosome names</span>
-<span class="no">dirIn</span> <span class="kw">&lt;-</span> <span class="st">"data/"</span> <span class="co"># Input folder</span>
-<span class="no">dirIn</span> <span class="kw">&lt;-</span> <span class="st">"https://github.com/kmt555/ComparativeHiC-analysis-tutorial/raw/master/data/"</span> <span class="co"># Remote data</span>
-<span class="no">samples</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="st">'HIC00'</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">8</span>, <span class="fl">9</span>)) <span class="co"># Sample names</span>
-<span class="no">res</span> <span class="kw">&lt;-</span> <span class="fl">500000</span> <span class="co"># Data resolution</span>
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">TADCompare</span>) <span class="co"># BiocManager::install("TADCompare", version = "devel") </span>
+<span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span>(<span class="kw">scipen</span> <span class="kw">=</span> <span class="fl">999</span>) <span class="co"># Output fixed numbers, not scientific notation</span></pre></body></html></div>
+</div>
+<div id="hi-c-data-formats" class="section level3">
+<h3 class="hasAnchor">
+<a href="#hi-c-data-formats" class="anchor"></a>Hi-C data formats</h3>
+<p>Like most sequencing data, Hi-C data starts out as paired-end reads stored in <code>fastq</code> files. These <code>fastq</code> files can be very large, depending on the depth of the sequencing. Several Hi-C data processing pipelines exist to convert raw Hi-C data into text-based chromatin interaction matrices <span class="citation">(Ay and Noble 2015)</span>. Researchers looking to generate their Hi-C experiments will need to familiarize themselves with the Hi-C data processing pipelines to convert raw data into chromatin interaction matrices <span class="citation">(Lajoie, Dekker, and Kaplan 2015)</span>. However, those interested in using the wide range of public Hi-C data deposited on Gene Expression Omnibus (GEO) repositories can frequently bypass the data processing steps, as most deposited Hi-C data also includes the processed chromatin interaction matrices. These matrices are typically stored in the text-based <code>.hic</code> or HDF5-based <code>.cool</code> formats developed by Aiden lab (<a href="http://aidenlab.org/data.html" class="uri">http://aidenlab.org/data.html</a>) and Mirny lab (<a href="ftp://cooler.csail.mit.edu/coolers" class="uri">ftp://cooler.csail.mit.edu/coolers</a>), respectively, and can be converted to plain text files. For more information, see Stansfield et al. 2019, “<a href="https://doi.org/10.1002/cpbi.76">R Tutorial: Detection of Differentially Interacting Chromatin Regions From Multiple Hi-C Datasets</a>” <span class="citation">(Stansfield et al. 2019)</span>, and the vignettes for the <a href="https://www.bioconductor.org/packages/release/bioc/vignettes/HiCcompare/inst/doc/HiCcompare-vignette.html">HiCcompare</a>, <a href="https://www.bioconductor.org/packages/release/bioc/vignettes/multiHiCcompare/inst/doc/multiHiCcompare.html">multiHiCcompare</a>, <a href="http://bioconductor.org/packages/release/bioc/vignettes/SpectralTAD/inst/doc/SpectralTAD.html">SpectralTAD</a> and <a href="https://www.bioconductor.org/packages/devel/bioc/vignettes/TADCompare/inst/doc/Input_Data.html">TADCompare</a> R/Bioconductor packages.</p>
+</div>
+</div>
+<div id="working-with-n-times-n-matrices" class="section level2">
+<h2 class="hasAnchor">
+<a href="#working-with-n-times-n-matrices" class="anchor"></a>Working with <span class="math inline">\(n \times n\)</span> matrices</h2>
+<p><span class="math inline">\(n \times n\)</span> contact matrices are most commonly associated with data coming from the Bing Ren lab (<a href="http://chromosome.sdsc.edu/mouse/hi-c/download.html" class="uri">http://chromosome.sdsc.edu/mouse/hi-c/download.html</a>). These contact matrices are square and symmetric with entry <span class="math inline">\(ij\)</span> corresponding to the number of contacts between region <span class="math inline">\(i\)</span> and region <span class="math inline">\(j\)</span>. Below is an example of a <span class="math inline">\(75 \times 75\)</span> region of a contact matrix derived from Rao et al. 2014 data, GM12878 cell line <span class="citation">(Rao et al. 2014)</span>, chromosome 22, 50kb resolution. Note the symmetry around the diagonal - the typical shape of chromatin interaction matrix. The figure was created using the <a href="https://cran.r-project.org/web/packages/pheatmap/index.html">pheatmap</a> package.</p>
+<p><img src="img/unnamed-chunk-1-1.png" width="1000"></p>
+</div>
+<div id="working-with-n-times-n3-matrices" class="section level2">
+<h2 class="hasAnchor">
+<a href="#working-with-n-times-n3-matrices" class="anchor"></a>Working with <span class="math inline">\(n \times (n+3)\)</span> matrices</h2>
+<p><span class="math inline">\(n \times (n+3)\)</span> matrices are commonly associated with the <code>TopDom</code> TAD caller (<a href="http://zhoulab.usc.edu/TopDom/" class="uri">http://zhoulab.usc.edu/TopDom/</a>). These matrices consist of an <span class="math inline">\(n \times n\)</span> matrix but with three additional leading columns containing the chromosome, the start of the region and the end of the region. Regions in this case are determined by the resolution of the data. The subset of a typical <span class="math inline">\(n \times (n+3)\)</span> matrix is shown below.</p>
+<pre><code>    chr    start      end X18500000 X18550000 X18600000 X18650000
+1 chr22 18500000 18550000     13313      4817      1664        96
+2 chr22 18550000 18600000      4817     15500      5120       178
+3 chr22 18600000 18650000      1664      5120     11242       316
+4 chr22 18650000 18700000        96       178       316       162</code></pre>
+</div>
+<div id="working-with-sparse-3-column-matrices" class="section level2">
+<h2 class="hasAnchor">
+<a href="#working-with-sparse-3-column-matrices" class="anchor"></a>Working with sparse 3-column matrices</h2>
+<p>Sparse 3-column matrices are matrices where the first and second columns refer to region <span class="math inline">\(i\)</span> and region <span class="math inline">\(j\)</span> of the chromosome, and the third column is the number of contacts between them. This style is becoming increasingly popular and is associated with raw data from Lieberman-Aiden lab (e.g., <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE63525" class="uri">https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE63525</a>), and is the data output produced by the Juicer tool <span class="citation">(Durand et al. 2016)</span>. 3-column matrices are handled internally in the package by converting them to <span class="math inline">\(n \times n\)</span> matrices using the <a href="https://bioconductor.org/packages/release/bioc/html/HiCcompare.html">HiCcompare</a> package’s <code><a href="https://rdrr.io/pkg/HiCcompare/man/sparse2full.html">sparse2full()</a></code> function. The first 5 rows of a typical sparse 3-column matrix are shown below.</p>
+<pre><code>    region1  region2 IF
+1: 16050000 16050000 12
+2: 16200000 16200000  4
+3: 16150000 16300000  1
+4: 16200000 16300000  1
+5: 16250000 16300000  1
+6: 16300000 16300000 10</code></pre>
+<div id="working-with-processed-hi-c-data" class="section level3">
+<h3 class="hasAnchor">
+<a href="#working-with-processed-hi-c-data" class="anchor"></a>Working with processed Hi-C data</h3>
+<p>The <code>HiCcompare</code> R package was designed for working with processed Hi-C data. It contains several functions that may be useful for analysis. Hi-C data extracted from <code>.hic</code> files using <code>straw</code> can be simply read into R in the standard fashion for loading any text file containing data. <code>HiCcompare</code> can then be used to convert Hi-C data from a sparse upper triangular matrix format into a full contact matrix using the <code>sparse2full</code> function. This process can be reversed using the <code>full2sparse</code> function. Data aligned by <code>HiC-Pro</code> can be converted into a more usable <code>BEDPE</code> format using the <code>hicpro2bedpe</code> function. The <code>hicpro2bedpe</code> function takes the <code>.matrix</code> and <code>.bed</code> files produced by <code>HiC-Pro</code> as input and creates a sparse upper triangular matrix containing start and end coordinates for each interacting region.</p>
+</div>
+</div>
+<div id="obtaining-and-preparing-the-data" class="section level2">
+<h2 class="hasAnchor">
+<a href="#obtaining-and-preparing-the-data" class="anchor"></a>Obtaining and preparing the data</h2>
+<p>Public Hi-C data is available from several sources. GEO (<a href="https://www.ncbi.nlm.nih.gov/geo/" class="uri">https://www.ncbi.nlm.nih.gov/geo/</a>) catalogs the data for many studies, and a simple search for “Hi-C” returns 3,647 hits (as of June 21, 2020). Additionally, the Aiden Lab website (<a href="https://www.aidenlab.org/" class="uri">https://www.aidenlab.org/</a>) lists many high-quality datasets that they have generated. Finally, there is the <code>cooler</code> repository (<a href="https://github.com/mirnylab/cooler" class="uri">https://github.com/mirnylab/cooler</a>), which provides a database of Hi-C data ready for download. More Hi-C studies and data can be found in our GitHub repository (<a href="https://github.com/mdozmorov/HiC_data" class="uri">https://github.com/mdozmorov/HiC_data</a>).</p>
+<p>First, we will need to download an example set of Hi-C data. We will use data from Rao 2017 <span class="citation">(Rao et al. 2017)</span>. For simplicity, we will only use two replicates for each experimental condition. The experimental conditions are normal HCT-116 cells and HCT-116 cells treated with auxin for six hours. To download the <code>.hic</code> files from GEO run the following commands in the terminal. Note: downloading the data will require about 30GB of hard drive space. You will also need to download the <code>straw</code> software from <a href="https://github.com/theaidenlab/straw/wiki">https://github.com/theaidenlab/straw/wiki</a> and install it.</p>
+<p>This step is only for illustration purposes due to the significant amount of download time and computational resources. We will start the workshop with the processed data in a sparse upper triangular text format.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># Install straw (Linux and Windows installations are available)</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="fu">wget</span> https://github.com/theaidenlab/straw/tree/master/bin/Mac/straw</span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="fu">chmod</span> +x straw</span>
+<span id="cb4-4"><a href="#cb4-4"></a></span>
+<span id="cb4-5"><a href="#cb4-5"></a><span class="fu">wget</span> https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM2795nnn/GSM2795535/suppl/GSM2795535_Rao-2017-HIC001_30.hic</span>
+<span id="cb4-6"><a href="#cb4-6"></a><span class="fu">wget</span> https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM2795nnn/GSM2795536/suppl/GSM2795536_Rao-2017-HIC002_30.hic</span>
+<span id="cb4-7"><a href="#cb4-7"></a><span class="fu">wget</span> https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM2809nnn/GSM2809539/suppl/GSM2809539_Rao-2017-HIC008_30.hic</span>
+<span id="cb4-8"><a href="#cb4-8"></a><span class="fu">wget</span> https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM2809nnn/GSM2809540/suppl/GSM2809540_Rao-2017-HIC009_30.hic</span>
+<span id="cb4-9"><a href="#cb4-9"></a></span>
+<span id="cb4-10"><a href="#cb4-10"></a><span class="co"># Make directories for the contact map files</span></span>
+<span id="cb4-11"><a href="#cb4-11"></a><span class="fu">mkdir</span> HIC001</span>
+<span id="cb4-12"><a href="#cb4-12"></a><span class="fu">mkdir</span> HIC002</span>
+<span id="cb4-13"><a href="#cb4-13"></a><span class="fu">mkdir</span> HIC008</span>
+<span id="cb4-14"><a href="#cb4-14"></a><span class="fu">mkdir</span> HIC009</span>
+<span id="cb4-15"><a href="#cb4-15"></a></span>
+<span id="cb4-16"><a href="#cb4-16"></a><span class="co"># Extract contact maps using straw by running the following commands in the terminal</span></span>
+<span id="cb4-17"><a href="#cb4-17"></a><span class="co"># Or, put the commands into a script file, e.g., `straw.sh`, and run it</span></span>
+<span id="cb4-18"><a href="#cb4-18"></a><span class="kw">for</span> <span class="ex">i</span> in <span class="dt">{1..22}</span></span>
+<span id="cb4-19"><a href="#cb4-19"></a>    <span class="kw">do</span></span>
+<span id="cb4-20"><a href="#cb4-20"></a>        <span class="ex">./straw</span> NONE GSM2795535_Rao-2017-HIC001_30.hic <span class="va">$i</span> <span class="va">$i</span> BP 500000 <span class="op">&gt;</span> HIC001/HIC001.NONE.chr<span class="va">$i</span>.500000.txt</span>
+<span id="cb4-21"><a href="#cb4-21"></a>    <span class="kw">done</span></span>
+<span id="cb4-22"><a href="#cb4-22"></a>    <span class="ex">./straw</span> NONE GSM2795535_Rao-2017-HIC001_30.hic X X BP 500000 <span class="op">&gt;</span> HIC001/HIC001.NONE.chrX.500000.txt</span>
+<span id="cb4-23"><a href="#cb4-23"></a>    </span>
+<span id="cb4-24"><a href="#cb4-24"></a><span class="kw">for</span> <span class="ex">i</span> in <span class="dt">{1..22}</span></span>
+<span id="cb4-25"><a href="#cb4-25"></a>    <span class="kw">do</span></span>
+<span id="cb4-26"><a href="#cb4-26"></a>        <span class="ex">./straw</span> NONE GSM2795536_Rao-2017-HIC002_30.hic <span class="va">$i</span> <span class="va">$i</span> BP 500000 <span class="op">&gt;</span> HIC002/HIC002.NONE.chr<span class="va">$i</span>.500000.txt</span>
+<span id="cb4-27"><a href="#cb4-27"></a>    <span class="kw">done</span></span>
+<span id="cb4-28"><a href="#cb4-28"></a>    <span class="ex">./straw</span> NONE GSM2795536_Rao-2017-HIC002_30.hic X X BP 500000 <span class="op">&gt;</span> HIC002/HIC002.NONE.chrX.500000.txt</span>
+<span id="cb4-29"><a href="#cb4-29"></a>    </span>
+<span id="cb4-30"><a href="#cb4-30"></a><span class="kw">for</span> <span class="ex">i</span> in <span class="dt">{1..22}</span></span>
+<span id="cb4-31"><a href="#cb4-31"></a>    <span class="kw">do</span></span>
+<span id="cb4-32"><a href="#cb4-32"></a>        <span class="ex">./straw</span> NONE GSM2809539_Rao-2017-HIC008_30.hic <span class="va">$i</span> <span class="va">$i</span> BP 500000 <span class="op">&gt;</span> HIC008/HIC008.NONE.chr<span class="va">$i</span>.500000.txt</span>
+<span id="cb4-33"><a href="#cb4-33"></a>    <span class="kw">done</span></span>
+<span id="cb4-34"><a href="#cb4-34"></a>    <span class="ex">./straw</span> NONE GSM2809539_Rao-2017-HIC008_30.hic X X BP 500000 <span class="op">&gt;</span> HIC008/HIC008.NONE.chrX.500000.txt</span>
+<span id="cb4-35"><a href="#cb4-35"></a>        </span>
+<span id="cb4-36"><a href="#cb4-36"></a><span class="kw">for</span> <span class="ex">i</span> in <span class="dt">{1..22}</span></span>
+<span id="cb4-37"><a href="#cb4-37"></a>    <span class="kw">do</span></span>
+<span id="cb4-38"><a href="#cb4-38"></a>        <span class="ex">./straw</span> NONE GSM2809540_Rao-2017-HIC009_30.hic <span class="va">$i</span> <span class="va">$i</span> BP 500000 <span class="op">&gt;</span> HIC009/HIC009.NONE.chr<span class="va">$i</span>.500000.txt</span>
+<span id="cb4-39"><a href="#cb4-39"></a>    <span class="kw">done</span></span>
+<span id="cb4-40"><a href="#cb4-40"></a>    <span class="ex">./straw</span> NONE GSM2809540_Rao-2017-HIC009_30.hic X X BP 500000 <span class="op">&gt;</span> HIC009/HIC009.NONE.chrX.500000.txt</span></code></pre></div>
+<p>These steps will create four folders containing the sparse upper triangular matrices for chromosomes 1-22 and X for each sample. HIC001 and HIC002 are the two replicates for the normal HCT-116 cells, and HIC008 and HIC009 are the two replicates for the auxin-treated HCT-116 cells.</p>
+<div id="data-import" class="section level3">
+<h3 class="hasAnchor">
+<a href="#data-import" class="anchor"></a>Data import</h3>
+<p>The original <code>HiCCompare</code> R package can be used when only two Hi-C datasets are available to be compared <span class="citation">(Stansfield et al. 2018)</span>. <code>HiCcompare</code> provides a method for the joint normalization and difference detection of two Hi-C datasets, but cannot be generalized to higher numbers of datasets. <code>multiHiCcompare</code> will need to be used if more than two Hi-C datasets are to be compared <span class="citation">(Stansfield, Cresswell, and Dozmorov 2019)</span>.</p>
+<p>We now need to read the data into R. Open R and make sure the working directory is set to the directory where the Hi-C data is stored in the following folder structure.</p>
+<pre><code>.
+├── HIC001
+│   ├── HIC001.NONE.chr1.500000.txt.gz
+│   ├── HIC001.NONE.chr10.500000.txt.gz
+|   ...
+│   ├── HIC001.NONE.chr9.500000.txt.gz
+│   └── HIC001.NONE.chrX.500000.txt.gz
+├── HIC002
+│   ├── HIC002.NONE.chr1.500000.txt.gz
+│   ├── HIC002.NONE.chr10.500000.txt.gz
+|   ...
+│   ├── HIC002.NONE.chr9.500000.txt.gz
+│   └── HIC002.NONE.chrX.500000.txt.gz
+├── HIC008
+│   ├── HIC008.NONE.chr1.500000.txt.gz
+│   ├── HIC008.NONE.chr10.500000.txt.gz
+|   ...
+│   ├── HIC008.NONE.chr9.500000.txt.gz
+│   └── HIC008.NONE.chrX.500000.txt.gz
+└── HIC009
+    ├── HIC009.NONE.chr1.500000.txt.gz
+    ├── HIC009.NONE.chr10.500000.txt.gz
+    ...
+    ├── HIC009.NONE.chr9.500000.txt.gz
+    └── HIC009.NONE.chrX.500000.txt.gz</code></pre>
+<p>Execute the following commands:</p>
+<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="co"># Set up parameters for reading in data</span>
+<span class="co"># Chromosome names</span>
+<span class="no">chr</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="st">'chr'</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>)) <span class="co"># First chromosome, or use c(1:22, 'X') for all chromosomes</span>
+<span class="co"># Input folder</span>
+<span class="no">dirIn</span> <span class="kw">&lt;-</span> <span class="st">"data/"</span> <span class="co"># Local data</span>
+<span class="co"># Sample and Folder names</span>
+<span class="no">samples</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="st">'HIC00'</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">8</span>, <span class="fl">9</span>))
+<span class="co"># Data resolution</span>
+<span class="no">res</span> <span class="kw">&lt;-</span> <span class="fl">500000</span>
 
 <span class="co"># Read data</span>
 <span class="no">sample_list</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>()
 <span class="no">chr_list</span>    <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>()
 <span class="kw">for</span>( <span class="no">j</span> <span class="kw">in</span> <span class="fl">1</span>:<span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="no">samples</span>)) {
   <span class="kw">for</span> (<span class="no">i</span> <span class="kw">in</span> <span class="fl">1</span>:<span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="no">chr</span>)) {
-    <span class="no">chr_list</span><span class="kw">[[</span><span class="no">i</span>]] <span class="kw">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_tsv</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="no">dirIn</span>, <span class="no">samples</span>[<span class="no">j</span>], <span class="st">"/"</span>, <span class="no">samples</span>[<span class="no">j</span>],
-                                     <span class="st">".NONE."</span>, <span class="no">chr</span>[<span class="no">i</span>], <span class="st">"."</span>, <span class="no">res</span>, <span class="st">".txt.gz"</span>),
-                              <span class="kw">col_names</span> <span class="kw">=</span> <span class="fl">FALSE</span>) <span class="kw">%&gt;%</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html">as.data.table</a></span>()
+    <span class="no">fileName</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="no">dirIn</span>, <span class="no">samples</span>[<span class="no">j</span>], <span class="st">"/"</span>, <span class="no">samples</span>[<span class="no">j</span>], <span class="st">".NONE."</span>, <span class="no">chr</span>[<span class="no">i</span>], <span class="st">"."</span>, <span class="no">res</span>, <span class="st">".txt.gz"</span>)
+    <span class="no">chr_list</span><span class="kw">[[</span><span class="no">i</span>]] <span class="kw">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_tsv</a></span>(<span class="no">fileName</span>, <span class="kw">col_names</span> <span class="kw">=</span> <span class="fl">FALSE</span>) <span class="kw">%&gt;%</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html">as.data.table</a></span>()
     <span class="co"># Add column indicating the chromosome</span>
     <span class="no">chr_list</span><span class="kw">[[</span><span class="no">i</span>]] <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/edgeR/man/cbind.html">cbind</a></span>(<span class="no">i</span>, <span class="no">chr_list</span><span class="kw">[[</span><span class="no">i</span>]])
     <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(<span class="no">chr_list</span><span class="kw">[[</span><span class="no">i</span>]]) <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'chr'</span>, <span class="st">'region1'</span>, <span class="st">'region2'</span>, <span class="st">'IF'</span>)
@@ -263,7 +331,7 @@ Richmond, VA, 23298<br><a href="mailto:mikhail.dozmorov@vcuhealth.org" class="em
 <span class="co"># Collapse separate chromosome lists into one table per sample</span>
 <span class="no">sample_list</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="no">sample_list</span>, <span class="no">rbindlist</span>)</pre></body></html></div>
 <p>We now have a list with each entry containing the sparse upper triangular matrix for one of the Hi-C datasets:</p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="no">sample_list</span><span class="kw">[[</span><span class="fl">1</span>]]</pre></body></html></div>
+<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="no">sample_list</span><span class="kw">[[</span><span class="fl">1</span>]]</pre></body></html></div>
 <pre><code>        chr   region1   region2    IF
      1:   1         0         0    17
      2:   1    500000    500000 11583
@@ -276,12 +344,15 @@ Richmond, VA, 23298<br><a href="mailto:mikhail.dozmorov@vcuhealth.org" class="em
 102705:   1 248000000 249000000   823
 102706:   1 248500000 249000000  2043
 102707:   1 249000000 249000000  8336</code></pre>
+<p>The first column indicates the chromosome number. The second column is the start location in base pairs for the first interacting region. The third column is the start location for the second interacting region, and the fourth column is the interaction frequency (IF) for the interacting pair.</p>
 </div>
 <div id="joint-normalization-of-hi-c-datasets" class="section level3">
 <h3 class="hasAnchor">
 <a href="#joint-normalization-of-hi-c-datasets" class="anchor"></a>Joint normalization of Hi-C datasets</h3>
-<p>First, we need to create a <code>Hicexp</code> object using the Hi-C data:</p>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="co"># Create a Hicexp object for use by multiHiCcompare (~10 min)</span>
+<p>As with any sequencing data, Hi-C datasets contain biases. There are two primary sources of bias, sequence- and technology-driven. The DNA sequence-driven biases include GC content, chromatin accessibility, and mappability <span class="citation">(Yaffe and Tanay 2011; O’Sullivan et al., n.d.)</span>, which tend to be consistent across datasets generated for the same organism. The similar sequence-driven biases affect chromatin interactions to the same extent when comparing Hi-C datasets.</p>
+<p>The technology-driven biases include cross-linking preferences, restriction enzyme choice, batch effects, and biotin labeling <span class="citation">(Lun and Smyth 2015)</span>. The technology-driven biases affect the data unpredictably and thus are harder to model. The <code>multiHiCcompare</code> R package was specifically designed to correct for the technology-driven biases between datasets.</p>
+<p>To remove biases between pairs of Hi-C datasets, first, we need to create a <code>Hicexp</code> object using the Hi-C data:</p>
+<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="co"># Create a Hicexp object for use by multiHiCcompare</span>
 <span class="co"># Four objects are assigned into two groups</span>
 <span class="no">rao2017</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/multiHiCcompare/man/make_hicexp.html">make_hicexp</a></span>(<span class="kw">data_list</span> <span class="kw">=</span> <span class="no">sample_list</span>, <span class="kw">groups</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>))
 
@@ -291,7 +362,7 @@ Richmond, VA, 23298<br><a href="mailto:mikhail.dozmorov@vcuhealth.org" class="em
 Group 1 has 2 samples 
 Group 2 has 2 samples </code></pre>
 <p>The <code>Hicexp</code> object stores the Hi-C experiment data and is the main input into the other functions included in <code>multiHiCcompare</code>. The user can view the IF information by using the <code>hic_table</code> accessor function:</p>
-<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/pkg/multiHiCcompare/man/hic_table.html">hic_table</a></span>(<span class="no">rao2017</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/pkg/multiHiCcompare/man/hic_table.html">hic_table</a></span>(<span class="no">rao2017</span>)</pre></body></html></div>
 <pre><code>       chr   region1   region2 D   IF1   IF2  IF3  IF4
     1:   1         0         0 0    17    12    5   13
     2:   1    500000    500000 0 11583 16945 4694 6252
@@ -304,16 +375,17 @@ Group 2 has 2 samples </code></pre>
 95551:   1 248500000 248500000 0  8283  8848 5391 5892
 95552:   1 248500000 249000000 1  2043  2178  848  950
 95553:   1 249000000 249000000 0  8336 10546 4272 5359</code></pre>
-<p>When comparing multiple Hi-C datasets, a joint normalization procedure increases power and reduces the number of false positives <span class="citation">[@Stansfield2018]</span>. The <code>multiHiCcompare</code> R package includes two methods for the joint normalization of Hi-C data, cyclic loess and fast loess (fastlo) <span class="citation">[@Ballman2004]</span>. We will normalize the data using fastlo.</p>
-<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="co"># MD plots before normalization</span>
+<p>When comparing multiple Hi-C datasets, a joint normalization procedure increases power and reduces the number of false positives <span class="citation">(Stansfield et al. 2018)</span>. <code>multiHiCcompare</code> provides a cyclic loess method for the joint normalization of multiple Hi-C datasets. The method is based on representing the data on an MD plot. The MD plot is similar to the MA plot (Bland-Altman plot), which is commonly used to visualize gene expression differences. <span class="math inline">\(M\)</span> is defined as the log difference between the two data sets <span class="math inline">\(M = log_2(IF_2/IF_1)\)</span>, where <span class="math inline">\(IF_1\)</span> and <span class="math inline">\(IF_2\)</span> are interaction frequencies of the first and the second Hi-C datasets, respectively. <span class="math inline">\(D\)</span> is defined as the distance between two interacting regions, expressed in unit-length of the <span class="math inline">\(X\)</span> resolution of the Hi-C data. A loess regression curve is fit through the MD plot and used to remove global biases by centering the <span class="math inline">\(M\)</span> differences around <span class="math inline">\(M=0\)</span> baseline. The <code>multiHiCcompare</code> R package includes two methods for the joint normalization of Hi-C data, cyclic loess and fast loess (fastlo) <span class="citation">(Ballman et al. 2004)</span>. We will normalize the data using fastlo.</p>
+<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="co"># MD plots before normalization</span>
 <span class="fu"><a href="https://rdrr.io/pkg/multiHiCcompare/man/MD_hicexp.html">MD_hicexp</a></span>(<span class="no">rao2017</span>, <span class="kw">plot.chr</span> <span class="kw">=</span> <span class="fl">1</span>, <span class="kw">plot.loess</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
-<p><img src="img/unnamed-chunk-6-1.png" width="1000"></p>
-<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="co"># Normalize (~2 min)</span>
+<p><img src="img/unnamed-chunk-9-1.png" width="1000"></p>
+<div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="co"># Normalize using Loess</span>
 <span class="no">rao2017</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/multiHiCcompare/man/fastlo.html">fastlo</a></span>(<span class="no">rao2017</span>)</pre></body></html></div>
-<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="co"># Plot normalization results</span>
+<div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="co"># Plot normalization results</span>
 <span class="fu"><a href="https://rdrr.io/pkg/multiHiCcompare/man/MD_hicexp.html">MD_hicexp</a></span>(<span class="no">rao2017</span>, <span class="kw">plot.chr</span> <span class="kw">=</span> <span class="fl">1</span>, <span class="kw">plot.loess</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
-<div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="co"># Print normalized IFs</span>
-<span class="kw pkg">knitr</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span>(<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu"><a href="https://rdrr.io/pkg/multiHiCcompare/man/hic_table.html">hic_table</a></span>(<span class="no">rao2017</span>)))</pre></body></html></div>
+<p><img src="img/unnamed-chunk-11-1.png" width="1000"></p>
+<div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="co"># Print normalized IFs</span>
+<span class="fu">kable</span>(<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu"><a href="https://rdrr.io/pkg/multiHiCcompare/man/hic_table.html">hic_table</a></span>(<span class="no">rao2017</span>)))</pre></body></html></div>
 <table class="table">
 <thead><tr class="header">
 <th align="right">chr</th>
@@ -388,9 +460,9 @@ Group 2 has 2 samples </code></pre>
 </tr>
 </tbody>
 </table>
-<p>The IFs in the <code>hic_table</code> slot have been updated with their normalized values. The MD plots (Fig. 2) show that the normalization has been performed correctly, and the cloud of points is centered and symmetric around 0 indicating that any biases between datasets have been removed. The MD plot displays unit genomic distance on the x-axis and the log2 difference between the two datasets on the y-axis. Any shift of the points away from y = 0 represents scaling differences between the datasets. The loess fit to the data on the MD plot will also model any trend biases between the datasets. Correctly normalized data should be centered around y = 0 and symmetric (without any clear trends) on the MD plot.</p>
+<p>The <code>hic_table</code> slot for IFs has been updated with their normalized values. The MD plots show that the normalization has been performed correctly, and the cloud of points is centered and symmetric around 0, indicating that any biases between datasets have been removed. The MD plot displays unit genomic distance on the x-axis and the log2 difference between the two datasets on the y-axis. Any shift of the points away from y = 0 represents scaling differences between the datasets. The loess fit to the data on the MD plot will also model any trend biases between the datasets. Correctly normalized data should be centered around y = 0 and symmetric (without any clear trends) on the MD plot.</p>
 <p>Note that if multiple cores are available, the runtime of <code>multiHiCcompare</code> can be sped up by using the <code>parallel</code> option. <code>multiHiCcompare</code> was built with the Bioconductor <code>BiocParallel</code> package. The number of cores to be used in parallel processing can be set as follows:</p>
-<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">BiocParallel</span>) <span class="co"># BiocManager::install("BiocParallel")</span>
+<div class="sourceCode" id="cb17"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">BiocParallel</span>) <span class="co"># BiocManager::install("BiocParallel")</span>
 <span class="co"># Check how many cores are available</span>
 <span class="no">numCores</span> <span class="kw">&lt;-</span> <span class="kw pkg">parallel</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/r/parallel/detectCores.html">detectCores</a></span>()
 
@@ -407,15 +479,22 @@ Group 2 has 2 samples </code></pre>
 <div id="difference-detection" class="section level3">
 <h3 class="hasAnchor">
 <a href="#difference-detection" class="anchor"></a>Difference detection</h3>
+<p><code>multiHiCcompare</code> provides two main ways to perform a differential comparison between the groups or conditions of your Hi-C experiment. For simple experiments where only a comparison between two groups is made, the <code><a href="https://rdrr.io/pkg/multiHiCcompare/man/hic_exactTest.html">hic_exactTest()</a></code> function can be used. For more complex experiments with covariates or multiple groups, the <code><a href="https://rdrr.io/pkg/multiHiCcompare/man/hic_glm.html">hic_glm()</a></code> function should be used. Both of these functions make use of the <code>edgeR</code> package for fitting negative binomial models to the Hi-C data. For the difference detection steps, <code>multiHiCcompare</code> first splits the data up by distance using the progressive pooling described in the fastlo section. Each distance pool is then treated similarly to an independent RNA-seq data matrix on which <code>edgeR</code>’s functions are applied to fit the specified model. This process is illustrated in the Figure below.</p>
+<p><img src="multiHiCcompare_glm.png"></p>
+<p><strong>Figure.</strong> The off-diagonal analysis of multiple Hi-C replicates. Dashed lines represent the off-diagonal vectors of interaction frequencies at a given distance between interacting regions. Right: Converted into a matrix format similar to RNA-seq data, IFs can be loess normalized, variance across replicates can be estimated using an empirical Bayes approach, and differences can be detected using log-linear GLMs.</p>
+<div id="exact-test" class="section level4">
+<h4 class="hasAnchor">
+<a href="#exact-test" class="anchor"></a>Exact test</h4>
 <p>Now that we have jointly normalized our data, we are ready to compare the conditions to find differentially interacting chromatin regions. For this example, we only have two conditions and no other covariates. Thus, we can use the exact test for our comparison:</p>
-<div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="co"># Perform exact test (~10 min)</span>
+<div class="sourceCode" id="cb18"><html><body><pre class="r"><span class="co"># Perform exact test</span>
 <span class="co"># May use "parallel = TRUE" option to speed up computations</span>
 <span class="no">rao2017</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/multiHiCcompare/man/hic_exactTest.html">hic_exactTest</a></span>(<span class="no">rao2017</span>, <span class="kw">parallel</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
-<div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="co"># Plot a composite MD plot with the results of a comparison</span>
-<span class="fu"><a href="https://rdrr.io/pkg/multiHiCcompare/man/MD_composite.html">MD_composite</a></span>(<span class="no">rao2017</span>, <span class="kw">plot.chr</span> <span class="kw">=</span> <span class="fl">1</span>)</pre></body></html></div>
-<p><img src="img/unnamed-chunk-14-1.png" width="1000"></p>
-<div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="co"># Print results as a data frame</span>
-<span class="kw pkg">knitr</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span>(<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu"><a href="https://rdrr.io/pkg/multiHiCcompare/man/results.html">results</a></span>(<span class="no">rao2017</span>)))</pre></body></html></div>
+<div class="sourceCode" id="cb19"><html><body><pre class="r"><span class="co"># Plot a composite MD plot with the results of a comparison</span>
+<span class="fu"><a href="https://rdrr.io/pkg/multiHiCcompare/man/MD_composite.html">MD_composite</a></span>(<span class="no">rao2017</span>, <span class="kw">plot.chr</span> <span class="kw">=</span> <span class="fl">1</span>, <span class="kw">D.range</span> <span class="kw">=</span> <span class="fl">0.4</span>)</pre></body></html></div>
+<p><img src="img/unnamed-chunk-15-1.png" width="1000"></p>
+<p>Here we can see the results. The composite MD plot highlights where the significantly different interactions occur in relation to distance and the fold difference between groups.</p>
+<div class="sourceCode" id="cb20"><html><body><pre class="r"><span class="co"># Print results as a data frame</span>
+<span class="fu">kable</span>(<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu"><a href="https://rdrr.io/pkg/multiHiCcompare/man/results.html">results</a></span>(<span class="no">rao2017</span>)))</pre></body></html></div>
 <table class="table">
 <thead><tr class="header">
 <th align="right">chr</th>
@@ -490,13 +569,860 @@ Group 2 has 2 samples </code></pre>
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb17"><html><body><pre class="r"><span class="co"># Save the Hicexp object</span>
-<span class="fu"><a href="https://rdrr.io/r/base/save.html">save</a></span>(<span class="no">rao2017</span>, <span class="kw">file</span> <span class="kw">=</span> <span class="st">'rao2017.RDA'</span>)
+<p>The results table shares the same first four columns with the <code>hic_table</code>, but the following columns indicate the results of the exact test. <code>logFC</code> is the log fold change difference between the experimental groups, <code>logCPM</code> is the log counts per million between the samples, <code>p.value</code> is the un-adjusted p-value for the exact test, and <code>p.adj</code> is the false discovery rate (FDR) corrected p-value from the exact test.</p>
+<p>You can save the results for the downstream analysis.</p>
+<div class="sourceCode" id="cb21"><html><body><pre class="r"><span class="co"># Save the Hicexp object</span>
+<span class="fu"><a href="https://rdrr.io/r/base/save.html">save</a></span>(<span class="no">rao2017</span>, <span class="kw">file</span> <span class="kw">=</span> <span class="st">'rao2017_exact.rda'</span>)
 
 <span class="co"># To start the downstream analysis </span>
 <span class="co"># without re-running multiHiCcompare load the saved file</span>
-<span class="co"># load('rao2017.RDA') </span></pre></body></html></div>
-<p>Here we can see the results. The composite MD plot highlights where the significantly different interactions are occurring in relation to distance and the fold change of the difference between groups (Fig. 3). The results table shares the same first four columns with the <code>hic_table</code>, but the following columns indicate the results of the exact test. <code>logFC</code> is the log fold change difference between the experimental groups, <code>logCPM</code> is the log counts per million between the samples, <code>p.value</code> is the un-adjusted p-value for the exact test, and <code>p.adj</code> is the false discovery rate (FDR) corrected p-value from the exact test.</p>
+<span class="co"># load('rao2017_exact.rda') </span></pre></body></html></div>
+</div>
+<div id="glm-method" class="section level4">
+<h4 class="hasAnchor">
+<a href="#glm-method" class="anchor"></a>GLM method</h4>
+<p>For more complex experiments, the exact test is no longer sufficient, and the general linear model (GLM) framework must be used. If, for example, we have some other covariate of interest that we wish to control for or if there are more than two experimental groups, the GLM functionality of <code>multiHiCcompare</code> should be used. Here we show an example GLM analysis using two additional replicates from Rao 2017, which come from different biological samples.</p>
+<div class="sourceCode" id="cb22"><html><body><pre class="r">wget https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM2795nnn/GSM2795538/suppl/GSM2795538_Rao-2017-HIC004_30.hic
+wget https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM2809nnn/GSM2809543/suppl/GSM2809543_Rao-2017-HIC012_30.hic</pre></body></html></div>
+<p>Assuming you processed the following files and extract matrices as described above, we read the data into R and create a <code>Hicexp</code> object as before:</p>
+<div class="sourceCode" id="cb23"><html><body><pre class="r"><span class="co"># Set up parameters for reading in data</span>
+<span class="co"># Chromosome names</span>
+<span class="no">chr</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="st">'chr'</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>)) <span class="co"># First chromosome, or use c(1:22, 'X') for all chromosomes</span>
+<span class="co"># Input folder</span>
+<span class="no">dirIn</span> <span class="kw">&lt;-</span> <span class="st">"data/"</span> <span class="co"># Local data</span>
+<span class="co"># Sample and Folder names</span>
+<span class="no">samples</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="st">'HIC0'</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'01'</span>, <span class="st">'02'</span>, <span class="st">'04'</span>, <span class="st">'08'</span>, <span class="st">'09'</span>, <span class="st">'12'</span>))
+<span class="co"># Data resolution</span>
+<span class="no">res</span> <span class="kw">&lt;-</span> <span class="fl">500000</span>
+
+<span class="co"># Read data</span>
+<span class="no">sample_list</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>()
+<span class="no">chr_list</span>    <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>()
+<span class="kw">for</span>( <span class="no">j</span> <span class="kw">in</span> <span class="fl">1</span>:<span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="no">samples</span>)) {
+  <span class="kw">for</span> (<span class="no">i</span> <span class="kw">in</span> <span class="fl">1</span>:<span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="no">chr</span>)) {
+    <span class="no">fileName</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="no">dirIn</span>, <span class="no">samples</span>[<span class="no">j</span>], <span class="st">"/"</span>, <span class="no">samples</span>[<span class="no">j</span>], <span class="st">".NONE."</span>, <span class="no">chr</span>[<span class="no">i</span>], <span class="st">"."</span>, <span class="no">res</span>, <span class="st">".txt.gz"</span>)
+    <span class="no">chr_list</span><span class="kw">[[</span><span class="no">i</span>]] <span class="kw">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_tsv</a></span>(<span class="no">fileName</span>, <span class="kw">col_names</span> <span class="kw">=</span> <span class="fl">FALSE</span>) <span class="kw">%&gt;%</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html">as.data.table</a></span>()
+    <span class="co"># Add column indicating the chromosome</span>
+    <span class="no">chr_list</span><span class="kw">[[</span><span class="no">i</span>]] <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/edgeR/man/cbind.html">cbind</a></span>(<span class="no">i</span>, <span class="no">chr_list</span><span class="kw">[[</span><span class="no">i</span>]])
+    <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(<span class="no">chr_list</span><span class="kw">[[</span><span class="no">i</span>]]) <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'chr'</span>, <span class="st">'region1'</span>, <span class="st">'region2'</span>, <span class="st">'IF'</span>)
+  }
+  <span class="no">sample_list</span><span class="kw">[[</span><span class="no">j</span>]] <span class="kw">&lt;-</span> <span class="no">chr_list</span>
+  <span class="no">chr_list</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>()
+}
+
+<span class="co"># Collapse separate chromosome lists into one table per sample</span>
+<span class="no">sample_list</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="no">sample_list</span>, <span class="no">rbindlist</span>)</pre></body></html></div>
+<p>Then, we create the Hicexp object that includes batch covariate, assuming the additional samples came from a different batch.</p>
+<div class="sourceCode" id="cb24"><html><body><pre class="r"><span class="co"># Create a Hicexp object for use by multiHiCcompare</span>
+<span class="co"># Add the covariate data.frame for biological sample source</span>
+<span class="no">rao_glm</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/multiHiCcompare/man/make_hicexp.html">make_hicexp</a></span>(<span class="kw">data_list</span>  <span class="kw">=</span> <span class="no">sample_list</span>, <span class="kw">groups</span>  <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">2</span>),
+                       <span class="kw">covariates</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="kw">biosample</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>)))
+<span class="co"># View covariates</span>
+<span class="fu"><a href="https://rdrr.io/pkg/multiHiCcompare/man/meta.html">meta</a></span>(<span class="no">rao_glm</span>)</pre></body></html></div>
+<pre><code>        group biosample
+Sample1     1         1
+Sample2     1         1
+Sample3     1         2
+Sample4     2         1
+Sample5     2         1
+Sample6     2         2</code></pre>
+<p>Now we can normalize as was done before:</p>
+<div class="sourceCode" id="cb26"><html><body><pre class="r"><span class="no">rao_glm</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/multiHiCcompare/man/fastlo.html">fastlo</a></span>(<span class="no">rao_glm</span>, <span class="kw">parallel</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
+<p>We are ready to use the GLM functionality of <code>multiHiCcompare</code>, which is similar to the strategy used in <code>limma</code> and <code>edgeR</code> packages.</p>
+<p>First, we need to create a design matrix. The design matrix should contain the covariates of interest. Any categorical variables should be entered as factors. Next, the comparison of interest will need to be specified using either the <code>contrast</code> or the <code>coef</code> option. For this example, we are interested in the group difference; thus, we can set <code>coef = 2</code> (the first coefficient is for the intercept) to test if the group effect is equal to 0. For more information on using <code>contrast</code> and <code>coef</code> please see the <code>edgeR</code> user manual.</p>
+<div class="sourceCode" id="cb27"><html><body><pre class="r"><span class="co"># Make design matrix</span>
+<span class="no">d</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/model.matrix.html">model.matrix</a></span>(~<span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="fu"><a href="https://rdrr.io/pkg/multiHiCcompare/man/meta.html">meta</a></span>(<span class="no">rao_glm</span>)$<span class="no">group</span>) + <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="fu"><a href="https://rdrr.io/pkg/multiHiCcompare/man/meta.html">meta</a></span>(<span class="no">rao_glm</span>)$<span class="no">biosample</span>))
+<span class="fu">kable</span>(<span class="no">d</span>)</pre></body></html></div>
+<table class="table">
+<thead><tr class="header">
+<th align="right">(Intercept)</th>
+<th align="right">factor(meta(rao_glm)$group)2</th>
+<th align="right">factor(meta(rao_glm)$biosample)2</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+</tr>
+</tbody>
+</table>
+<p>Now we are ready to perform the comparison. There are three methods by which <code><a href="https://rdrr.io/pkg/multiHiCcompare/man/hic_glm.html">hic_glm()</a></code> can be performed. The default method is to use the <code>QLFTest</code> which makes use of the quasi-likelihood model. Additionally, there is the <code>LRTest</code> which conducts a likelihood ratio test. The final method is the <code>Treat</code> method, which conducts a test relative to a specified fold change threshold. For this option, the <code>M</code> option will need to be used to specify the log2 fold change threshold. See the <a href="https://www.bioconductor.org/packages/release/bioc/vignettes/multiHiCcompare/inst/doc/multiHiCcompare.html">multiHiCcompare vignette</a> for more details.</p>
+<div class="sourceCode" id="cb28"><html><body><pre class="r"><span class="co"># Plug into GLM function</span>
+<span class="no">rao_glm</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/multiHiCcompare/man/hic_glm.html">hic_glm</a></span>(<span class="no">rao_glm</span>, <span class="kw">design</span> <span class="kw">=</span> <span class="no">d</span>, <span class="kw">coef</span> <span class="kw">=</span> <span class="fl">2</span>, <span class="kw">method</span> <span class="kw">=</span> <span class="st">"QLFTest"</span>, <span class="kw">p.method</span> <span class="kw">=</span> <span class="st">"fdr"</span>, <span class="kw">parallel</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb29"><html><body><pre class="r"><span class="co"># Plot a composite MD plot with the results of a comparison</span>
+<span class="fu"><a href="https://rdrr.io/pkg/multiHiCcompare/man/MD_composite.html">MD_composite</a></span>(<span class="no">rao_glm</span>, <span class="kw">plot.chr</span> <span class="kw">=</span> <span class="fl">1</span>, <span class="kw">D.range</span> <span class="kw">=</span> <span class="fl">0.2</span>)</pre></body></html></div>
+<p><img src="img/unnamed-chunk-24-1.png" width="1000"></p>
+<p>Here we can see the results. The composite MD plot highlights where the significantly different interactions are occurring in relation to distance and the fold change of the difference between groups.</p>
+<div class="sourceCode" id="cb30"><html><body><pre class="r"><span class="co"># Print results as a data frame</span>
+<span class="fu">kable</span>(<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu"><a href="https://rdrr.io/pkg/multiHiCcompare/man/results.html">results</a></span>(<span class="no">rao_glm</span>)))</pre></body></html></div>
+<table class="table">
+<thead><tr class="header">
+<th align="right">chr</th>
+<th align="right">region1</th>
+<th align="right">region2</th>
+<th align="right">D</th>
+<th align="right">logFC</th>
+<th align="right">logCPM</th>
+<th align="right">F</th>
+<th align="right">p.value</th>
+<th align="right">p.adj</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">-0.1021543</td>
+<td align="right">-0.0243108</td>
+<td align="right">0.0316211</td>
+<td align="right">0.8650068</td>
+<td align="right">0.8946755</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="right">500000</td>
+<td align="right">500000</td>
+<td align="right">0</td>
+<td align="right">0.3204454</td>
+<td align="right">9.3528873</td>
+<td align="right">0.7814935</td>
+<td align="right">0.4123871</td>
+<td align="right">0.4878896</td>
+</tr>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">500000</td>
+<td align="right">1000000</td>
+<td align="right">1</td>
+<td align="right">-0.2754725</td>
+<td align="right">8.0445835</td>
+<td align="right">1.3820008</td>
+<td align="right">0.2864798</td>
+<td align="right">0.3582978</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="right">500000</td>
+<td align="right">1500000</td>
+<td align="right">2</td>
+<td align="right">0.3323417</td>
+<td align="right">5.9134426</td>
+<td align="right">3.0192280</td>
+<td align="right">0.1355097</td>
+<td align="right">0.1915485</td>
+</tr>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">500000</td>
+<td align="right">2000000</td>
+<td align="right">3</td>
+<td align="right">-0.2373112</td>
+<td align="right">8.5721266</td>
+<td align="right">0.9202522</td>
+<td align="right">0.3640999</td>
+<td align="right">0.4603879</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="right">500000</td>
+<td align="right">2500000</td>
+<td align="right">4</td>
+<td align="right">-0.1304014</td>
+<td align="right">7.5473344</td>
+<td align="right">0.3783153</td>
+<td align="right">0.5547362</td>
+<td align="right">0.6357543</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb31"><html><body><pre class="r"><span class="co"># Save the Hicexp object</span>
+<span class="fu"><a href="https://rdrr.io/r/base/save.html">save</a></span>(<span class="no">rao2017</span>, <span class="kw">file</span> <span class="kw">=</span> <span class="st">'rao2017_glm.rda'</span>)
+
+<span class="co"># To start the downstream analysis </span>
+<span class="co"># without re-running multiHiCcompare load the saved file</span>
+<span class="co"># load('rao2017_glm.rda') </span></pre></body></html></div>
+</div>
+</div>
+</div>
+<div id="downstream-interpretation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#downstream-interpretation" class="anchor"></a>Downstream interpretation</h2>
+<p>The identification of differentially interacting chromatin regions (DIRs) opens up a problem of interpretation - what is so special about these regions from a genome regulation perspective? Answers to the following questions may help to better understand the regulatory role of differentially interacting regions.</p>
+<ul>
+<li>
+<strong>Visualization of DIRs.</strong> A Manhattan-like plot of DIRs may inform us about abnormalities or reveal chromosome-specific enrichment of differentially interacting regions.</li>
+<li>
+<strong>Overlap between differentially expressed genes and DIRs.</strong> If gene expression measurements are available, a list of differentially expressed genes may be tested for overlap with DIRs. The goal of this analysis is to establish a formal link between DIRs and changed gene expression.</li>
+<li>
+<strong>Functional enrichment of genes overlapping DIRs.</strong> DIRs may disrupt the regulation of genes overlapping them. The goal of this analysis is to test whether genes overlapping DIRs are enriched in a canonical pathway or share a common function.</li>
+<li>
+<strong>Overlap enrichment between TAD boundaries and DIRs.</strong> DIRs may correspond to TAD boundaries that are deleted or created. Thus, it is important to test DIRs for significant overlap with TAD boundaries detected in either condition or only in boundaries changed between the conditions. Similar overlap enrichment can be calculated between DIRs and any genomic annotation.</li>
+<li>
+<strong>Overlap between DIRs and binding sites.</strong> DIRs may correspond to locations where proteins bind with DNA, such as CTCF sites. Thus, it may be of interest to check for overlap between binding site locations and DIRs.</li>
+</ul>
+<div id="visualizing-differentially-interacting-chromatin-regions-dirs" class="section level3">
+<h3 class="hasAnchor">
+<a href="#visualizing-differentially-interacting-chromatin-regions-dirs" class="anchor"></a>Visualizing differentially interacting chromatin regions (DIRs)</h3>
+<p>Regions that are frequently detected as differentially interacting may be visualized using the Manhattan plot-like plotting function provided by <code>multiHiCcompare</code>. The function <code>manhattan_hicexp</code> allows the user to make a Manhattan plot showing the regions that are detected as significantly differentially interacting with any other regions (summarized p-value) or frequently identified as significantly differentially interacting (number of times a region is significantly differentially interacting with other regions).</p>
+<p>The <code>standard</code> method (default) displays the -log10-transformed p-values for each interacting pair of regions, which allows you to visualize the most significant interactions in the datasets. However, the <code>standard</code> method requires more computational time than other methods. The p-value summarization methods include the <code>addCLT</code> (default) <span class="citation">(<span class="citeproc-not-found" data-reference-id="Nguyen:2016"><strong>???</strong></span>)</span>, <code>fisher</code> <span class="citation">(<span class="citeproc-not-found" data-reference-id="Fisher:1950"><strong>???</strong></span>)</span>, and <code>stouffer</code> <span class="citation">(<span class="citeproc-not-found" data-reference-id="Stouffer:1949"><strong>???</strong></span>)</span> methods to combine the p-values for each region to produce a plot of the most significant regions.</p>
+<p>The <code>count</code> method creates a plot where the height corresponds to the number of times a region was detected as significant. The goal of these plots is to visualize the most significantly differentially interacting regions in the context of the linear genome.</p>
+<p>The higher the dots are, the more significant/more frequent a region was detected as significantly differentially interacting. Use <code>plot.chr</code> to focus on any given chromosome:</p>
+<div class="sourceCode" id="cb32"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/pkg/multiHiCcompare/man/manhattan_hicexp.html">manhattan_hicexp</a></span>(<span class="no">rao2017</span>, <span class="kw">method</span> <span class="kw">=</span> <span class="st">'addCLT'</span>)</pre></body></html></div>
+<p><img src="img/unnamed-chunk-27-1.png" width="1000"></p>
+<div class="sourceCode" id="cb33"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/pkg/multiHiCcompare/man/manhattan_hicexp.html">manhattan_hicexp</a></span>(<span class="no">rao2017</span>, <span class="kw">method</span> <span class="kw">=</span> <span class="st">'count'</span>, <span class="kw">plot.chr</span> <span class="kw">=</span> <span class="fl">1</span>)</pre></body></html></div>
+<p><img src="img/unnamed-chunk-28-1.png" width="1000"></p>
+<p>It may be of interest to take a more in-depth look at the most significant regions that were frequently detected as differentially interacting. We can get started with this by using the <code>topDirs</code> function that gives us a <code>data.frame</code> of the regions and the count for the number of times each region was detected as differentially interacting, along with the Fisher combined p-value of the detected interactions. The <code>topDirs</code> function is an analog of the <code><a href="https://rdrr.io/pkg/limma/man/toptable.html">limma::topTable</a></code> and <code><a href="https://rdrr.io/pkg/edgeR/man/topTags.html">edgeR::topTags</a></code> functions in that it allows us to filter the results by the average log fold-change (<code>logfc_cutoff</code>), the average interaction frequency (the higher the average frequency, the more confident we are in the detected difference, <code>logcpm_cutoff</code>), the adjusted p-value cutoff (<code>p.adj_cutoff</code>), and the distance cutoff (<code>D_cutoff</code>). The <code>topDirs</code> function allows us to focus on the most significant regions while filtering out less interesting regions.</p>
+<p>The <code>return_df = 'bed'</code> option gives us a summary of the regions which are found to be interacting at least one time or more:</p>
+<div class="sourceCode" id="cb34"><html><body><pre class="r"><span class="no">counts</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/multiHiCcompare/man/topDirs.html">topDirs</a></span>(<span class="no">rao2017</span>, <span class="kw">logfc_cutoff</span> <span class="kw">=</span> <span class="fl">1</span>, <span class="kw">logcpm_cutoff</span> <span class="kw">=</span> <span class="fl">2</span>,
+                  <span class="kw">p.adj_cutoff</span> <span class="kw">=</span> <span class="fl">0.01</span>, <span class="kw">return_df</span> <span class="kw">=</span> <span class="st">'bed'</span>)
+
+<span class="fu">kable</span>(<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">counts</span>))</pre></body></html></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">chr</th>
+<th align="right">start</th>
+<th align="right">end</th>
+<th align="right">count</th>
+<th align="right">avgD</th>
+<th align="right">avgLogFC</th>
+<th align="right">avgLogCPM</th>
+<th align="left">avgP.adj</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">chr1</td>
+<td align="right">206000000</td>
+<td align="right">206499999</td>
+<td align="right">107</td>
+<td align="right">45.10280</td>
+<td align="right">-1.2141</td>
+<td align="right">6.9624</td>
+<td align="left">2.1193E-70</td>
+</tr>
+<tr class="even">
+<td align="left">chr1</td>
+<td align="right">156000000</td>
+<td align="right">156499999</td>
+<td align="right">106</td>
+<td align="right">69.53774</td>
+<td align="right">-1.0095</td>
+<td align="right">8.1635</td>
+<td align="left">3.9946E-69</td>
+</tr>
+<tr class="odd">
+<td align="left">chr1</td>
+<td align="right">156500000</td>
+<td align="right">156999999</td>
+<td align="right">102</td>
+<td align="right">68.78431</td>
+<td align="right">-1.0139</td>
+<td align="right">8.2423</td>
+<td align="left">4.9611E-66</td>
+</tr>
+<tr class="even">
+<td align="left">chr1</td>
+<td align="right">16000000</td>
+<td align="right">16499999</td>
+<td align="right">101</td>
+<td align="right">166.19802</td>
+<td align="right">-1.0247</td>
+<td align="right">7.9119</td>
+<td align="left">4.7194E-66</td>
+</tr>
+<tr class="odd">
+<td align="left">chr1</td>
+<td align="right">145500000</td>
+<td align="right">145999999</td>
+<td align="right">95</td>
+<td align="right">48.92632</td>
+<td align="right">-1.3783</td>
+<td align="right">7.2570</td>
+<td align="left">7.0017E-63</td>
+</tr>
+<tr class="even">
+<td align="left">chr1</td>
+<td align="right">49500000</td>
+<td align="right">49999999</td>
+<td align="right">72</td>
+<td align="right">60.25000</td>
+<td align="right">1.1385</td>
+<td align="right">7.1517</td>
+<td align="left">2.7634E-47</td>
+</tr>
+</tbody>
+</table>
+<p>We can now use the <code>counts</code> data.frame as input for plotting the p-values of the top DIRs, summarized by Fisher’s method. To zoom in on a particular chromosome the <code>plot.chr</code> option can be used:</p>
+<div class="sourceCode" id="cb35"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/pkg/multiHiCcompare/man/plot_pvals.html">plot_pvals</a></span>(<span class="no">counts</span>)</pre></body></html></div>
+<p><img src="img/unnamed-chunk-30-1.png" width="1000"></p>
+<p>We can also plot the counts:</p>
+<div class="sourceCode" id="cb36"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/pkg/multiHiCcompare/man/plot_counts.html">plot_counts</a></span>(<span class="no">counts</span>, <span class="kw">plot.chr</span> <span class="kw">=</span> <span class="fl">1</span>)</pre></body></html></div>
+<p><img src="img/unnamed-chunk-31-1.png" width="1000"></p>
+<p>The <code>return_df = 'pairedbed'</code> will give the results in the form of interacting pairs:</p>
+<div class="sourceCode" id="cb37"><html><body><pre class="r"><span class="no">pairs</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/multiHiCcompare/man/topDirs.html">topDirs</a></span>(<span class="no">rao2017</span>, <span class="kw">logfc_cutoff</span> <span class="kw">=</span> <span class="fl">2</span>, <span class="kw">logcpm_cutoff</span> <span class="kw">=</span> <span class="fl">4</span>,
+                 <span class="kw">p.adj_cutoff</span> <span class="kw">=</span> <span class="fl">0.01</span>, <span class="kw">return_df</span> <span class="kw">=</span> <span class="st">'pairedbed'</span>)
+
+<span class="fu">kable</span>(<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">pairs</span>))</pre></body></html></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">chr1</th>
+<th align="right">start1</th>
+<th align="right">end1</th>
+<th align="left">chr2</th>
+<th align="right">start2</th>
+<th align="right">end2</th>
+<th align="right">D</th>
+<th align="right">logFC</th>
+<th align="right">logCPM</th>
+<th align="left">p.value</th>
+<th align="left">p.adj</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">chr1</td>
+<td align="right">500000</td>
+<td align="right">999999</td>
+<td align="left">chr1</td>
+<td align="right">50000000</td>
+<td align="right">50499999</td>
+<td align="right">99</td>
+<td align="right">4.5574</td>
+<td align="right">5.1487</td>
+<td align="left">2.5787E-04</td>
+<td align="left">5.4759E-03</td>
+</tr>
+<tr class="even">
+<td align="left">chr1</td>
+<td align="right">500000</td>
+<td align="right">999999</td>
+<td align="left">chr1</td>
+<td align="right">227000000</td>
+<td align="right">227499999</td>
+<td align="right">453</td>
+<td align="right">-2.4551</td>
+<td align="right">5.6621</td>
+<td align="left">2.3725E-06</td>
+<td align="left">3.7135E-04</td>
+</tr>
+<tr class="odd">
+<td align="left">chr1</td>
+<td align="right">1000000</td>
+<td align="right">1499999</td>
+<td align="left">chr1</td>
+<td align="right">50500000</td>
+<td align="right">50999999</td>
+<td align="right">99</td>
+<td align="right">2.0054</td>
+<td align="right">6.5709</td>
+<td align="left">2.7951E-04</td>
+<td align="left">5.6961E-03</td>
+</tr>
+<tr class="even">
+<td align="left">chr1</td>
+<td align="right">1000000</td>
+<td align="right">1499999</td>
+<td align="left">chr1</td>
+<td align="right">173000000</td>
+<td align="right">173499999</td>
+<td align="right">344</td>
+<td align="right">-2.9429</td>
+<td align="right">4.7608</td>
+<td align="left">1.2840E-04</td>
+<td align="left">6.8989E-03</td>
+</tr>
+<tr class="odd">
+<td align="left">chr1</td>
+<td align="right">1000000</td>
+<td align="right">1499999</td>
+<td align="left">chr1</td>
+<td align="right">229500000</td>
+<td align="right">229999999</td>
+<td align="right">457</td>
+<td align="right">-2.2605</td>
+<td align="right">6.1349</td>
+<td align="left">6.2145E-08</td>
+<td align="left">2.3550E-05</td>
+</tr>
+<tr class="even">
+<td align="left">chr1</td>
+<td align="right">1000000</td>
+<td align="right">1499999</td>
+<td align="left">chr1</td>
+<td align="right">230000000</td>
+<td align="right">230499999</td>
+<td align="right">458</td>
+<td align="right">-2.4601</td>
+<td align="right">5.3469</td>
+<td align="left">4.5318E-05</td>
+<td align="left">3.4711E-03</td>
+</tr>
+</tbody>
+</table>
+<p>The coordinates of differentially interacting regions may be saved as <code>.bed</code> files for downstream analysis in tools such as GenomeRunner <span class="citation">(Dozmorov et al. 2016)</span>, LOLA <span class="citation">(Sheffield and Bock 2016)</span>, or visualization in, e.g., UCSC Genome Browser <span class="citation">(Karolchik et al. 2014)</span>:</p>
+<div class="sourceCode" id="cb38"><html><body><pre class="r"><span class="co"># Regular BED format</span>
+<span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html">write_tsv</a></span>(<span class="no">counts</span>[, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'chr'</span>, <span class="st">'start'</span>, <span class="st">'end'</span>, <span class="st">'count'</span>)],
+          <span class="kw">path</span> <span class="kw">=</span> <span class="st">'detected_regions.bed'</span>, <span class="kw">col_names</span> <span class="kw">=</span> <span class="fl">FALSE</span>)
+<span class="co"># Paired BED format</span>
+<span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html">write_tsv</a></span>(<span class="no">pairs</span>, <span class="kw">path</span> <span class="kw">=</span> <span class="st">'detected_regions.pairedbed'</span>,
+          <span class="kw">col_names</span> <span class="kw">=</span> <span class="fl">FALSE</span>)</pre></body></html></div>
+<p>Sometimes, a BED file of all regions in the genome needs to be saved, to be used as a “background” for random sampling:</p>
+<div class="sourceCode" id="cb39"><html><body><pre class="r"><span class="co"># Get list of all 100KB regions in genome</span>
+<span class="no">regions</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/multiHiCcompare/man/topDirs.html">topDirs</a></span>(<span class="no">rao2017</span>, <span class="kw">logfc_cutoff</span> <span class="kw">=</span> <span class="fl">0</span>, <span class="kw">logcpm_cutoff</span> <span class="kw">=</span> -<span class="fl">1</span>,
+                   <span class="kw">D_cutoff</span> <span class="kw">=</span> <span class="fl">0</span>, <span class="kw">p.adj_cutoff</span> <span class="kw">=</span> <span class="fl">1</span>, <span class="kw">alpha</span> <span class="kw">=</span> <span class="fl">2</span>,
+                   <span class="kw">return_df</span> <span class="kw">=</span> <span class="st">'bed'</span> )
+<span class="co"># Order regions</span>
+<span class="no">regions</span> <span class="kw">&lt;-</span> <span class="no">regions</span>[<span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/setorder.html">order</a></span>(<span class="no">chr</span>, <span class="no">start</span>, <span class="no">end</span>), ]
+<span class="co"># Remove unnecessary columns</span>
+<span class="no">regions</span> <span class="kw">&lt;-</span> <span class="no">regions</span>[, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'chr'</span>, <span class="st">'start'</span>, <span class="st">'end'</span>)]
+<span class="co"># Write into BED format</span>
+<span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html">write_tsv</a></span>(<span class="no">regions</span>, <span class="kw">path</span> <span class="kw">=</span> <span class="st">'all_regions.bed'</span>, <span class="kw">col_names</span> <span class="kw">=</span> <span class="fl">FALSE</span>)</pre></body></html></div>
+</div>
+<div id="overlap-between-differentially-expressed-genes-and-dirs" class="section level3">
+<h3 class="hasAnchor">
+<a href="#overlap-between-differentially-expressed-genes-and-dirs" class="anchor"></a>Overlap between differentially expressed genes and DIRs</h3>
+<p>If gene expression data is available, DIRs may be checked for statistically significant overlap with differentially expressed (DE) genes. The hypothesis here is that regions detected as differentially interacting harbor genes that change their gene expression due to changes in chromatin interactions. In our example, we obtain a list of genes differentially expressed between the normal cells and auxin treated cells <span class="citation">(Rao et al. 2017)</span> and test whether they are co-localized with DIRs. First, we get the genomic coordinates (hg19/GRCh37) of all differentially interacting regions:</p>
+<div class="sourceCode" id="cb40"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">GenomicRanges</span>) <span class="co"># BiocManager::install("GenomicRanges")</span>
+<span class="co"># Make GRanges from significant regions</span>
+<span class="no">sig.regions</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/multiHiCcompare/man/topDirs.html">topDirs</a></span>(<span class="no">rao2017</span>, <span class="kw">logfc_cutoff</span> <span class="kw">=</span> <span class="fl">1</span>, <span class="kw">p.adj_cutoff</span> <span class="kw">=</span> <span class="fl">10</span>^-<span class="fl">15</span>,
+                       <span class="kw">return_df</span> <span class="kw">=</span> <span class="st">'bed'</span>)
+<span class="no">sig.regions.gr</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GenomicRanges/man/makeGRangesFromDataFrame.html">makeGRangesFromDataFrame</a></span>(<span class="no">sig.regions</span>,
+                                           <span class="kw">seqnames.field</span> <span class="kw">=</span> <span class="st">'chr'</span>,
+                                           <span class="kw">start.field</span> <span class="kw">=</span> <span class="st">'start'</span>,
+                                           <span class="kw">end.field</span> <span class="kw">=</span> <span class="st">'end'</span>,
+                                           <span class="kw">keep.extra.columns</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
+<p>Next, we get the genomic coordinates of all protein-coding genes in the genome. They will be used for a permutation test, to assess the average probability of overlap between DIRs and genes:</p>
+<div class="sourceCode" id="cb41"><html><body><pre class="r"><span class="co"># Install annotables package for gene locations</span>
+<span class="co"># devtools::install_github("stephenturner/annotables")</span>
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">annotables</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">dplyr</span>)
+
+<span class="co"># Use annotables for hg19 symbols</span>
+<span class="no">hg19_symbols</span> <span class="kw">&lt;-</span> <span class="no">grch37</span> <span class="kw">%&gt;%</span> <span class="co"># Get genomic coordinates for hg19/GRCh37  genome assembly</span>
+  <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/subset.data.table.html">subset</a></span>(<span class="no">.</span>,<span class="no">biotype</span> <span class="kw">==</span> <span class="st">"protein_coding"</span>) <span class="kw">%&gt;%</span> <span class="co"># For protein-coding genes only</span>
+  <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/subset.data.table.html">subset</a></span>(<span class="no">.</span>, <span class="no">chr</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>:<span class="fl">22</span>, <span class="st">'X'</span>)) <span class="co"># On autosomes and X chromosome</span>
+<span class="co"># Make X chromosome numeric for compatibility with Hi-C data conventions</span>
+<span class="no">hg19_symbols</span>$<span class="no">chr</span>[<span class="no">hg19_symbols</span>$<span class="no">chr</span> <span class="kw">==</span> <span class="st">'X'</span>] <span class="kw">&lt;-</span> <span class="fl">23</span>
+<span class="no">hg19_symbols</span>$<span class="no">chr</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="st">'chr'</span>, <span class="no">hg19_symbols</span>$<span class="no">chr</span>)
+<span class="no">hg19_symbols</span>$<span class="no">strand</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/fifelse.html">ifelse</a></span>(<span class="no">hg19_symbols</span>$<span class="no">strand</span> <span class="kw">==</span> -<span class="fl">1</span>, <span class="st">'-'</span>, <span class="st">'+'</span>)
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">hg19_symbols</span>)</pre></body></html></div>
+<pre><code># A tibble: 6 x 9
+  ensgene  entrez symbol  chr     start    end strand biotype description       
+  &lt;chr&gt;     &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;int&gt;  &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;             
+1 ENSG000…   7105 TSPAN6  chr23  9.99e7 9.99e7 -      protei… tetraspanin 6 [So…
+2 ENSG000…  64102 TNMD    chr23  9.98e7 9.99e7 +      protei… tenomodulin [Sour…
+3 ENSG000…   8813 DPM1    chr20  4.96e7 4.96e7 -      protei… dolichyl-phosphat…
+4 ENSG000…  57147 SCYL3   chr1   1.70e8 1.70e8 -      protei… SCY1-like 3 (S. c…
+5 ENSG000…  55732 C1orf1… chr1   1.70e8 1.70e8 +      protei… chromosome 1 open…
+6 ENSG000…   2268 FGR     chr1   2.79e7 2.80e7 -      protei… feline Gardner-Ra…</code></pre>
+<p>Then, we need to download the list of differentially expressed genes from GEO:</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb43-1"><a href="#cb43-1"></a><span class="fu">wget</span> https://ftp.ncbi.nlm.nih.gov/geo/series/GSE106nnn/GSE106886/suppl/GSE106886_Rao-2017-CMVnotreat_vs_RAD21treat.Genes.DESeq2.txt.gz</span></code></pre></div>
+<p>Now, we read the list of differentially expressed genes into R, get their genomic coordinates (hg19 genome assembly), and create the GRanges object:</p>
+<div class="sourceCode" id="cb44"><html><body><pre class="r"><span class="no">de.genes</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.table</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/connections.html">gzfile</a></span>(<span class="st">'GSE106886_Rao-2017-CMVnotreat_vs_RAD21treat.Genes.DESeq2.txt.gz'</span>))
+<span class="co"># Add "symbol" column</span>
+<span class="no">de.genes</span> <span class="kw">&lt;-</span> <span class="no">de.genes</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="kw">symbol</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(<span class="no">de.genes</span>))
+<span class="co"># Remove genes without differential expression statistics</span>
+<span class="no">de.genes</span> <span class="kw">&lt;-</span> <span class="no">de.genes</span>[ !<span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(<span class="no">de.genes</span>[, <span class="st">"padj"</span>]), ]
+<span class="co"># Select the most significant differentially expressed genes</span>
+<span class="no">de.genes</span> <span class="kw">&lt;-</span> <span class="no">de.genes</span>[<span class="no">de.genes</span>[, <span class="st">"padj"</span>] <span class="kw">&lt;</span> <span class="fl">0.05</span>, ] <span class="co"># FDR cutoff 0.05</span>
+<span class="co"># Merge differentially expressed genes with genomic coordinates</span>
+<span class="no">de.genes</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span>(<span class="no">de.genes</span>, <span class="no">hg19_symbols</span>, <span class="kw">by</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'symbol'</span> <span class="kw">=</span> <span class="st">'symbol'</span>))
+<span class="co"># Remove rows with NAs</span>
+<span class="no">de.genes</span> <span class="kw">&lt;-</span> <span class="no">de.genes</span>[<span class="fu"><a href="https://rdrr.io/r/stats/complete.cases.html">complete.cases</a></span>(<span class="no">de.genes</span>),]
+<span class="co"># Make GRanges object for DE genes</span>
+<span class="no">de.genes.gr</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GenomicRanges/man/GRanges-class.html">GRanges</a></span>(<span class="no">de.genes</span>$<span class="no">chr</span>, <span class="fu">IRanges</span>(<span class="kw">start</span> <span class="kw">=</span> <span class="no">de.genes</span>$<span class="no">start</span>,
+                                             <span class="kw">end</span> <span class="kw">=</span> <span class="no">de.genes</span>$<span class="no">end</span>))
+<span class="co"># Save the de.genes GRanges object</span>
+<span class="co"># save(de.genes.gr, file = 'rao2017_genes.rda')</span></pre></body></html></div>
+<div class="sourceCode" id="cb45"><html><body><pre class="r"><span class="co"># To start the downstream analysis, load the saved file</span>
+<span class="co"># load('rao2017_genes.rda') </span>
+<span class="co"># Find overlaps</span>
+<span class="no">olaps</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GenomicRanges/man/findOverlaps-methods.html">findOverlaps</a></span>(<span class="no">sig.regions.gr</span>, <span class="no">de.genes.gr</span>)
+<span class="no">olaps</span></pre></body></html></div>
+<pre><code>Hits object with 37 hits and 0 metadata columns:
+       queryHits subjectHits
+       &lt;integer&gt;   &lt;integer&gt;
+   [1]         2        1502
+   [2]         2        1657
+   [3]         2        3512
+   [4]         2        5725
+   [5]         2        5726
+   ...       ...         ...
+  [33]        21        1848
+  [34]        21        3419
+  [35]        22         643
+  [36]        22         686
+  [37]        24        1804
+  -------
+  queryLength: 26 / subjectLength: 6380</code></pre>
+<p>We can see that there are 37 overlaps between the DE genes and our significant regions. To test if this amount of overlap is significantly different from what can be expected by chance, we can perform a permutation test by testing the overlap of the DE genes with randomly selected regions from the genome. We can use <code>multiHiCcompare</code>’s built-in permutation test for checking the enrichment of genomic features:</p>
+<div class="sourceCode" id="cb47"><html><body><pre class="r"><span class="co"># use multiHiCcompare's permutation test function </span>
+<span class="no">p.value</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/multiHiCcompare/man/perm_test.html">perm_test</a></span>(<span class="no">rao2017</span>, <span class="no">de.genes.gr</span>, <span class="kw">p.adj_cutoff</span> <span class="kw">=</span> <span class="fl">10</span>^-<span class="fl">15</span>,
+                     <span class="kw">logfc_cutoff</span> <span class="kw">=</span> <span class="fl">1</span>, <span class="kw">num.perm</span> <span class="kw">=</span> <span class="fl">1000</span>)
+<span class="no">p.value</span></pre></body></html></div>
+<pre><code>[1] 0.5454545</code></pre>
+<p>We can see that the DE genes are not significantly enriched in our DIRs that were detected by <code>mulitHiCcompare</code> (p-value = 5.455E-01).</p>
+</div>
+<div id="functional-enrichment-of-genes-overlapping-dirs" class="section level3">
+<h3 class="hasAnchor">
+<a href="#functional-enrichment-of-genes-overlapping-dirs" class="anchor"></a>Functional enrichment of genes overlapping DIRs</h3>
+<p>Given the significant overlap between DE genes and DIRs, it may be of interest to test whether all genes overlapping DIRs are enriched in any canonical pathway or gene ontology annotation category. This can be done using the <code>ROntoTools</code> R package <span class="citation">(<span class="citeproc-not-found" data-reference-id="Voichita:2012"><strong>???</strong></span>)</span>.</p>
+<p>First, we need to get the genomic locations of the genes including strand information:</p>
+<div class="sourceCode" id="cb49"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">clusterProfiler</span>) <span class="co"># BiocManager::install("clusterProfiler")</span>
+<span class="co"># library(DOSE) # BiocManager::install("DOSE")</span>
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">ROntoTools</span>) <span class="co"># BiocManager::install("ROntoTools")</span>
+<span class="co"># library(graph) # BiocManager::install("graph")</span>
+
+<span class="co"># Make GRanges out of all genes</span>
+<span class="no">hg19_symbols.gr</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GenomicRanges/man/makeGRangesFromDataFrame.html">makeGRangesFromDataFrame</a></span>(<span class="no">hg19_symbols</span>,
+                                            <span class="kw">seqnames.field</span> <span class="kw">=</span> <span class="st">'chr'</span>,
+                                            <span class="kw">start.field</span> <span class="kw">=</span> <span class="st">'start'</span>,
+                                            <span class="kw">end.field</span> <span class="kw">=</span> <span class="st">'end'</span>,
+                                            <span class="kw">strand.field</span> <span class="kw">=</span> <span class="st">'strand'</span>,
+                                            <span class="kw">keep.extra.columns</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
+
+<span class="co"># Overlap genes with DIRs defined previously</span>
+<span class="no">olap</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GenomicRanges/man/findOverlaps-methods.html">findOverlaps</a></span>(<span class="no">sig.regions.gr</span>, <span class="no">hg19_symbols.gr</span>)</pre></body></html></div>
+<p>Next, we need to create a named vector for the number of times each region was detected as significantly interacting. The names for this vector will be the Entrez gene IDs. This vector will be used for the pathway enrichment to walk down the list of genes overlapping most-to-least frequently detected DIRs:</p>
+<div class="sourceCode" id="cb50"><html><body><pre class="r"><span class="co"># Create "gene_counts" data.frame with the column for count and gene symbol</span>
+<span class="no">genes_olap</span> <span class="kw">&lt;-</span> <span class="no">olap</span> <span class="kw">%&gt;%</span> <span class="no">as.data.frame</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/pkg/clusterProfiler/man/reexports.html">group_by</a></span>(<span class="no">queryHits</span>) <span class="kw">%&gt;%</span>
+              <span class="fu"><a href="https://rdrr.io/pkg/clusterProfiler/man/reexports.html">mutate</a></span>(<span class="kw">genes</span> <span class="kw">=</span> <span class="no">hg19_symbols.gr</span>@<span class="kw">elementMetadata</span>$<span class="no">symbol</span>[<span class="no">subjectHits</span>]) <span class="kw">%&gt;%</span>
+              <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="no">queryHits</span>, <span class="no">genes</span>) <span class="kw">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span>()
+
+<span class="no">tmp</span> <span class="kw">&lt;-</span> <span class="no">sig.regions</span> <span class="kw">%&gt;%</span> <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="no">count</span>, <span class="no">avgLogFC</span>, <span class="no">avgP.adj</span>) <span class="kw">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/pkg/clusterProfiler/man/reexports.html">mutate</a></span>(<span class="kw">id</span> <span class="kw">=</span> <span class="fl">1</span>:<span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(<span class="no">sig.regions</span>))
+<span class="no">gene_counts</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span>(<span class="no">genes_olap</span>, <span class="no">tmp</span>, <span class="kw">by</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'queryHits'</span> <span class="kw">=</span> <span class="st">'id'</span>))
+
+<span class="co"># Convert gene symbols into entrez ID</span>
+<span class="no">entrez</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/clusterProfiler/man/bitr.html">bitr</a></span>(<span class="no">gene_counts</span>$<span class="no">genes</span>, <span class="kw">fromType</span> <span class="kw">=</span> <span class="st">'SYMBOL'</span>, <span class="kw">toType</span> <span class="kw">=</span> <span class="st">'ENTREZID'</span>, <span class="kw">OrgDb</span> <span class="kw">=</span> <span class="st">'org.Hs.eg.db'</span>)
+
+<span class="co"># Join the Entrez ID to the counts</span>
+<span class="no">gene_counts</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span>(<span class="no">gene_counts</span>, <span class="no">entrez</span>, <span class="kw">by</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'genes'</span> <span class="kw">=</span> <span class="st">'SYMBOL'</span>))
+<span class="co"># Remove unmapped entries</span>
+<span class="no">gene_counts</span> <span class="kw">&lt;-</span> <span class="no">gene_counts</span>[<span class="fu"><a href="https://rdrr.io/r/stats/complete.cases.html">complete.cases</a></span>(<span class="no">gene_counts</span>), ]
+
+<span class="co"># Make the named vector of fold changes and pvalues for genes</span>
+<span class="no">fc</span> <span class="kw">&lt;-</span> <span class="no">gene_counts</span>$<span class="no">avgLogFC</span>
+<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="no">fc</span>) <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="st">'hsa:'</span>, <span class="no">gene_counts</span>$<span class="no">ENTREZID</span>)
+<span class="no">pv</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span>(<span class="no">gene_counts</span>$<span class="no">avgP.adj</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="no">pv</span>) <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="st">'hsa:'</span>, <span class="no">gene_counts</span>$<span class="no">ENTREZID</span>)
+
+<span class="co"># load KEGG pathways </span>
+<span class="no">kpg</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ROntoTools/man/keggPathwayGraphs.html">keggPathwayGraphs</a></span>(<span class="st">"hsa"</span>, <span class="kw">updateCache</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">verbose</span> <span class="kw">=</span> <span class="fl">FALSE</span>)
+<span class="co"># set edge weights</span>
+<span class="no">kpg</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ROntoTools/man/setEdgeWeights.html">setEdgeWeights</a></span>(<span class="no">kpg</span>, <span class="kw">edgeTypeAttr</span> <span class="kw">=</span> <span class="st">"subtype"</span>,
+                      <span class="kw">edgeWeightByType</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">activation</span> <span class="kw">=</span> <span class="fl">1</span>, <span class="kw">inhibition</span> <span class="kw">=</span> -<span class="fl">1</span>,
+                      <span class="kw">expression</span> <span class="kw">=</span> <span class="fl">1</span>, <span class="kw">repression</span> <span class="kw">=</span> -<span class="fl">1</span>),
+                      <span class="kw">defaultWeight</span> <span class="kw">=</span> <span class="fl">0</span>)</pre></body></html></div>
+<p>Now we can plug the <code>fc</code> (fold-chabge) and <code>pv</code> (p-value) vectors into <code>ROntoTools</code> pathway analysis:</p>
+<div class="sourceCode" id="cb51"><html><body><pre class="r"><span class="co"># Set node weights</span>
+<span class="no">kpg</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ROntoTools/man/setNodeWeights.html">setNodeWeights</a></span>(<span class="no">kpg</span>,<span class="kw">weights</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/pkg/ROntoTools/man/alpha1MR.html">alpha1MR</a></span>(<span class="no">pv</span>), <span class="kw">defaultWeight</span> <span class="kw">=</span> <span class="fl">1</span>)
+<span class="co"># Perform pathway analysis</span>
+<span class="no">peRes</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ROntoTools/man/pe.html">pe</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">fc</span>, <span class="kw">graphs</span> <span class="kw">=</span> <span class="no">kpg</span>, <span class="kw">ref</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="st">'hsa:'</span>, <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span>(<span class="no">hg19_symbols</span>$<span class="no">entrez</span>)), <span class="kw">nboot</span> <span class="kw">=</span> <span class="fl">200</span>, <span class="kw">verbose</span> <span class="kw">=</span> <span class="fl">FALSE</span>)
+<span class="co"># Prepare results table</span>
+<span class="no">kpn</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ROntoTools/man/keggPathwayNames.html">keggPathwayNames</a></span>(<span class="st">"hsa"</span>)
+<span class="no">table1</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/groupGeneric.html">Summary</a></span>(<span class="no">peRes</span>, <span class="kw">pathNames</span> <span class="kw">=</span> <span class="no">kpn</span>, <span class="kw">totalAcc</span> <span class="kw">=</span> <span class="fl">FALSE</span>, <span class="kw">totalPert</span> <span class="kw">=</span> <span class="fl">FALSE</span>,
+              <span class="kw">pAcc</span> <span class="kw">=</span> <span class="fl">FALSE</span>, <span class="kw">pORA</span> <span class="kw">=</span> <span class="fl">FALSE</span>, <span class="kw">comb.pv</span> <span class="kw">=</span> <span class="kw">NULL</span>, <span class="kw">order.by</span> <span class="kw">=</span> <span class="st">"pPert"</span>), <span class="kw">n</span> <span class="kw">=</span> <span class="fl">15</span>)
+<span class="no">table1</span>$<span class="no">pPert</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span>(<span class="no">table1</span>$<span class="no">pPert</span>, <span class="kw">digits</span> <span class="kw">=</span> <span class="fl">3</span>)
+<span class="no">table1</span>$<span class="no">pPert.fdr</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span>(<span class="no">table1</span>$<span class="no">pPert.fdr</span>, <span class="kw">digits</span> <span class="kw">=</span> <span class="fl">3</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb52"><html><body><pre class="r"><span class="co"># Print results</span>
+<span class="kw pkg">knitr</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span>(<span class="no">table1</span>)</pre></body></html></div>
+<table class="table">
+<thead><tr class="header">
+<th></th>
+<th align="left">pathNames</th>
+<th align="right">pPert</th>
+<th align="right">pPert.fdr</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>path:hsa04146</td>
+<td align="left">Peroxisome</td>
+<td align="right">0.015</td>
+<td align="right">0.583</td>
+</tr>
+<tr class="even">
+<td>path:hsa04740</td>
+<td align="left">Olfactory transduction</td>
+<td align="right">0.020</td>
+<td align="right">0.583</td>
+</tr>
+<tr class="odd">
+<td>path:hsa04970</td>
+<td align="left">Salivary secretion</td>
+<td align="right">0.025</td>
+<td align="right">0.583</td>
+</tr>
+<tr class="even">
+<td>path:hsa04972</td>
+<td align="left">Pancreatic secretion</td>
+<td align="right">0.035</td>
+<td align="right">0.583</td>
+</tr>
+<tr class="odd">
+<td>path:hsa04213</td>
+<td align="left">Longevity regulating pathway - multiple species</td>
+<td align="right">0.045</td>
+<td align="right">0.583</td>
+</tr>
+<tr class="even">
+<td>path:hsa04630</td>
+<td align="left">JAK-STAT signaling pathway</td>
+<td align="right">0.045</td>
+<td align="right">0.583</td>
+</tr>
+<tr class="odd">
+<td>path:hsa04971</td>
+<td align="left">Gastric acid secretion</td>
+<td align="right">0.050</td>
+<td align="right">0.583</td>
+</tr>
+<tr class="even">
+<td>path:hsa03013</td>
+<td align="left">RNA transport</td>
+<td align="right">0.060</td>
+<td align="right">0.612</td>
+</tr>
+<tr class="odd">
+<td>path:hsa04270</td>
+<td align="left">Vascular smooth muscle contraction</td>
+<td align="right">0.075</td>
+<td align="right">0.680</td>
+</tr>
+<tr class="even">
+<td>path:hsa04145</td>
+<td align="left">Phagosome</td>
+<td align="right">0.090</td>
+<td align="right">0.714</td>
+</tr>
+<tr class="odd">
+<td>path:hsa05165</td>
+<td align="left">Human papillomavirus infection</td>
+<td align="right">0.100</td>
+<td align="right">0.714</td>
+</tr>
+<tr class="even">
+<td>path:hsa04742</td>
+<td align="left">Taste transduction</td>
+<td align="right">0.104</td>
+<td align="right">0.714</td>
+</tr>
+<tr class="odd">
+<td>path:hsa05230</td>
+<td align="left">Central carbon metabolism in cancer</td>
+<td align="right">0.134</td>
+<td align="right">0.742</td>
+</tr>
+<tr class="even">
+<td>path:hsa04010</td>
+<td align="left">MAPK signaling pathway</td>
+<td align="right">0.139</td>
+<td align="right">0.742</td>
+</tr>
+<tr class="odd">
+<td>path:hsa04141</td>
+<td align="left">Protein processing in endoplasmic reticulum</td>
+<td align="right">0.154</td>
+<td align="right">0.742</td>
+</tr>
+</tbody>
+</table>
+<p>Here we can see the results of the Pathway analysis. These pathways do not make much sense in the context of the auxin vs. normal experiment and given only chromosome 1 was analyzed.</p>
+<!--
+We can also plot the pathways using `ROntoTools` to visualize the propagation across a specific pathway. Select a pathway name of interest, for example, "Cytokine-cytokine receptor interaction" pathway (path:hsa04060). We then create the plot as follows (figure omitted due to large size).
+
+
+
+```r
+# Select pathway
+p <- peRes@pathways[["path:hsa04146"]]
+# Create graph
+g <- layoutGraph(p@map, layoutType = "dot")
+graphRenderInfo(g) <- list(fixedsize = FALSE)
+edgeRenderInfo(g) <- peEdgeRenderInfo(p)
+nodeRenderInfo(g) <- peNodeRenderInfo(p)
+# Plot the graph
+renderGraph(g)
+```
+-->
+<!-- We will also check the standard hypergeometric test for enrichment. This can be done by plugging the same `geneList` object into the `enrichKEGG` function: -->
+<!-- ```{r} -->
+<!-- # Perform over representation test -->
+<!-- over.rep <- enrichKEGG(names(geneList), organism = 'hsa', pvalueCutoff = 0.05) -->
+<!-- table2 <- over.rep@result[1:15, c("ID", "Description", "GeneRatio", -->
+<!--                                   "BgRatio", "pvalue", "p.adjust")] -->
+<!-- ``` -->
+<!-- ```{r, eval=FALSE, echo=FALSE} -->
+<!-- # Print results -->
+<!-- knitr::kable(table2) -->
+<!-- ``` -->
+<!-- Again, we seem to have a random assortment of pathways, likely due to the widespread effects of auxin upon the genome (Table 2). -->
+</div>
+<div id="overlap-enrichment-between-tad-boundaries-and-dirs" class="section level3">
+<h3 class="hasAnchor">
+<a href="#overlap-enrichment-between-tad-boundaries-and-dirs" class="anchor"></a>Overlap enrichment between TAD boundaries and DIRs</h3>
+<p>Another plausible hypothesis to test is the overlap between the DIRs and the boundaries of topologically associated domains (TADs).</p>
+<p>We will first need to identify the TADs for the datasets being used. We can use the <code>TopDom</code> R package for TAD identification. Note: TADs are typically called using Hi-C data at resolutions of &gt;50KB, however for simplicity here, we continue to use the 50KB data. If the user plans to perform an analysis using TADs, he should call them at &gt;50KB resolution.</p>
+<div class="sourceCode" id="cb53"><html><body><pre class="r"><span class="co"># Install TopDom</span>
+<span class="co"># remotes::install_github("HenrikBengtsson/TopDom", ref="master")</span>
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"TopDom"</span>)</pre></body></html></div>
+<p>Next, we will create the matrix file necessary for <code>TopDom</code>. <code>TopDom</code> requires an <span class="math inline">\(N \times (N+3)\)</span> matrix in a text file. We can create this file for chromosome 1 as follows:</p>
+<div class="sourceCode" id="cb54"><html><body><pre class="r"><span class="co"># Convert sparse matrix read in at beginning of tutorial to a full matrix</span>
+<span class="no">mat</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/HiCcompare/man/sparse2full.html">sparse2full</a></span>(<span class="no">sample_list</span><span class="kw">[[</span><span class="fl">1</span>]][<span class="no">chr</span> <span class="kw">==</span> <span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'region1'</span>, <span class="st">'region2'</span>, <span class="st">'IF'</span>)])
+<span class="co"># Create 3 extra columns necessary for TopDom</span>
+<span class="no">bed</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="kw">chr</span> <span class="kw">=</span> <span class="st">'chr1'</span>, <span class="kw">start</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(<span class="no">mat</span>),
+                  <span class="kw">end</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(<span class="no">mat</span>)) + <span class="fu"><a href="https://rdrr.io/pkg/multiHiCcompare/man/resolution.html">resolution</a></span>(<span class="no">rao2017</span>))
+<span class="co"># Merge 3 columns with full matrix</span>
+<span class="no">mat</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/edgeR/man/cbind.html">cbind</a></span>(<span class="no">bed</span>, <span class="no">mat</span>)
+<span class="co"># Write as a text file for input into TopDom</span>
+<span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html">write_tsv</a></span>(<span class="no">mat</span>, <span class="kw">path</span> <span class="kw">=</span> <span class="st">'chr1.matrix'</span>, <span class="kw">col_names</span> <span class="kw">=</span> <span class="fl">FALSE</span>)</pre></body></html></div>
+<p>The user should now have a text file containing the <span class="math inline">\(N \times (N+3)\)</span> contact matrix for chromosome 1 in the file <code>chr1.matrix</code>. Now we can input the matrix into <code>TopDom</code> and get the TAD boundaries:</p>
+<div class="sourceCode" id="cb55"><html><body><pre class="r"><span class="no">TADs</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/TopDom/man/TopDom.html">TopDom</a></span>(<span class="kw">data</span> <span class="kw">=</span> <span class="st">"chr1.matrix"</span>, <span class="kw">window.size</span> <span class="kw">=</span> <span class="fl">5</span>)</pre></body></html></div>
+<p>The results contain a BED file indicating the positions of the gaps, domains, and boundaries. We will pull out the locations of the boundaries to check if the DIRs are enriched within them:</p>
+<div class="sourceCode" id="cb56"><html><body><pre class="r"><span class="co"># Pull out the bed file from the TopDom results with boundary locations</span>
+<span class="no">boundaries</span> <span class="kw">&lt;-</span> <span class="no">TADs</span>$<span class="no">bed</span>
+<span class="co"># Subset to only boundaries</span>
+<span class="no">boundaries</span> <span class="kw">&lt;-</span> <span class="no">boundaries</span>[<span class="no">boundaries</span>$<span class="no">name</span> <span class="kw">==</span> <span class="st">"boundary"</span>,]
+
+<span class="co"># Convert to GRanges</span>
+<span class="no">boundaries</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GenomicRanges/man/makeGRangesFromDataFrame.html">makeGRangesFromDataFrame</a></span>(<span class="no">boundaries</span>,
+                                       <span class="kw">seqnames.field</span> <span class="kw">=</span> <span class="st">'chrom'</span>,
+                                       <span class="kw">start.field</span> <span class="kw">=</span> <span class="st">'chromStart'</span>,
+                                       <span class="kw">end.field</span> <span class="kw">=</span> <span class="st">'chromEnd'</span>,
+                                       <span class="kw">keep.extra.columns</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
+<p>Similarly, we prepare a list of DIRs on chromosome 1:</p>
+<div class="sourceCode" id="cb57"><html><body><pre class="r"><span class="co"># Make GRanges object for DIRs from `counts` object created with the topDIRs function</span>
+<span class="no">chr1.dir</span> <span class="kw">&lt;-</span> <span class="no">counts</span>[<span class="no">counts</span>$<span class="no">chr</span> <span class="kw">==</span> <span class="st">'chr1'</span>, ]
+<span class="no">chr1.dir</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GenomicRanges/man/makeGRangesFromDataFrame.html">makeGRangesFromDataFrame</a></span>(<span class="no">chr1.dir</span>,
+                                     <span class="kw">seqnames.field</span> <span class="kw">=</span> <span class="st">'chr'</span>,
+                                     <span class="kw">start.field</span> <span class="kw">=</span> <span class="st">'start'</span>,
+                                     <span class="kw">end.field</span> <span class="kw">=</span> <span class="st">'end'</span>,
+                                     <span class="kw">keep.extra.columns</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
+
+<span class="co"># Find overlaps between boundaries and DIRs</span>
+<span class="no">olaps</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GenomicRanges/man/findOverlaps-methods.html">findOverlaps</a></span>(<span class="no">chr1.dir</span>, <span class="no">boundaries</span>)
+<span class="no">olaps</span></pre></body></html></div>
+<pre><code>Hits object with 2 hits and 0 metadata columns:
+      queryHits subjectHits
+      &lt;integer&gt;   &lt;integer&gt;
+  [1]         4           2
+  [2]        10           1
+  -------
+  queryLength: 26 / subjectLength: 6</code></pre>
+<p>Next, we perform a permutation test similar to the one performed in the previous section. This will test for enrichment of DIRs within the TAD boundaries:</p>
+<div class="sourceCode" id="cb59"><html><body><pre class="r"><span class="co"># subset rao2017 Hicexp object to only chr1</span>
+<span class="no">chr1.rao2017</span> <span class="kw">&lt;-</span> <span class="no">rao2017</span>
+<span class="fu">slot</span>(<span class="no">rao2017</span>, <span class="st">"comparison"</span>) <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/multiHiCcompare/man/results.html">results</a></span>(<span class="no">rao2017</span>)[<span class="no">chr</span> <span class="kw">==</span> <span class="fl">1</span>, ]
+
+<span class="co"># perofrm permutation test</span>
+<span class="no">p.value</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/multiHiCcompare/man/perm_test.html">perm_test</a></span>(<span class="no">rao2017</span>, <span class="no">boundaries</span>, <span class="kw">p.adj_cutoff</span> <span class="kw">=</span> <span class="fl">0.01</span>,
+                     <span class="kw">logfc_cutoff</span> <span class="kw">=</span> <span class="fl">1</span>, <span class="kw">num.perm</span> <span class="kw">=</span> <span class="fl">1000</span>)
+<span class="no">p.value</span></pre></body></html></div>
+<pre><code>[1] 0.1398601</code></pre>
+<p>The DIRs do not seem to be enriched within TAD boundaries. This could be due to the simplifications we took for this tutorial. TADs should be called at resolutions of 50KB or higher, so it is possible our TAD boundaries are not as accurate as they should be. Additionally, it is possible that the changes induced by auxin do not target TAD boundaries but instead target smaller loop boundaries within the TADs.</p>
+</div>
+<div id="overlap-between-dirs-and-binding-sites" class="section level3">
+<h3 class="hasAnchor">
+<a href="#overlap-between-dirs-and-binding-sites" class="anchor"></a>Overlap between DIRs and binding sites</h3>
+<p>The auxin treatment used in <span class="citation">(Rao et al. 2017)</span> was noted to destroy the RAD21 complex. Thus, our DIRs may correspond to changes at RAD21 binding sites.</p>
+<p>We will need to download the location information for RAD21 binding sites for HCT-116 cells from <a href="http://cistrome.org/db/#/">CistromeDB</a>. Search for “46207” and download the BED peaks <code>46207_peaks.bed</code> file into the working directory. Note the provided example has been subsetted to chromosome 1 only.</p>
+<p>We can read the file into R:</p>
+<div class="sourceCode" id="cb61"><html><body><pre class="r"><span class="no">rad21</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.table</a></span>(<span class="st">'46207_chr1_peaks.bed'</span>)
+
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">rad21</span>)</pre></body></html></div>
+<pre><code>    V1     V2     V3    V4       V5
+1 chr1  10149  10295 peak1  6.70350
+2 chr1  16184  16359 peak2 13.33365
+3 chr1  91401  91609 peak3 42.12526
+4 chr1 104859 105106 peak4 57.36115
+5 chr1 181917 182071 peak5 11.32777
+6 chr1 186798 187100 peak6 10.35612</code></pre>
+<p>This is a standard BED file. We will need to convert it into a <code>GRanges</code> object so that we can input these locations into the permutation test function:</p>
+<div class="sourceCode" id="cb63"><html><body><pre class="r"><span class="co"># convert X and Y chr names into 23 and 24 to correspond with multiHiCcompare results</span>
+<span class="no">rad21</span>$<span class="no">V1</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html">sub</a></span>(<span class="st">"X"</span>, <span class="st">"23"</span>, <span class="no">rad21</span>$<span class="no">V1</span>)
+<span class="no">rad21</span>$<span class="no">V1</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html">sub</a></span>(<span class="st">"Y"</span>, <span class="st">"24"</span>, <span class="no">rad21</span>$<span class="no">V1</span>)
+
+<span class="co"># convert to GRanges</span>
+<span class="no">rad21</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GenomicRanges/man/GRanges-class.html">GRanges</a></span>(<span class="no">rad21</span>$<span class="no">V1</span>, <span class="fu">IRanges</span>(<span class="kw">start</span> <span class="kw">=</span> <span class="no">rad21</span>$<span class="no">V2</span>, <span class="kw">end</span> <span class="kw">=</span> <span class="no">rad21</span>$<span class="no">V3</span>))
+
+<span class="co"># input into permutation test</span>
+<span class="fu"><a href="https://rdrr.io/pkg/multiHiCcompare/man/perm_test.html">perm_test</a></span>(<span class="no">rao2017</span>, <span class="no">rad21</span>, <span class="kw">p.adj_cutoff</span> <span class="kw">=</span> <span class="fl">10</span>^-<span class="fl">15</span>, <span class="kw">logfc_cutoff</span> <span class="kw">=</span> <span class="fl">1</span>, <span class="kw">num.perm</span> <span class="kw">=</span> <span class="fl">1000</span>)</pre></body></html></div>
+<pre><code>[1] 0.97003</code></pre>
+<p>RAD21 sites are not significantly enriched in the DIRs. This is due to the oversimplification of analyzing chromosome 1 only. This enrichment is significant when all chromosomes are analyzed, confirming the published observations <span class="citation">(Rao et al. 2017)</span>.</p>
+</div>
+</div>
+<div id="references" class="section level1 unnumbered">
+<h1 class="hasAnchor">
+<a href="#references" class="anchor"></a>References</h1>
+<div id="refs" class="references">
+<div id="ref-Ay:2015aa">
+<p>Ay, Ferhat, and William S Noble. 2015. “Analysis Methods for Studying the 3D Architecture of the Genome.” <em>Genome Biol</em> 16 (September): 183. <a href="https://doi.org/10.1186/s13059-015-0745-7">https://doi.org/10.1186/s13059-015-0745-7</a>.</p>
+</div>
+<div id="ref-Ballman:2004aa">
+<p>Ballman, Karla V, Diane E Grill, Ann L Oberg, and Terry M Therneau. 2004. “Faster Cyclic Loess: Normalizing Rna Arrays via Linear Models.” <em>Bioinformatics</em> 20 (16): 2778–86. <a href="https://doi.org/10.1093/bioinformatics/bth327">https://doi.org/10.1093/bioinformatics/bth327</a>.</p>
+</div>
+<div id="ref-Dozmorov:2016aa">
+<p>Dozmorov, Mikhail G, Lukas R Cara, Cory B Giles, and Jonathan D Wren. 2016. “GenomeRunner Web Server: Regulatory Similarity and Differences Define the Functional Impact of Snp Sets.” <em>Bioinformatics</em> 32 (15): 2256–63. <a href="https://doi.org/10.1093/bioinformatics/btw169">https://doi.org/10.1093/bioinformatics/btw169</a>.</p>
+</div>
+<div id="ref-Durand:2016aa">
+<p>Durand, Neva C, Muhammad S Shamim, Ido Machol, Suhas S P Rao, Miriam H Huntley, Eric S Lander, and Erez Lieberman Aiden. 2016. “Juicer Provides a One-Click System for Analyzing Loop-Resolution Hi-c Experiments.” <em>Cell Syst</em> 3 (1): 95–98. <a href="https://doi.org/10.1016/j.cels.2016.07.002">https://doi.org/10.1016/j.cels.2016.07.002</a>.</p>
+</div>
+<div id="ref-Karolchik:2014aa">
+<p>Karolchik, Donna, Galt P Barber, Jonathan Casper, Hiram Clawson, Melissa S Cline, Mark Diekhans, Timothy R Dreszer, et al. 2014. “The Ucsc Genome Browser Database: 2014 Update.” <em>Nucleic Acids Res</em> 42 (Database issue): D764–70. <a href="https://doi.org/10.1093/nar/gkt1168">https://doi.org/10.1093/nar/gkt1168</a>.</p>
+</div>
+<div id="ref-Lajoie:2015aa">
+<p>Lajoie, Bryan R, Job Dekker, and Noam Kaplan. 2015. “The Hitchhiker’s Guide to Hi-c Analysis: Practical Guidelines.” <em>Methods</em> 72 (January): 65–75. <a href="https://doi.org/10.1016/j.ymeth.2014.10.031">https://doi.org/10.1016/j.ymeth.2014.10.031</a>.</p>
+</div>
+<div id="ref-Lun:2015aa">
+<p>Lun, Aaron T L, and Gordon K Smyth. 2015. “DiffHic: A Bioconductor Package to Detect Differential Genomic Interactions in Hi-c Data.” <em>BMC Bioinformatics</em> 16: 258. <a href="https://doi.org/10.1186/s12859-015-0683-0">https://doi.org/10.1186/s12859-015-0683-0</a>.</p>
+</div>
+<div id="ref-OSullivan:2013aa">
+<p>O’Sullivan, Justin M, Michael D Hendy, Tatyana Pichugina, Graeme C Wake, and Jörg Langowski. n.d. “The Statistical-Mechanics of Chromosome Conformation Capture.” <em>Nucleus</em> 4 (5): 390–8. <a href="https://doi.org/10.4161/nucl.26513">https://doi.org/10.4161/nucl.26513</a>.</p>
+</div>
+<div id="ref-Rao:2017aa">
+<p>Rao, Suhas S. P., Su-Chen Huang, Brian Glenn St Hilaire, Jesse M. Engreitz, Elizabeth M. Perez, Kyong-Rim Kieffer-Kwon, Adrian L. Sanborn, et al. 2017. “Cohesin Loss Eliminates All Loop Domains.” <em>Cell</em> 171 (2): 305–320.e24. <a href="https://doi.org/10.1016/j.cell.2017.09.026">https://doi.org/10.1016/j.cell.2017.09.026</a>.</p>
+</div>
+<div id="ref-Rao:2014aa">
+<p>Rao, Suhas S P, Miriam H Huntley, Neva C Durand, Elena K Stamenova, Ivan D Bochkov, James T Robinson, Adrian L Sanborn, et al. 2014. “A 3D Map of the Human Genome at Kilobase Resolution Reveals Principles of Chromatin Looping.” <em>Cell</em> 159 (7): 1665–80. <a href="https://doi.org/10.1016/j.cell.2014.11.021">https://doi.org/10.1016/j.cell.2014.11.021</a>.</p>
+</div>
+<div id="ref-Sheffield:2016aa">
+<p>Sheffield, Nathan C, and Christoph Bock. 2016. “LOLA: Enrichment Analysis for Genomic Region Sets and Regulatory Elements in R and Bioconductor.” <em>Bioinformatics</em> 32 (4): 587–9. <a href="https://doi.org/10.1093/bioinformatics/btv612">https://doi.org/10.1093/bioinformatics/btv612</a>.</p>
+</div>
+<div id="ref-Stansfield:2019aa">
+<p>Stansfield, John C, Kellen G Cresswell, and Mikhail G Dozmorov. 2019. “MultiHiCcompare: Joint Normalization and Comparative Analysis of Complex Hi-c Experiments.” <em>Bioinformatics</em>, January. <a href="https://doi.org/10.1093/bioinformatics/btz048">https://doi.org/10.1093/bioinformatics/btz048</a>.</p>
+</div>
+<div id="ref-Stansfield:2018aa">
+<p>Stansfield, John C, Kellen G Cresswell, Vladimir I Vladimirov, and Mikhail G Dozmorov. 2018. “HiCcompare: An R-Package for Joint Normalization and Comparison of Hi-c Datasets.” <em>BMC Bioinformatics</em> 19 (1): 279. <a href="https://doi.org/10.1186/s12859-018-2288-x">https://doi.org/10.1186/s12859-018-2288-x</a>.</p>
+</div>
+<div id="ref-Stansfield:2019ab">
+<p>Stansfield, John C, Duc Tran, Tin Nguyen, and Mikhail G Dozmorov. 2019. “R Tutorial: Detection of Differentially Interacting Chromatin Regions from Multiple Hi-c Datasets.” <em>Curr Protoc Bioinformatics</em> 66 (1): e76. <a href="https://doi.org/10.1002/cpbi.76">https://doi.org/10.1002/cpbi.76</a>.</p>
+</div>
+<div id="ref-Yaffe:2011aa">
+<p>Yaffe, Eitan, and Amos Tanay. 2011. “Probabilistic Modeling of Hi-c Contact Maps Eliminates Systematic Biases to Characterize Global Chromosomal Architecture.” <em>Nat Genet</em> 43 (11): 1059–65. <a href="https://doi.org/10.1038/ng.947">https://doi.org/10.1038/ng.947</a>.</p>
 </div>
 </div>
 </div>
