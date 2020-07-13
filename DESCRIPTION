@@ -39,7 +39,6 @@ Imports:
     readr,
     data.table,
     edgeR,
-    TADCompare,
     GenomicRanges,
     annotables,
     clusterProfiler,
