@@ -9,4 +9,6 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-RUN Rscript -e "devtools::install('.', dependencies=TRUE, repos = BiocManager::repositories())"
+RUN Rscript -e "BiocManager::install(update = TRUE, ask=FALSE)"
+# RUN Rscript -e "devtools::install('.', dependencies=TRUE, repos = BiocManager::repositories())"
+RUN Rscript -e "options(repos = c(CRAN = 'https://cran.r-project.org')); devtools::install('.', dependencies=TRUE, repos = BiocManager::repositories())"
