@@ -19,7 +19,7 @@ RUN Rscript -e "BiocManager::install('GenomicRanges', update = FALSE, ask=FALSE)
 RUN Rscript -e "BiocManager::install('clusterProfiler', update = FALSE, ask=FALSE)"
 RUN Rscript -e "BiocManager::install('ROntoTools', update = FALSE, ask=FALSE)"
 RUN Rscript -e "BiocManager::install('DO.db', update = FALSE, ask=FALSE)"
-RUN Rscript -e "devtools::install_github('HenrikBengtsson/TopDom')"
+RUN Rscript -e "devtools::install_github('HenrikBengtsson/TopDom', dependencies = TRUE, upgrade = 'never')"
 
 RUN Rscript -e "devtools::install('.', dependencies=TRUE, repos = BiocManager::repositories())"
 # RUN Rscript -e "options(repos = c(CRAN = 'https://cran.r-project.org')); devtools::install('.', dependencies=TRUE, repos = BiocManager::repositories())"
