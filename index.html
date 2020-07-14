@@ -92,18 +92,26 @@
   <div class="contents col-md-9">
 
 <p><img src="https://github.com/mdozmorov/HiCcompareWorkshop/workflows/.github/workflows/basic_checks.yaml/badge.svg" alt=".github/workflows/basic_checks.yaml"></p>
-<div id="differential-hi-c-data-analysis-workshop" class="section level1">
+<div id="detection-of-differentially-interacting-chromatin-regions-from-multiple-hi-c-datasets" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#differential-hi-c-data-analysis-workshop" class="anchor"></a>Differential Hi-C Data Analysis Workshop</h1></div>
-<p>This tutorial is an introductory guide into differential Hi-C data analysis. It includes joint normalization of Hi-C data matrices and the detection of differential chromatin interactions. Preprocessing and extraction of Hi-C data matrices are introduced. Examples of downstream analysis of differentially interacting chromatin regions and guidelines on how to visualize and interpret the results are also provided.</p>
+<a href="#detection-of-differentially-interacting-chromatin-regions-from-multiple-hi-c-datasets" class="anchor"></a>Detection of Differentially Interacting Chromatin Regions From Multiple Hi-C Datasets</h1></div>
+<p>This tutorial is an introductory guide into differential Hi-C data analysis. It includes joint normalization of Hi-C data matrices and the detection of differential chromatin interactions. Hi-C data formats are introduced, as well as methods for preprocessing introduced. Examples of downstream analysis of differentially interacting chromatin regions and guidelines on how to visualize and interpret the results are also provided.</p>
+<pre><code>if(!require(devtools)) install.packages("devtools")
+devtools::install_github(repo = "mdozmorov/HiCcompareWorkshop", build_vignettes = TRUE)</code></pre>
+<p>If installation fails due to missing packages, install them like:</p>
+<pre><code>if(!require(BiocManager)) install.packages("BiocManager")
+BiocManager::install("multiHiCcompare")
+BiocManager::install("clusterProfiler")
+BiocManager::install("ROntoTools")
+BiocManager::install("DO.db")</code></pre>
 <p>Please, refer to the <a href="vignettes/hic_tutorial.Rmd">hic_tutorial.Rmd</a> vignette for more details. This workshop is based on the <a href="https://currentprotocols.onlinelibrary.wiley.com/doi/abs/10.1002/cpbi.76">Paper: Stansfield et al., “R Tutorial: Detection of Differentially Interacting Chromatin Regions From Multiple Hi-C Datasets.”</a>. The workshop demonstrates functionality of the following R packages:</p>
 <ul>
 <li><a href="https://www.bioconductor.org/packages/HiCcompare">HiCcompare</a></li>
 <li><a href="https://bioconductor.org/packages/multiHiCcompare">multiHiCcompare</a></li>
 </ul>
-<p><a href="https://mdozmorov.github.io/HiCcompareWorkshop/">HiCcompareWorkshop pkgdown website</a> - <a href="https://mdozmorov.github.io/HiCcompareWorkshop/" class="uri">https://mdozmorov.github.io/HiCcompareWorkshop/</a></p>
-<p><a href="https://hub.docker.com/repository/docker/mdozmorov/hiccompareworkshop">HiCcompareWorkshop Docker image</a> - <a href="https://hub.docker.com/repository/docker/mdozmorov/hiccompareworkshop" class="uri">https://hub.docker.com/repository/docker/mdozmorov/hiccompareworkshop</a></p>
-<p>The tutorial has been developed to be presented at the <a href="https://bioc2020.bioconductor.org/">Bioconductor Conference 2020</a>, July 27-31 in Boston, MA.</p>
+<p><a href="https://mdozmorov.github.io/HiCcompareWorkshop/">HiCcompareWorkshop pkgdown website</a></p>
+<p><a href="https://hub.docker.com/repository/docker/mdozmorov/hiccompareworkshop">HiCcompareWorkshop Docker image</a></p>
+<p>The tutorial has been developed to be presented at the <a href="https://bioc2020.bioconductor.org/">Bioconductor Virtual Conference 2020</a>, July 30, 2020, 10:00-10:55am</p>
 </div>
 
   </div>
