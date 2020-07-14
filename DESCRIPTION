@@ -45,7 +45,9 @@ Imports:
     pheatmap,
     igraph,
     DO.db,
-    IRanges
+    IRanges,
+    annotables,
+    TopDom
 Remotes:
     stephenturner/annotables,
     HenrikBengtsson/TopDom
