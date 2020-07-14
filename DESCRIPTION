@@ -40,12 +40,9 @@ Imports:
     readr,
     data.table,
     GenomicRanges,
-    annotables,
     clusterProfiler,
     ROntoTools,
     pheatmap,
-    BiocParallel,
-    BiocManager,
     igraph,
     DO.db,
     IRanges
