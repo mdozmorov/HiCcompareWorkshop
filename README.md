@@ -68,5 +68,8 @@ BiocManager::install("DO.db")
 
 [HiCcompareWorkshop Docker image](https://hub.docker.com/repository/docker/mdozmorov/hiccompareworkshop)
 
+To use Docker image, run `docker run -e PASSWORD=yourpassword -p 8787:8787 -d --rm -v $(pwd):/home/rstudio mdozmorov/hiccompareworkshop`. Login to RStudio at http://localhost:8787 using username `rstudio` and password `yourpassword`. Follow the [hic_tutorial.Rmd](vignettes/hic_tutorial.Rmd) code.
+
+
 This workshop has been developed to be presented at the [Bioconductor Virtual Conference 2020](https://bioc2020.bioconductor.org/), July 30, 2020, 10:00-10:55am
 
