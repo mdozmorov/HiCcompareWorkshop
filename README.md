@@ -11,6 +11,15 @@ This workshop is based on [Stansfield et al., “R Tutorial: Detection of Differ
 - [HiCcompareWorkshop pkgdown website](https://mdozmorov.github.io/HiCcompareWorkshop/)
 - [HiCcompareWorkshop Docker image](https://hub.docker.com/repository/docker/mdozmorov/hiccompareworkshop)
 
+# Using Docker
+
+The easiest way to get started with the workshop is to run it from a Docker container.
+
+- Run `docker run -e PASSWORD=yourpassword -p 8787:8787 -d --rm mdozmorov/hiccompareworkshop`. Use `-v $(pwd):/home/rstudio` argument to map your local directory to the container. 
+- Log in to RStudio at [http://localhost:8787](http://localhost:8787) using username `rstudio` and password `yourpassword`. Note that on Windows you need to provide your localhost IP address like `http://191.163.92.108:8787/` - find it using `docker-machine ip default` in Docker's terminal.
+- Run `browseVignettes(package = "HiCcompareWorkshop")`. Click on one of the links, "HTML", "source", "R code".
+    - In case of `The requested page was not found` error, add `help/` to the URL right after the hostname, e.g., [http://localhost:8787/help/library/HiCcompareWorkshop/doc/hic_tutorial.html](http://localhost:8787/help/library/HiCcompareWorkshop/doc/hic_tutorial.html). This is a [known bug](https://github.com/rocker-org/rocker-versioned/issues/178).
+
 # Local Installation
 
 ```
@@ -18,12 +27,12 @@ if(!require(devtools)) install.packages("devtools")
 devtools::install_github(repo = "mdozmorov/HiCcompareWorkshop", build_vignettes = TRUE)
 ```
 
-# Using Docker
+If installation fails due to missing packages, install them as follows:
 
-- Run `docker run -e PASSWORD=yourpassword -p 8787:8787 -d --rm mdozmorov/hiccompareworkshop`. Use `-v $(pwd):/home/rstudio` argument to map your local directory to the container. 
-- Log in to RStudio at [http://localhost:8787](http://localhost:8787) using username `rstudio` and password `yourpassword`. Note that on Windows you need to provide your localhost IP address like `http://191.163.92.108:8787/` - find it using `docker-machine ip default` in Docker's terminal.
-- Run `browseVignettes(package = "HiCcompareWorkshop")`. Click on one of the links, "HTML", "source", "R code".
-    - In case of `The requested page was not found` error, add `help/` to the URL right after the hostname, e.g., [http://localhost:8787/help/library/HiCcompareWorkshop/doc/hic_tutorial.html](http://localhost:8787/help/library/HiCcompareWorkshop/doc/hic_tutorial.html). This is a [known bug](https://github.com/rocker-org/rocker-versioned/issues/178).
+```
+if(!require(BiocManager)) install.packages("BiocManager")
+BiocManager::install(c('edgeR', 'HiCcompare', 'multiHiCcompare', 'clusterProfiler', 'ROntoTools'))
+```
 
 # Workshop Description
 
