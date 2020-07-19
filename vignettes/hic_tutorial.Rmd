@@ -15,10 +15,12 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{r setup, echo=FALSE, message=FALSE, warning=FALSE}
-library(knitr)
+```{r setup, echo=FALSE, message=FALSE, warning=FALSE, include=FALSE}
 # Set up the environment
-opts_chunk$set(cache.path='cache/', fig.path='img/', cache=T, tidy=F, fig.keep='high', echo=T, dpi=100, warnings=F, message=F, comment=NA, warning=F, results='as.is', fig.width = 10, fig.height = 6) #out.width=700, 
+knitr::opts_chunk$set(echo=T, warnings=F, message=F,
+  collapse = TRUE,
+  comment = "#>"
+)
 set.seed(1)
 options(stringsAsFactors = FALSE)
 ```
@@ -255,7 +257,7 @@ MD_hicexp(rao2017, plot.chr = 1, plot.loess = TRUE)
 
 ```{r}
 # Print normalized IFs
-kable(head(hic_table(rao2017)))
+knitr::kable(head(hic_table(rao2017)))
 ```
 
 The `hic_table` slot for IFs has been updated with their normalized values. The MD plots show that the normalization has been performed correctly, and the cloud of points is centered and symmetric around 0, indicating that any biases between datasets have been removed. The MD plot displays resolution $r$ unit genomic distance on the x-axis and the log2 difference between the two datasets on the y-axis. Any shift of the points away from y = 0 represents scaling differences between the datasets. The loess fit to the data on the MD plot will also model any trend biases between the datasets. Correctly normalized data should be centered around y = 0 and symmetric (without any clear trends) on the MD plot.
@@ -306,7 +308,7 @@ Here we can see the results. The composite MD plot highlights where the signific
 
 ```{r}
 # Print results as a data frame
-kable(head(results(rao2017)))
+knitr::kable(head(results(rao2017)))
 ```
 
 The results table shares the same first four columns with the `hic_table`, but the following columns indicate the results of the exact test. `logFC` is the log fold change difference between the experimental groups, `logCPM` is the log counts per million between the samples, `p.value` is the un-adjusted p-value for the exact test, and `p.adj` is the false discovery rate (FDR) corrected p-value from the exact test. 
@@ -386,7 +388,7 @@ First, we need to create a design matrix. The design matrix should contain the c
 ```{r}
 # Make design matrix
 d <- model.matrix(~factor(meta(rao_glm)$group) + factor(meta(rao_glm)$biosample))
-kable(d)
+knitr::kable(d)
 ```
 
 Now we are ready to perform the comparison. There are three methods by which `hic_glm()` can be performed. The default method is to use the `QLFTest` which makes use of the quasi-likelihood model. Additionally, there is the `LRTest` which conducts a likelihood ratio test. The final method is the `Treat` method, which conducts a test relative to a specified fold-change threshold. For this option, the `M` option will need to be used to specify the log2 fold change threshold. See the [multiHiCcompare vignette](https://www.bioconductor.org/packages/release/bioc/vignettes/multiHiCcompare/inst/doc/multiHiCcompare.html) for more details.
@@ -405,7 +407,7 @@ Here we can see the results. The composite MD plot highlights where the signific
 
 ```{r}
 # Print results as a data frame
-kable(head(results(rao_glm)))
+knitr::kable(head(results(rao_glm)))
 ```
 
 ```{r eval=FALSE}
@@ -453,7 +455,7 @@ The `return_df = 'bed'` option gives us a summary of the regions which are found
 counts <- topDirs(rao2017, logfc_cutoff = 1, logcpm_cutoff = 2,
                   p.adj_cutoff = 0.01, return_df = 'bed')
 
-kable(head(counts))
+knitr::kable(head(counts))
 ```
 
 We can now use the `counts` data.frame as input for plotting the p-values of the top DIRs, summarized by Fisher's method. To zoom in on a particular chromosome the `plot.chr` option can be used:
@@ -474,7 +476,7 @@ The `return_df = 'pairedbed'` will give the results in the form of interacting p
 pairs <- topDirs(rao2017, logfc_cutoff = 2, logcpm_cutoff = 4,
                  p.adj_cutoff = 0.01, return_df = 'pairedbed')
 
-kable(head(pairs))
+knitr::kable(head(pairs))
 ```
 
 The coordinates of differentially interacting regions may be saved as `.bed` files for downstream analysis in tools such as GenomeRunner [@Dozmorov:2016aa], LOLA [@Sheffield:2016aa], or visualization in, e.g., UCSC Genome Browser [@Karolchik:2014aa]:
