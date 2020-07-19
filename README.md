@@ -19,6 +19,7 @@ This workshop will be presented at the [Bioconductor Virtual Conference 2020](ht
 
 The easiest way to get started with the workshop is to run it from a Docker container.
 
+- Pull the latest version of the `HiCcompareWorkshop` Docker image, `docker pull mdozmorov/hiccompareworkshop:latest`
 - Run `docker run -e PASSWORD=yourpassword -p 8787:8787 -d --rm mdozmorov/hiccompareworkshop`. Use `-v $(pwd):/home/rstudio` argument to map your local directory to the container. 
 - Log in to RStudio at [http://localhost:8787](http://localhost:8787) using username `rstudio` and password `yourpassword`. Note that on Windows you need to provide your localhost IP address like `http://191.163.92.108:8787/` - find it using `docker-machine ip default` in Docker's terminal.
 - Run `browseVignettes(package = "HiCcompareWorkshop")`. Click on one of the links, "HTML", "source", "R code".
