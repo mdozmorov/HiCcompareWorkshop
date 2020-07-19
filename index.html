@@ -108,6 +108,8 @@
 <a href="#using-docker" class="anchor"></a>Using Docker</h1>
 <p>The easiest way to get started with the workshop is to run it from a Docker container.</p>
 <ul>
+<li>Pull the latest version of the <code>HiCcompareWorkshop</code> Docker image, <code>docker pull mdozmorov/hiccompareworkshop:latest</code>
+</li>
 <li>Run <code>docker run -e PASSWORD=yourpassword -p 8787:8787 -d --rm mdozmorov/hiccompareworkshop</code>. Use <code>-v $(pwd):/home/rstudio</code> argument to map your local directory to the container.</li>
 <li>Log in to RStudio at <a href="http://localhost:8787">http://localhost:8787</a> using username <code>rstudio</code> and password <code>yourpassword</code>. Note that on Windows you need to provide your localhost IP address like <code>http://191.163.92.108:8787/</code> - find it using <code>docker-machine ip default</code> in Docker’s terminal.</li>
 <li>Run <code><a href="https://rdrr.io/r/utils/browseVignettes.html">browseVignettes(package = "HiCcompareWorkshop")</a></code>. Click on one of the links, “HTML”, “source”, “R code”.
