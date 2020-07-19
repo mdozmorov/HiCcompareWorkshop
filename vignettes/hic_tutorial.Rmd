@@ -54,7 +54,7 @@ $n \times n$ contact matrices are the most intuitive format to represent chromos
 $n \times n$ contact matrices are square and symmetric with entry $ij$ corresponding to the number of contacts between region $i$ and region $j$. Below is an example of a $75 \times 75$ region of a contact matrix derived from Rao et al. 2014 data, GM12878 cell line [@Rao:2014aa], chromosome 22, 50kb resolution. Note the symmetry around the diagonal - the typical shape of chromatin interaction matrix. The figure was created using the [pheatmap](https://cran.r-project.org/web/packages/pheatmap/index.html) package. $n \times n$ are most commonly associated with data from the Bing Ren lab (http://chromosome.sdsc.edu/mouse/hi-c/download.html).
 
 ```{r echo = FALSE, fig.height=8}
-load("rao_chr22_prim.rda")
+load(system.file("extdata", "rao_chr22_prim.rda", package = "HiCcompareWorkshop"))
 row.names(rao_chr22_prim) <- colnames(rao_chr22_prim) <- format(as.numeric(row.names(rao_chr22_prim)), scientific = FALSE)
 coords <- 200:275
 pheatmap::pheatmap(log10(rao_chr22_prim[coords, coords]), cluster_rows = FALSE, cluster_cols = FALSE)
@@ -76,7 +76,6 @@ sub_mat
 Sparse 3-column matrices are matrices where the first and second columns refer to region $i$ and region $j$ of the chromosome, and the third column is the number of contacts between them.  This style is becoming increasingly popular and is associated with raw data from Lieberman-Aiden lab (e.g., https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE63525), and is the data output produced by the Juicer tool [@Durand:2016aa]. 3-column matrices are handled internally in the package by converting them to $n \times n$ matrices using the [HiCcompare](https://bioconductor.org/packages/release/bioc/html/HiCcompare.html) package's `sparse2full()` function. The first 5 rows of a typical sparse 3-column matrix are shown below.
 
 ```{r echo = FALSE}
-data("rao_chr22_prim") 
 head(HiCcompare::full2sparse(rao_chr22_prim))
 ```
 ### Working with processed Hi-C data
@@ -178,8 +177,7 @@ Execute the following commands:
 # Set up parameters for reading in data
 # Chromosome names
 chr <- paste0('chr', c(1)) # First chromosome, or use c(1:22, 'X') for all chromosomes
-# Input folder
-dirIn <- "data/" # Local data
+
 # Sample and Folder names
 samples <- paste0('HIC00', c(1, 2, 8, 9)) 
 # Data resolution
@@ -190,7 +188,7 @@ sample_list <- list()
 chr_list    <- list()
 for( j in 1:length(samples)) {
   for (i in 1:length(chr)) {
-    fileName <- paste0(dirIn, samples[j], "/", samples[j], ".NONE.", chr[i], ".", res, ".txt.gz")
+    fileName <- system.file("extdata", paste0(samples[j], "/", samples[j], ".NONE.", chr[i], ".", res, ".txt.gz"), package = "HiCcompareWorkshop")
     chr_list[[i]] <- read_tsv(fileName, col_names = FALSE) %>% as.data.table()
     # Add column indicating the chromosome
     chr_list[[i]] <- cbind(i, chr_list[[i]]) 
@@ -339,8 +337,7 @@ Assuming you processed the following files and extract matrices as described abo
 # Set up parameters for reading in data
 # Chromosome names
 chr <- paste0('chr', c(1)) # First chromosome, or use c(1:22, 'X') for all chromosomes
-# Input folder
-dirIn <- "data/" # Local data
+
 # Sample and Folder names
 samples <- paste0('HIC0', c('01', '02', '04', '08', '09', '12'))
 # Data resolution
@@ -351,7 +348,7 @@ sample_list <- list()
 chr_list    <- list()
 for( j in 1:length(samples)) {
   for (i in 1:length(chr)) {
-    fileName <- paste0(dirIn, samples[j], "/", samples[j], ".NONE.", chr[i], ".", res, ".txt.gz")
+    fileName <- system.file("extdata", paste0(samples[j], "/", samples[j], ".NONE.", chr[i], ".", res, ".txt.gz"), package = "HiCcompareWorkshop")
     chr_list[[i]] <- read_tsv(fileName, col_names = FALSE) %>% as.data.table()
     # Add column indicating the chromosome
     chr_list[[i]] <- cbind(i, chr_list[[i]]) 
@@ -552,7 +549,8 @@ wget https://ftp.ncbi.nlm.nih.gov/geo/series/GSE106nnn/GSE106886/suppl/GSE106886
 Now, we read the list of differentially expressed genes into R, get their genomic coordinates (hg19 genome assembly), and create the GRanges object:
 
 ```{r}
-de.genes <- read.table(gzfile('GSE106886_Rao-2017-CMVnotreat_vs_RAD21treat.Genes.DESeq2.txt.gz'))
+fileName <- system.file("extdata", 'GSE106886_Rao-2017-CMVnotreat_vs_RAD21treat.Genes.DESeq2.txt.gz', package = "HiCcompareWorkshop")
+de.genes <- read.table(gzfile(fileName))
 # Add "symbol" column
 de.genes <- de.genes %>% mutate(symbol = rownames(de.genes))
 # Remove genes without differential expression statistics
@@ -798,7 +796,8 @@ We will need to download the location information for RAD21 binding sites for HC
 We can read the file into R:
 
 ```{r}
-rad21 <- read.table('46207_chr1_peaks.bed')
+
+rad21 <- read.table(system.file("extdata", '46207_chr1_peaks.bed', package = "HiCcompareWorkshop"))
 
 head(rad21)
 ```
