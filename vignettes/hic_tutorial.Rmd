@@ -181,7 +181,7 @@ Execute the following commands:
 chr <- paste0('chr', c(1)) # First chromosome, or use c(1:22, 'X') for all chromosomes
 
 # Sample and Folder names
-samples <- paste0('HIC00', c(1, 2, 8, 9)) 
+(samples <- paste0('HIC00', c(1, 2, 8, 9))) 
 # Data resolution
 res <- 500000 
 
@@ -296,7 +296,7 @@ Now that we have jointly normalized our data, we are ready to compare the condit
 ```{r}
 # Perform exact test
 # May use "parallel = TRUE" option to speed up computations
-rao2017 <- hic_exactTest(rao2017, parallel = TRUE) 
+rao2017 <- hic_exactTest(rao2017, parallel = FALSE) 
 ```
 
 ```{r}
@@ -326,7 +326,7 @@ save(rao2017, file = 'rao2017_exact.rda')
 
 #### GLM method
 
-For more complex experiments, the exact test is no longer sufficient, and the general linear model (GLM) framework must be used. If, for example, we have some other covariate of interest that we wish to control for or if there are more than two experimental groups, the GLM functionality of `multiHiCcompare` should be used. Here we show an example GLM analysis using two additional replicates from Rao 2017, which come from different biological samples. 
+For more complex experiments, the exact test is no longer sufficient, and the generalized linear model (GLM) framework must be used. If, for example, we have some other covariate of interest that we wish to control for or if there are more than two experimental groups, the GLM functionality of `multiHiCcompare` should be used. Here we show an example GLM analysis using two additional replicates from Rao 2017, which come from different biological samples. 
 
 ```{r eval=FALSE}
 wget https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM2795nnn/GSM2795538/suppl/GSM2795538_Rao-2017-HIC004_30.hic
@@ -341,7 +341,7 @@ Assuming you processed the following files and extract matrices as described abo
 chr <- paste0('chr', c(1)) # First chromosome, or use c(1:22, 'X') for all chromosomes
 
 # Sample and Folder names
-samples <- paste0('HIC0', c('01', '02', '04', '08', '09', '12'))
+(samples <- paste0('HIC0', c('01', '02', '04', '08', '09', '12')))
 # Data resolution
 res <- 500000
 
@@ -378,7 +378,7 @@ meta(rao_glm)
 Now we can normalize as was done before:
 
 ```{r}
-rao_glm <- fastlo(rao_glm, parallel = TRUE)
+rao_glm <- fastlo(rao_glm, parallel = FALSE)
 ```
 
 We are ready to use the GLM functionality of `multiHiCcompare`, which is similar to the strategy used in `limma` and `edgeR` packages. 
@@ -388,6 +388,7 @@ First, we need to create a design matrix. The design matrix should contain the c
 ```{r}
 # Make design matrix
 d <- model.matrix(~factor(meta(rao_glm)$group) + factor(meta(rao_glm)$biosample))
+colnames(d) <- c("(Intercept)", "group", "factor")
 knitr::kable(d)
 ```
 
@@ -395,7 +396,7 @@ Now we are ready to perform the comparison. There are three methods by which `hi
 
 ```{r}
 # Plug into GLM function
-rao_glm <- hic_glm(rao_glm, design = d, coef = 2, method = "QLFTest", p.method = "fdr", parallel = TRUE)
+rao_glm <- hic_glm(rao_glm, design = d, coef = 2, method = "QLFTest", p.method = "fdr", parallel = FALSE)
 ```
 
 ```{r}
@@ -440,7 +441,7 @@ The `count` method creates a plot where the height corresponds to the number of 
 The higher the dots are, the more significant/more frequent a region was detected as significantly differentially interacting. Use `plot.chr` to focus on any given chromosome:
 
 ```{r}
-manhattan_hicexp(rao2017, method = 'addCLT')
+manhattan_hicexp(rao2017, method = 'fisher')
 ```
 
 ```{r}
@@ -521,6 +522,7 @@ sig.regions.gr <- makeGRangesFromDataFrame(sig.regions,
                                            start.field = 'start', 
                                            end.field = 'end',
                                            keep.extra.columns = TRUE)
+sig.regions.gr
 ```
 
 Next, we get the genomic coordinates of all protein-coding genes in the genome. They will be used for a permutation test, to assess the average probability of overlap between DIRs and genes:
@@ -566,6 +568,7 @@ de.genes <- de.genes[complete.cases(de.genes),]
 # Make GRanges object for DE genes
 de.genes.gr <- GRanges(de.genes$chr, IRanges(start = de.genes$start, 
                                              end = de.genes$end))
+de.genes.gr
 # Save the de.genes GRanges object
 # save(de.genes.gr, file = 'rao2017_genes.rda')
 ```
@@ -613,6 +616,7 @@ hg19_symbols.gr <- makeGRangesFromDataFrame(hg19_symbols,
 
 # Overlap genes with DIRs defined previously
 olap <- findOverlaps(sig.regions.gr, hg19_symbols.gr)
+length(olap)
 ```
 
 Next, we need to create a named vector for the number of times each region was detected as significantly interacting. The names for this vector will be the Entrez gene IDs. This vector will be used for the pathway enrichment to walk down the list of genes overlapping most-to-least frequently detected DIRs:
@@ -641,7 +645,7 @@ pv <- as.numeric(gene_counts$avgP.adj)
 names(pv) <- paste0('hsa:', gene_counts$ENTREZID)
 
 # load KEGG pathways 
-kpg <- keggPathwayGraphs("hsa", updateCache = TRUE, verbose = FALSE)
+kpg <- keggPathwayGraphs("hsa", updateCache = FALSE, verbose = FALSE)
 # set edge weights
 kpg <- setEdgeWeights(kpg, edgeTypeAttr = "subtype",
                       edgeWeightByType = list(activation = 1, inhibition = -1,
@@ -649,7 +653,7 @@ kpg <- setEdgeWeights(kpg, edgeTypeAttr = "subtype",
                       defaultWeight = 0)
 ```
 
-Now we can plug the `fc` (fold-chabge) and `pv` (p-value) vectors into `ROntoTools` pathway analysis:
+Now we can plug the `fc` (fold-change) and `pv` (p-value) vectors into `ROntoTools` pathway analysis:
 
 ```{r, message=FALSE, warning=FALSE}
 # Set node weights
