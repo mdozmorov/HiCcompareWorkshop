@@ -2,7 +2,7 @@ on: [push]
 jobs:
   job1:
     runs-on: ubuntu-latest
-    container: bioconductor/bioconductor_docker:bioc2020
+    container: bioconductor/bioconductor_docker:bioc2020.1
 #    container: bioconductor/bioconductor_docker:devel
     steps:
       - uses: actions/checkout@v1
