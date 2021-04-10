@@ -9,11 +9,12 @@
 This workshop is based on [Stansfield et al., “R Tutorial: Detection of Differentially Interacting Chromatin Regions From Multiple Hi-C Datasets.”](https://currentprotocols.onlinelibrary.wiley.com/doi/abs/10.1002/cpbi.76). 
 
 - [Slides with a brief introduction for the workshop](https://mdozmorov.github.io/Talk_HiCcompare/index.html)
+- [Video: Differentially interacting chromatin regions from multiple Hi-C data](https://youtu.be/f4RaQVwPMzo)
 - [HiCcompareWorkshop GitHub repo](https://github.com/mdozmorov/HiCcompareWorkshop)
 - [HiCcompareWorkshop Docker image](https://hub.docker.com/repository/docker/mdozmorov/hiccompareworkshop)
 - [HiCcompareWorkshop pkgdown website](https://mdozmorov.github.io/HiCcompareWorkshop/)
 
-This workshop will be presented at the [Bioconductor Virtual Conference 2020](https://bioc2020.bioconductor.org/), July 30, 2020, 10:00-10:55am
+This workshop was presented at the [Bioconductor Virtual Conference 2020](https://bioc2020.bioconductor.org/), July 30, 2020, 10:00-10:55am
 
 # Using Docker
 
